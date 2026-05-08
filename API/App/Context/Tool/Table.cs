@@ -12,7 +12,7 @@ namespace API.App.Context.Tool
 
 
         #region Constructor Method
-        public Table(HtmlDto Html)
+        internal Table(HtmlDto Html)
         {
             this.html = Html;
         }
@@ -63,7 +63,7 @@ namespace API.App.Context.Tool
             }
             else
             {
-                return string.Empty;
+                return result.Error;
             }
         }
 

@@ -1,6 +1,6 @@
 ﻿namespace API
 {
-    internal class Result<T>
+    internal sealed class Result<T>
     {
         #region Variables
         private bool isSuccess;
