@@ -50,12 +50,21 @@ namespace API.App.Context.Tool
             string tableHtml;
             #endregion
 
-            tableHtml = GetMatch().Groups[1].Value;
+            var result = GetMatch();
 
-            return tableHtml;
+            if (result.IsSuccess)
+            {
+                tableHtml = result.Value.Value;
+
+                return tableHtml;
+            }
+            else
+            {
+                return string.Empty;
+            }
         }
 
-        private Match GetMatch()
+        private Result<Match> GetMatch()
         {
             #region Object
             Match tableMatch;
@@ -67,15 +76,13 @@ namespace API.App.Context.Tool
                 pattern: this.html.Table.Pattern,
                 options: RegexOptions.Singleline
             );
+            
+            if (tableMatch.Success == false)
+            {
+                return Result<Match>.Failure($"La variable {nameof(tableMatch.Success)} no puede ser falso.");
+            }
 
-            #region Exception
-            ArgumentOutOfRangeException.ThrowIfEqual<bool>(
-                value: tableMatch.Success,
-                other: false
-            );
-            #endregion
-
-            return tableMatch;
+            return Result<Match>.Success(tableMatch);
         }
         #endregion
         #endregion
