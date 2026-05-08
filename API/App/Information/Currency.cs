@@ -25,45 +25,63 @@ namespace API.App.Information
         }
         #endregion
 
-        /*
-        public Result<bool> Validation(CurrencyInfoDto Value)
+
+
+
+        public async Task<CurrencyHeaderDto> HeaderAsync()
         {
+            #region Objects
+            Result<Boolean> validationResult = this.Validation();
+            #endregion
+
+            if (validationResult.IsSuccess)
+            {
+                #region Objects
+                CurrencyHeaderDto currencyHeader;
+                #endregion
+
+                VarGlobal.Currencies = await GetAsync();
+
+                currencyHeader = new CurrencyHeaderDto
+                {
+                    ConsultationDateTime = VarGlobal.Now,
+                    Year = this.searchFilter.Year,
+                    MonthName = this.MonthName(),
+                    Currencies = VarGlobal.Currencies
+                };
+
+                return currencyHeader;
+            }
+            else
+            {
+                return default!;
+            }
+        }
+
+        private Result<Boolean> Validation()
+        {
+            #region Variables
+            bool validation;
+            #endregion
+
             #region Collections
             bool[] currencyValidation;
             #endregion
 
             currencyValidation = new bool[2]
             {
-                searchFilter.Year >= Value.StartDate.Year,
-                searchFilter.Year <= Value.EndDate.Year
+                this.searchFilter.Year >= this.currencyInfo.StartDate.Year,
+                this.searchFilter.Year <= this.currencyInfo.EndDate.Year
             };
 
-            if (!currencyValidation.All(value => value == true))
+            validation = currencyValidation.All(value => value == true);
+
+            if (validation == false)
             {
-                return Result<bool>.Failure("El año está fuera de rango.");
+                return Result<Boolean>.Failure($"La variable '{nameof(this.searchFilter.Year)}' está fuera de rango.");
             }
 
-            return Result<bool>.Success(Value: true);
-        }
-        */
-
-        public async Task<CurrencyHeaderDto> HeaderAsync()
-        {
-            #region Objects
-            CurrencyHeaderDto currencyHeader;
-            #endregion
-
-            VarGlobal.Currencies = await GetAsync();
-
-            currencyHeader = new CurrencyHeaderDto
-            {
-                ConsultationDateTime = VarGlobal.Now,
-                Year = this.searchFilter.Year,
-                MonthName = this.MonthName(),
-                Currencies = VarGlobal.Currencies
-            };
-
-            return currencyHeader;
+            return Result<Boolean>.Success(Value: validation);
         }
 
         private async Task<CurrencyDto[]> GetAsync()
