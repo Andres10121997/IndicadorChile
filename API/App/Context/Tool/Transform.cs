@@ -3,11 +3,13 @@ using API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace API.App.Context.Tool
 {
-    internal class Transform
+    internal class Transform<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Object
         private SearchFilterModel searchFilter;
@@ -34,8 +36,8 @@ namespace API.App.Context.Tool
 
 
         #region To
-        private async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, float[]> Data,
-                                                           Func<DateOnly, float, TModel> ModelFactory)
+        private async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, T[]> Data,
+                                                           Func<DateOnly, T, TModel> ModelFactory)
         {
             #region Objects
             object lockObject;
@@ -50,7 +52,7 @@ namespace API.App.Context.Tool
             modelList = new List<TModel>();
             #endregion
 
-            await Parallel.ForEachAsync<KeyValuePair<byte, float[]>>(
+            await Parallel.ForEachAsync<KeyValuePair<byte, T[]>>(
                 source: Data,
                 parallelOptions: Utils.ParallelForEachOptions,
                 body: async (Item, CancellationToken) =>
@@ -74,7 +76,7 @@ namespace API.App.Context.Tool
                         if (dateRange.All(predicate: value => value == true))
                         {
                             #region Variables
-                            float value;
+                            T value;
                             #endregion
 
                             #region Objects
@@ -104,11 +106,11 @@ namespace API.App.Context.Tool
             return modelList.ToArray<TModel>();
         }
 
-        internal async Task<CurrencyDto[]> ToCurrencyModelsAsync(Dictionary<byte, float[]> CurrencyData)
+        internal async Task<CurrencyDto<T>[]> ToCurrencyModelsAsync(Dictionary<byte, T[]> CurrencyData)
         {
-            return await this.ToModelsAsync<CurrencyDto>(
+            return await this.ToModelsAsync<CurrencyDto<T>>(
                 Data: CurrencyData,
-                ModelFactory: (Date, Value) => new CurrencyDto
+                ModelFactory: (Date, Value) => new CurrencyDto<T>
                 {
                     // https://www.youtube.com/shorts/UwcOL3ZL3go
                     ID = Guid.CreateVersion7(

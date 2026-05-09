@@ -1,12 +1,14 @@
 ﻿using API.App.DTO.Currency;
 using System;
+using System.Numerics;
 
 namespace API
 {
-    internal static class VarGlobal
+    internal static class VarGlobal<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Collections
-        private static CurrencyDto[] currencies;
+        private static CurrencyDto<T>[] currencies;
         #endregion
 
 
@@ -14,7 +16,7 @@ namespace API
         #region Constructor Method
         static VarGlobal()
         {
-            currencies = Array.Empty<CurrencyDto>();
+            currencies = Array.Empty<CurrencyDto<T>>();
         }
         #endregion
 
@@ -22,7 +24,7 @@ namespace API
 
         #region Field
         #region Collections
-        internal static CurrencyDto[] Currencies
+        internal static CurrencyDto<T>[] Currencies
         {
             get => currencies;
             set
@@ -34,13 +36,6 @@ namespace API
 
                 currencies = value;
             }
-        }
-        #endregion
-
-        #region Others
-        internal static DateTime Now
-        {
-            get => DateTime.Now;
         }
         #endregion
         #endregion

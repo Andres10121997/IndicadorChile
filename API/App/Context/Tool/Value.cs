@@ -4,18 +4,22 @@ using API.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace API.App.Context.Tool
 {
-    public class Value
+    public class Value<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Objects
         private CurrencyInfoDto currencyInfo;
         private SearchFilterModel searchFilter;
         #endregion
 
+        #region Tasks
         private Task<string> htmlContentAsync;
+        #endregion
 
 
 
@@ -35,13 +39,13 @@ namespace API.App.Context.Tool
 
 
 
-        public async Task<CurrencyDto[]> AnnualAsync()
+        public async Task<CurrencyDto<T>[]> AnnualAsync()
         {
             #region Collections
-            Task<Dictionary<byte, float[]>> values;
+            Task<Dictionary<byte, T[]>> values;
             #endregion
 
-            values = Extract.ValuesAsync(
+            values = Extract<T>.ValuesAsync(
                 Html: new HtmlDto
                 {
                     Content = await htmlContentAsync,
@@ -52,48 +56,50 @@ namespace API.App.Context.Tool
                 }
             );
 
-            VarGlobal.Currencies = await new Transform(SearchFilter: this.searchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
+            VarGlobal<T>.Currencies = await new Transform<T>(SearchFilter: this.searchFilter).ToCurrencyModelsAsync(CurrencyData: await values);
 
-            return VarGlobal.Currencies
-                .AsParallel<CurrencyDto>()
-                .Where<CurrencyDto>(predicate: Model => !float.IsNaN(f: Model.Currency)
-                                                        &&
-                                                        !float.IsInfinity(f: Model.Currency)
-                                                        &&
-                                                        !float.IsNegative(f: Model.Currency))
-                .OrderBy<CurrencyDto, DateOnly>(keySelector: Model => Model.Date)
-                .ToArray<CurrencyDto>();
+            return VarGlobal<T>.Currencies
+                .AsParallel()
+                .Where(predicate: Model => !T.IsNaN(value: Model.Currency)
+                                           &&
+                                           !T.IsZero(value: Model.Currency)
+                                           &&
+                                           !T.IsInfinity(value: Model.Currency)
+                                           &&
+                                           !T.IsNegative(value: Model.Currency))
+                .OrderBy<CurrencyDto<T>, DateOnly>(keySelector: Model => Model.Date)
+                .ToArray<CurrencyDto<T>>();
         }
 
-        public async Task<CurrencyDto[]> MonthlyAsync()
+        public async Task<CurrencyDto<T>[]> MonthlyAsync()
         {
-            VarGlobal.Currencies = await this.AnnualAsync();
+            VarGlobal<T>.Currencies = await this.AnnualAsync();
 
-            return VarGlobal.Currencies
-                .AsParallel<CurrencyDto>()
-                .Where<CurrencyDto>(predicate: Model => Model.Date.Year == this.searchFilter.Year
-                                                        &&
-                                                        Model.Date.Month == this.searchFilter.Month)
-                .ToArray<CurrencyDto>();
+            return VarGlobal<T>.Currencies
+                .AsParallel()
+                .Where(predicate: Model => Model.Date.Year == this.searchFilter.Year
+                                           &&
+                                           Model.Date.Month == this.searchFilter.Month)
+                .ToArray<CurrencyDto<T>>();
         }
 
-        public async Task<CurrencyDto> DailyAsync(DateOnly Date)
+        public async Task<CurrencyDto<T>> DailyAsync(DateOnly Date)
         {
             #region Objects
-            CurrencyDto? value;
+            CurrencyDto<T>? value;
             #endregion
 
-            VarGlobal.Currencies = await this.AnnualAsync();
+            VarGlobal<T>.Currencies = await this.AnnualAsync();
 
             // Buscar valor exacto
-            value = VarGlobal.Currencies
-                        .FirstOrDefault<CurrencyDto>(predicate: model => model.Date == Date)
+            value = VarGlobal<T>.Currencies
+                        .FirstOrDefault(predicate: model => model.Date == Date)
                     ??
                     // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
-                    VarGlobal.Currencies
-                        .Where<CurrencyDto>(predicate: Model => Model.Date < Date)
-                        .OrderByDescending<CurrencyDto, DateOnly>(keySelector: Model => Model.Date)
-                        .FirstOrDefault<CurrencyDto>();
+                    VarGlobal<T>.Currencies
+                        .Where(predicate: Model => Model.Date < Date)
+                        .OrderByDescending(keySelector: Model => Model.Date)
+                        .FirstOrDefault();
 
             #region Exception
             ArgumentNullException.ThrowIfNull(argument: value);

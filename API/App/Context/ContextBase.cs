@@ -2,11 +2,13 @@
 using API.App.DTO.Currency;
 using API.Models;
 using System.Net.Http;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace API.App.Context
 {
-    public class ContextBase
+    public class ContextBase<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Objects
         private CurrencyInfoDto currencyInfo;
@@ -46,13 +48,13 @@ namespace API.App.Context
 
 
         #region Values
-        public async Task<CurrencyDto[]> Values()
+        public async Task<CurrencyDto<T>[]> Values()
         {
             #region Objects
-            Value value;
+            Value<T> value;
             #endregion
 
-            value = new Value(
+            value = new Value<T>(
                 CurrencyInfo: this.CurrencyInfo,
                 SearchFilter: this.SearchFilter,
                 HtmlContentAsync: this.GetHtmlContentAsync()

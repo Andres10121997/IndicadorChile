@@ -1,8 +1,10 @@
 ﻿using System;
+using System.Numerics;
 
 namespace API.App.DTO.Currency
 {
-    public sealed record CurrencyHeaderDto
+    public sealed record CurrencyHeaderDto<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Field
         public required DateTime ConsultationDateTime { get; init; }
@@ -15,7 +17,7 @@ namespace API.App.DTO.Currency
                 #region Exception
                 ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(
                     value: value,
-                    other: VarGlobal.Now.Year
+                    other: DateTime.Now.Year
                 );
                 #endregion
 
@@ -24,7 +26,7 @@ namespace API.App.DTO.Currency
         }
 
         public string? MonthName { get; init; }
-        public required CurrencyDto[] Currencies { get; init; }
+        public required CurrencyDto<T>[] Currencies { get; init; }
         #endregion
     }
 }

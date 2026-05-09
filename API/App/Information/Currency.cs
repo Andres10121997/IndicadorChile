@@ -3,11 +3,13 @@ using API.App.DTO.Currency;
 using API.Models;
 using System;
 using System.Linq;
+using System.Numerics;
 using System.Threading.Tasks;
 
 namespace API.App.Information
 {
-    public class Currency
+    public class Currency<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Objects
         private CurrencyInfoDto currencyInfo;
@@ -28,7 +30,7 @@ namespace API.App.Information
 
 
 
-        public async Task<CurrencyHeaderDto> HeaderAsync()
+        public async Task<CurrencyHeaderDto<T>> HeaderAsync()
         {
             #region Objects
             Result<Boolean> validationResult = this.Validation();
@@ -37,17 +39,17 @@ namespace API.App.Information
             if (validationResult.IsSuccess)
             {
                 #region Objects
-                CurrencyHeaderDto currencyHeader;
+                CurrencyHeaderDto<T> currencyHeader;
                 #endregion
 
-                VarGlobal.Currencies = await GetAsync();
+                VarGlobal<T>.Currencies = await GetAsync();
 
-                currencyHeader = new CurrencyHeaderDto
+                currencyHeader = new CurrencyHeaderDto<T>
                 {
-                    ConsultationDateTime = VarGlobal.Now,
+                    ConsultationDateTime = DateTime.Now,
                     Year = this.searchFilter.Year,
                     MonthName = this.MonthName(),
-                    Currencies = VarGlobal.Currencies
+                    Currencies = VarGlobal<T>.Currencies
                 };
 
                 return currencyHeader;
@@ -84,20 +86,20 @@ namespace API.App.Information
             return Result<Boolean>.Success(Value: validation);
         }
 
-        private async Task<CurrencyDto[]> GetAsync()
+        private async Task<CurrencyDto<T>[]> GetAsync()
         {
             #region Objects
-            ContextBase context;
+            ContextBase<T> context;
             #endregion
 
-            context = new ContextBase(
+            context = new ContextBase<T>(
                 CurrencyInfo: this.currencyInfo,
                 SearchFilter: this.searchFilter
             );
 
-            VarGlobal.Currencies = await context.Values();
+            VarGlobal<T>.Currencies = await context.Values();
 
-            return VarGlobal.Currencies;
+            return VarGlobal<T>.Currencies;
         }
 
         private string? MonthName()

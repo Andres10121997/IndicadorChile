@@ -76,7 +76,7 @@ namespace API.Controllers
                          "\n" +
                          "---",
 
-                VarGlobal.Now   // {0}
+                DateTime.Now   // {0}
             );
         }
         #endregion
@@ -95,7 +95,7 @@ namespace API.Controllers
                          "\n" +
                          "---",
 
-                VarGlobal.Now   // {0}
+                DateTime.Now   // {0}
             );
         }
         #endregion

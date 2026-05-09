@@ -1,19 +1,21 @@
 ﻿using API.App.DTO.HTML;
 using System.Collections.Generic;
 using System.Globalization;
+using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace API.App.Context.Tool
 {
-    public static class Extract
+    public static class Extract<T>
+        where T : struct, IFloatingPoint<T>
     {
         #region Objects
         private static object lockObject;
         #endregion
 
         #region Collections
-        private static Dictionary<byte, float[]> data;
+        private static Dictionary<byte, T[]> data;
         #endregion
 
 
@@ -26,7 +28,7 @@ namespace API.App.Context.Tool
             #endregion
 
             #region Collections
-            data = new Dictionary<byte, float[]>();
+            data = new Dictionary<byte, T[]>();
             #endregion
         }
         #endregion
@@ -34,7 +36,7 @@ namespace API.App.Context.Tool
 
 
         #region Field
-        public static Dictionary<byte, float[]> Data
+        public static Dictionary<byte, T[]> Data
         {
             get => data;
             set => data = value;
@@ -43,7 +45,7 @@ namespace API.App.Context.Tool
 
 
 
-        public static async Task<Dictionary<byte, float[]>> ValuesAsync(HtmlDto Html)
+        public static async Task<Dictionary<byte, T[]>> ValuesAsync(HtmlDto Html)
         {
             #region Objects
             Table table;
@@ -64,7 +66,7 @@ namespace API.App.Context.Tool
 
 
 
-        private static async Task<Dictionary<byte, float[]>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
+        private static async Task<Dictionary<byte, T[]>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
         {
             await Parallel.ForEachAsync<Match>(
                 source: RowMatches,
@@ -130,10 +132,10 @@ namespace API.App.Context.Tool
                                     byte Day)
         {
             #region Collections
-            float[] values;
+            T[] values;
             #endregion
 
-            values = new float[12];
+            values = new T[12];
 
             for (byte i = 1; i < CellMatches.Count; i++)
             {
@@ -154,16 +156,16 @@ namespace API.App.Context.Tool
                         newValue: "."
                     );
 
-                switch (float.TryParse(s: value,
-                                       style: NumberStyles.Number,
-                                       provider: CultureInfo.InvariantCulture,
-                                       result: out float currencyValue))
+                switch (T.TryParse(s: value,
+                                      style: NumberStyles.Number,
+                                      provider: CultureInfo.InvariantCulture,
+                                      result: out T currencyValue))
                 {
                     case true:
                         values[i - 1] = currencyValue;
                         break;
                     case false:
-                        values[i - 1] = float.NaN;
+                        values[i - 1] = T.Zero;
                         break;
                 }
             }
