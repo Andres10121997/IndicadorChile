@@ -7,10 +7,16 @@ namespace API
 {
     internal static class Validate
     {
+        #region Collections
+        private static bool[] range;
+        #endregion
+
+
+
         #region Constructor Method
         static Validate()
         {
-            
+            range = Array.Empty<bool>();
         }
         #endregion
 
@@ -19,17 +25,13 @@ namespace API
         #region Range
         internal static bool DateRange(SearchFilterModel SearchFilter, byte Day, byte Month)
         {
-            #region Collections
-            bool[] dateRange;
-            #endregion
-
-            dateRange = new bool[2]
+            range = new bool[2]
             {
                 Day > 0,
                 Day <= DateTime.DaysInMonth(year: SearchFilter.Year, month: Month)
             };
 
-            return dateRange.All(predicate: value => value == true);
+            return range.All(predicate: value => value == true);
         }
 
         internal static bool YearRange(SearchFilterModel SearchFilter, CurrencyInfoDto CurrencyInfo)
@@ -38,17 +40,13 @@ namespace API
             bool validation;
             #endregion
 
-            #region Collections
-            bool[] yearRange;
-            #endregion
-
-            yearRange = new bool[2]
+            range = new bool[2]
             {
                 SearchFilter.Year >= CurrencyInfo.StartDate.Year,
                 SearchFilter.Year <= CurrencyInfo.EndDate.Year
             };
 
-            validation = yearRange.All(value => value == true);
+            validation = range.All(value => value == true);
 
             return validation;
         }
