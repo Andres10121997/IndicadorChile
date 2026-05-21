@@ -25,29 +25,29 @@ namespace API.App.Context.Tool
         internal Result<MatchCollection> GetData()
         {
             #region Objects
-            Result<string> result;
+            Result<string> htmlResult;
             #endregion
 
-            result = this.GetHtml();
+            htmlResult = this.GetHtml();
 
-            if (!result.IsSuccess)
+            if (!htmlResult.IsSuccess)
             {
                 return Result<MatchCollection>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
                         MethodName = nameof(this.GetData),
-                        VariableName = nameof(result.IsSuccess),
-                        Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}.",
+                        VariableName = nameof(htmlResult.IsSuccess),
+                        Description = $"La variable {nameof(htmlResult.IsSuccess)} no puede ser {false}.",
                         OtherErrors = new[]
                         {
-                            result.Error
+                            htmlResult.Error
                         }
                     }
                 );
             }
 
-            return Result<MatchCollection>.Success(Value: RowMatches(Input: result.Value));
+            return Result<MatchCollection>.Success(Value: RowMatches(Input: htmlResult.Value));
         }
 
         private MatchCollection RowMatches(string Input)
