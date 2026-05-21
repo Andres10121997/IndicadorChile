@@ -29,7 +29,7 @@ namespace API.App.Context.Tool
 
             table = new Table(Html: Html);
 
-            rowsResult = table.GetData();
+            rowsResult = table.GetRows();
 
             if (!rowsResult.IsSuccess)
             {

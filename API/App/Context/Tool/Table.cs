@@ -22,7 +22,7 @@ namespace API.App.Context.Tool
 
 
         #region Get
-        internal Result<MatchCollection> GetData()
+        internal Result<MatchCollection> GetRows()
         {
             #region Objects
             Result<string> htmlResult;
@@ -36,7 +36,7 @@ namespace API.App.Context.Tool
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
-                        MethodName = nameof(this.GetData),
+                        MethodName = nameof(this.GetRows),
                         VariableName = nameof(htmlResult.IsSuccess),
                         Description = $"La variable {nameof(htmlResult.IsSuccess)} no puede ser {false}.",
                         OtherErrors = new[]
