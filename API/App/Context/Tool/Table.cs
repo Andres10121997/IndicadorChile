@@ -24,16 +24,8 @@ namespace API.App.Context.Tool
         #region Get
         internal Result<MatchCollection> GetData()
         {
-            #region Variables
-            string rowPattern;
-            #endregion
-
             #region Objects
             Result<string> result;
-            #endregion
-
-            #region Collection
-            MatchCollection rowMatches;
             #endregion
 
             result = this.GetHtml();
@@ -55,15 +47,28 @@ namespace API.App.Context.Tool
                 );
             }
 
+            return Result<MatchCollection>.Success(Value: RowMatches(Input: result.Value));
+        }
+
+        private MatchCollection RowMatches(string Input)
+        {
+            #region Variables
+            string rowPattern;
+            #endregion
+
+            #region Collection
+            MatchCollection rowMatches;
+            #endregion
+
             // Regex para las filas de la tabla
             rowPattern = @"<tr>(.*?)<\/tr>";
             rowMatches = Regex.Matches(
-                input: result.Value,
+                input: Input,
                 pattern: rowPattern,
                 options: RegexOptions.Singleline
             );
 
-            return Result<MatchCollection>.Success(Value: rowMatches);
+            return rowMatches;
         }
 
         #region Table
