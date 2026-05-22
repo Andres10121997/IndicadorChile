@@ -1,4 +1,5 @@
 ﻿using API.App.Context.Tool;
+using API.App.DTO;
 using API.App.DTO.Currency;
 using API.Models;
 using System.Net.Http;
@@ -69,6 +70,23 @@ namespace API.App.Context
                 case false:
                     currenciesResult = await value.AnnualAsync();
                     break;
+            }
+
+            if (!currenciesResult.IsSuccess)
+            {
+                return Result<CurrencyDto<T>[]>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(ContextBase<T>),
+                        MethodName = nameof(Values),
+                        VariableName = nameof(currenciesResult),
+                        Description = $"La variable {nameof(currenciesResult)} no puede ser {false}.",
+                        OtherErrors = new[]
+                        {
+                            currenciesResult.Error
+                        }
+                    }
+                );
             }
 
             return Result<CurrencyDto<T>[]>.Success(Value: currenciesResult.Value);
