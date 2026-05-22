@@ -22,14 +22,11 @@ namespace API.App.Context.Tool
         internal static async Task<Result<Dictionary<byte, T[]>>> ValuesAsync(HtmlDto Html)
         {
             #region Objects
-            Table table;
             Result<Dictionary<byte, T[]>> result;
             Result<MatchCollection> rowsResult;
             #endregion
 
-            table = new Table(Html: Html);
-
-            rowsResult = table.GetRows();
+            rowsResult = Table.GetRows(Html: Html);
 
             if (!rowsResult.IsSuccess)
             {

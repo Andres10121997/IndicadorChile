@@ -4,31 +4,25 @@ using System.Text.RegularExpressions;
 
 namespace API.App.Context.Tool
 {
-    internal class Table
+    internal static class Table
     {
-        #region Objects
-        private HtmlDto html;
-        #endregion
-
-
-
         #region Constructor Method
-        internal Table(HtmlDto Html)
+        static Table()
         {
-            this.html = Html;
+            
         }
         #endregion
 
 
 
         #region Get
-        internal Result<MatchCollection> GetRows()
+        internal static Result<MatchCollection> GetRows(HtmlDto Html)
         {
             #region Objects
             Result<string> htmlResult;
             #endregion
 
-            htmlResult = this.GetHtml();
+            htmlResult = GetHtml(Html: Html);
 
             if (!htmlResult.IsSuccess)
             {
@@ -36,7 +30,7 @@ namespace API.App.Context.Tool
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
-                        MethodName = nameof(this.GetRows),
+                        MethodName = nameof(GetRows),
                         VariableName = nameof(htmlResult.IsSuccess),
                         Description = $"La variable {nameof(htmlResult.IsSuccess)} no puede ser {false}.",
                         OtherErrors = new[]
@@ -50,7 +44,7 @@ namespace API.App.Context.Tool
             return Result<MatchCollection>.Success(Value: RowMatches(Input: htmlResult.Value));
         }
 
-        private MatchCollection RowMatches(string Input)
+        private static MatchCollection RowMatches(string Input)
         {
             #region Variables
             string rowPattern;
@@ -72,7 +66,7 @@ namespace API.App.Context.Tool
         }
 
         #region Table
-        private Result<string> GetHtml()
+        private static Result<string> GetHtml(HtmlDto Html)
         {
             #region Variables
             string tableHtml;
@@ -82,7 +76,7 @@ namespace API.App.Context.Tool
             Result<Match> result;
             #endregion
 
-            result = this.GetMatchResult();
+            result = GetMatchResult(Html: Html);
 
             if (!result.IsSuccess)
             {
@@ -90,7 +84,7 @@ namespace API.App.Context.Tool
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
-                        MethodName = nameof(this.GetHtml),
+                        MethodName = nameof(GetHtml),
                         VariableName = nameof(result.IsSuccess),
                         Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}.",
                         OtherErrors = new[]
@@ -106,7 +100,7 @@ namespace API.App.Context.Tool
             return Result<string>.Success(Value: tableHtml);
         }
 
-        private Result<Match> GetMatchResult()
+        private static Result<Match> GetMatchResult(HtmlDto Html)
         {
             #region Object
             Match tableMatch;
@@ -114,8 +108,8 @@ namespace API.App.Context.Tool
 
             // Regex para encontrar la tabla con el ID dinámico
             tableMatch = Regex.Match(
-                input: this.html.Content,
-                pattern: this.html.Table.Pattern,
+                input: Html.Content,
+                pattern: Html.Table.Pattern,
                 options: RegexOptions.Singleline
             );
             
@@ -125,7 +119,7 @@ namespace API.App.Context.Tool
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
-                        MethodName = nameof(this.GetMatchResult),
+                        MethodName = nameof(GetMatchResult),
                         VariableName = nameof(tableMatch.Success),
                         Description = $"La variable {nameof(tableMatch.Success)} no puede ser {false}."
                     }
