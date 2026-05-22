@@ -52,6 +52,7 @@ namespace API.App.Context
         {
             #region Objects
             Value<T> value;
+            Result<CurrencyDto<T>[]> currenciesResult;
             #endregion
 
             value = new Value<T>(
@@ -63,10 +64,14 @@ namespace API.App.Context
             switch (this.SearchFilter.Month.HasValue)
             {
                 case true:
-                    return await value.MonthlyAsync();
+                    currenciesResult = await value.MonthlyAsync();
+                    break;
                 case false:
-                    return await value.AnnualAsync();
+                    currenciesResult = await value.AnnualAsync();
+                    break;
             }
+
+            return Result<CurrencyDto<T>[]>.Success(Value: currenciesResult.Value);
         }
         #endregion
 
