@@ -23,8 +23,8 @@ namespace API.App.Context.Tool
 
 
         internal static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(CurrencyInfoDto CurrencyInfo,
-                                                                       SearchFilterModel SearchFilter,
-                                                                       Task<string> HtmlContentAsync)
+                                                                         SearchFilterModel SearchFilter,
+                                                                         string HtmlContentAsync)
         {
             #region Objects
             Result<CurrencyDto<T>[]> toCurrencyModelsResult;
@@ -34,7 +34,7 @@ namespace API.App.Context.Tool
             valuesResult = await Extract<T>.ValuesAsync(
                 Html: new HtmlDto
                 {
-                    Content = await HtmlContentAsync,
+                    Content = HtmlContentAsync,
                     Table = new TableDto
                     {
                         ID = CurrencyInfo.Table.ID
@@ -94,8 +94,8 @@ namespace API.App.Context.Tool
         }
 
         internal static async Task<Result<CurrencyDto<T>[]>> MonthlyAsync(CurrencyInfoDto CurrencyInfo,
-                                                                        SearchFilterModel SearchFilter,
-                                                                        Task<string> HtmlContentAsync)
+                                                                          SearchFilterModel SearchFilter,
+                                                                          string HtmlContentAsync)
         {
             #region Objects
             Result<CurrencyDto<T>[]> currencyResult;
@@ -131,9 +131,9 @@ namespace API.App.Context.Tool
         }
 
         internal static async Task<Result<CurrencyDto<T>>> DailyAsync(CurrencyInfoDto CurrencyInfo,
-                                                                    SearchFilterModel SearchFilter,
-                                                                    Task<string> HtmlContentAsync,
-                                                                    DateOnly Date)
+                                                                      SearchFilterModel SearchFilter,
+                                                                      string HtmlContentAsync,
+                                                                      DateOnly Date)
         {
             #region Objects
             CurrencyDto<T>? currency;

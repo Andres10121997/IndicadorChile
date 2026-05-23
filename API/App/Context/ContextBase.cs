@@ -61,14 +61,14 @@ namespace API.App.Context
                     currenciesResult = await Value<T>.MonthlyAsync(
                         CurrencyInfo: this.CurrencyInfo,
                         SearchFilter: this.SearchFilter,
-                        HtmlContentAsync: this.GetHtmlContentAsync()
+                        HtmlContentAsync: await this.GetHtmlContentAsync()
                     );
                     break;
                 case false:
                     currenciesResult = await Value<T>.AnnualAsync(
                         CurrencyInfo: this.CurrencyInfo,
                         SearchFilter: this.SearchFilter,
-                        HtmlContentAsync: this.GetHtmlContentAsync()
+                        HtmlContentAsync: await this.GetHtmlContentAsync()
                     );
                     break;
             }
