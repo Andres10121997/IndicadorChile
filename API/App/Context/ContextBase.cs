@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 namespace API.App.Context
 {
     public class ContextBase<T>
-        where T : struct, IFloatingPoint<T>
+        where T : struct, IFloatingPointConstants<T>
     {
         #region Objects
         private CurrencyInfoDto currencyInfo;

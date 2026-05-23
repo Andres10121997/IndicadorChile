@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace API.App.Context.Tool
 {
     internal static class Extract<T>
-        where T : struct, IFloatingPoint<T>
+        where T : struct, IFloatingPointConstants<T>
     {
         #region Constructor Method
         static Extract()

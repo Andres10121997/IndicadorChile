@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 namespace API
 {
     internal static class VarGlobal<T>
-        where T : struct, IFloatingPoint<T>
+        where T : struct, IFloatingPointConstants<T>
     {
         #region Collections
         private static CurrencyDto<T>[] currencies;

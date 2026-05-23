@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace API.App.Context.Tool
 {
     internal static class Data<T>
-        where T : struct, IFloatingPoint<T>
+        where T : struct, IFloatingPointConstants<T>
     {
         #region Objects
         private static object lockObject;
