@@ -116,7 +116,7 @@ namespace API.App.Context.Tool
             if (tableMatch.Success == false)
             {
                 return Result<Match>.Failure(
-                    new ResultErrorDto()
+                    Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
                         MethodName = nameof(GetMatchResult),
