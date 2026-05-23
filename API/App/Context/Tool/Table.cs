@@ -73,29 +73,29 @@ namespace API.App.Context.Tool
             #endregion
 
             #region Objects
-            Result<Match> result;
+            Result<Match> tableMatchResult;
             #endregion
 
-            result = GetMatchResult(Html: Html);
+            tableMatchResult = GetMatchResult(Html: Html);
 
-            if (!result.IsSuccess)
+            if (!tableMatchResult.IsSuccess)
             {
                 return Result<string>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
                         MethodName = nameof(GetHtml),
-                        VariableName = nameof(result.IsSuccess),
-                        Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}.",
+                        VariableName = nameof(tableMatchResult.IsSuccess),
+                        Description = $"La variable {nameof(tableMatchResult.IsSuccess)} no puede ser {false}.",
                         OtherErrors = new[]
                         {
-                            result.Error
+                            tableMatchResult.Error
                         }
                     }
                 );
             }
 
-            tableHtml = result.Value.Groups[1].Value;
+            tableHtml = tableMatchResult.Value.Groups[1].Value;
 
             return Result<string>.Success(Value: tableHtml);
         }
