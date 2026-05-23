@@ -52,23 +52,24 @@ namespace API.App.Context
         public async Task<Result<CurrencyDto<T>[]>> Values()
         {
             #region Objects
-            Value<T> value;
             Result<CurrencyDto<T>[]> currenciesResult;
             #endregion
-
-            value = new Value<T>(
-                CurrencyInfo: this.CurrencyInfo,
-                SearchFilter: this.SearchFilter,
-                HtmlContentAsync: this.GetHtmlContentAsync()
-            );
 
             switch (this.SearchFilter.Month.HasValue)
             {
                 case true:
-                    currenciesResult = await value.MonthlyAsync();
+                    currenciesResult = await Value<T>.MonthlyAsync(
+                        CurrencyInfo: this.CurrencyInfo,
+                        SearchFilter: this.SearchFilter,
+                        HtmlContentAsync: this.GetHtmlContentAsync()
+                    );
                     break;
                 case false:
-                    currenciesResult = await value.AnnualAsync();
+                    currenciesResult = await Value<T>.AnnualAsync(
+                        CurrencyInfo: this.CurrencyInfo,
+                        SearchFilter: this.SearchFilter,
+                        HtmlContentAsync: this.GetHtmlContentAsync()
+                    );
                     break;
             }
 

@@ -10,37 +10,21 @@ using System.Threading.Tasks;
 
 namespace API.App.Context.Tool
 {
-    public class Value<T>
+    internal static class Value<T>
         where T : struct, IFloatingPoint<T>
     {
-        #region Objects
-        private CurrencyInfoDto currencyInfo;
-        private SearchFilterModel searchFilter;
-        #endregion
-
-        #region Tasks
-        private Task<string> htmlContentAsync;
-        #endregion
-
-
-
         #region Constructor Method
-        public Value(CurrencyInfoDto CurrencyInfo,
-                     SearchFilterModel SearchFilter,
-                     Task<string> HtmlContentAsync)
+        static Value()
         {
-            #region Objects
-            this.currencyInfo = CurrencyInfo;
-            this.searchFilter = SearchFilter;
-            #endregion
-
-            this.htmlContentAsync = HtmlContentAsync;
+            
         }
         #endregion
 
 
 
-        public async Task<Result<CurrencyDto<T>[]>> AnnualAsync()
+        internal static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(CurrencyInfoDto CurrencyInfo,
+                                                                       SearchFilterModel SearchFilter,
+                                                                       Task<string> HtmlContentAsync)
         {
             #region Objects
             Result<CurrencyDto<T>[]> toCurrencyModelsResult;
@@ -50,10 +34,10 @@ namespace API.App.Context.Tool
             valuesResult = await Extract<T>.ValuesAsync(
                 Html: new HtmlDto
                 {
-                    Content = await htmlContentAsync,
+                    Content = await HtmlContentAsync,
                     Table = new TableDto
                     {
-                        ID = this.currencyInfo.Table.ID
+                        ID = CurrencyInfo.Table.ID
                     }
                 }
             );
@@ -75,7 +59,7 @@ namespace API.App.Context.Tool
                 );
             }
 
-            toCurrencyModelsResult = await new Transform<T>(SearchFilter: this.searchFilter).ToCurrencyModelsAsync(CurrencyData: valuesResult.Value);
+            toCurrencyModelsResult = await new Transform<T>(SearchFilter: SearchFilter).ToCurrencyModelsAsync(CurrencyData: valuesResult.Value);
 
             if (!toCurrencyModelsResult.IsSuccess)
             {
@@ -109,13 +93,15 @@ namespace API.App.Context.Tool
             return Result<CurrencyDto<T>[]>.Success(Value: VarGlobal<T>.Currencies);
         }
 
-        public async Task<Result<CurrencyDto<T>[]>> MonthlyAsync()
+        internal static async Task<Result<CurrencyDto<T>[]>> MonthlyAsync(CurrencyInfoDto CurrencyInfo,
+                                                                        SearchFilterModel SearchFilter,
+                                                                        Task<string> HtmlContentAsync)
         {
             #region Objects
             Result<CurrencyDto<T>[]> currencyResult;
             #endregion
 
-            currencyResult = await this.AnnualAsync();
+            currencyResult = await AnnualAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter, HtmlContentAsync: HtmlContentAsync);
 
             if (!currencyResult.IsSuccess)
             {
@@ -136,22 +122,25 @@ namespace API.App.Context.Tool
 
              VarGlobal<T>.Currencies = currencyResult.Value
                 .AsParallel()
-                .Where(predicate: Model => Model.Date.Year == this.searchFilter.Year
+                .Where(predicate: Model => Model.Date.Year == SearchFilter.Year
                                            &&
-                                           Model.Date.Month == this.searchFilter.Month)
+                                           Model.Date.Month == SearchFilter.Month)
                 .ToArray<CurrencyDto<T>>();
 
             return Result<CurrencyDto<T>[]>.Success(Value: VarGlobal<T>.Currencies);
         }
 
-        public async Task<Result<CurrencyDto<T>>> DailyAsync(DateOnly Date)
+        internal static async Task<Result<CurrencyDto<T>>> DailyAsync(CurrencyInfoDto CurrencyInfo,
+                                                                    SearchFilterModel SearchFilter,
+                                                                    Task<string> HtmlContentAsync,
+                                                                    DateOnly Date)
         {
             #region Objects
             CurrencyDto<T>? currency;
             Result<CurrencyDto<T>[]> currencyResult;
             #endregion
 
-            currencyResult = await this.AnnualAsync();
+            currencyResult = await AnnualAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter, HtmlContentAsync: HtmlContentAsync);
 
             if (!currencyResult.IsSuccess)
             {
