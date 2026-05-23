@@ -61,7 +61,6 @@ namespace API.App.Context.Tool
         private static Result<MatchCollection> Cell(Match RowMatch)
         {
             #region Variables
-            string rowHtml;
             string cellPattern;
             #endregion
 
@@ -69,12 +68,10 @@ namespace API.App.Context.Tool
             MatchCollection cellMatches;
             #endregion
 
-            rowHtml = RowMatch.Groups[1].Value;
-
             // Regex para las celdas (<th> y <td>)
             cellPattern = @"<t[hd][^>]*>(.*?)<\/t[hd]>";
             cellMatches = Regex.Matches(
-                input: rowHtml,
+                input: RowHtml(RowMatch: RowMatch),
                 pattern: cellPattern,
                 options: RegexOptions.Singleline
             );
@@ -106,6 +103,17 @@ namespace API.App.Context.Tool
             }
 
             return Result<MatchCollection>.Success(Value: cellMatches);
+        }
+
+        private static string RowHtml(Match RowMatch)
+        {
+            #region Variables
+            string rowHtml;
+            #endregion
+
+            rowHtml = RowMatch.Groups[1].Value;
+
+            return rowHtml;
         }
 
         private static void Parse(MatchCollection CellMatches)
