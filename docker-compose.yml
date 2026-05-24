@@ -22,6 +22,7 @@ services:
             - LANGUAGE=es_CL:es
             - LC_ALL=es_CL.UTF-8
         volumes:
+            - '/path/to/host/uptime/:/app/data'
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
             - ${APPDATA}/ASP.NET/Https:/home/app/.aspnet/https:ro
