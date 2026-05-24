@@ -1,4 +1,5 @@
 ﻿using API.App.DTO;
+using System;
 
 namespace API
 {
@@ -35,12 +36,28 @@ namespace API
 
         public TValue Value
         {
-            get => this.value;
+            get
+            {
+                if (!this.isSuccess)
+                {
+                    throw new Exception(message: "Operación inválida: no se puede obtener el valor de un resultado fallido.");
+                }
+                
+                return this.value;
+            }
         }
 
         public ResultErrorDto Error
         {
-            get => this.error;
+            get
+            {
+                if (this.isSuccess)
+                {
+                    throw new Exception(message: "Operación inválida: no se puede obtener el error de un resultado exitoso.");
+                }
+                
+                return this.error;
+            }
         }
         #endregion
 
