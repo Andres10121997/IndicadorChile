@@ -13,7 +13,7 @@ namespace API.App.Start
 
             App = await Startup.InitAppAsync(args: args);
 
-            App.Run();
+            await App.RunAsync();
         }
     }
 }
