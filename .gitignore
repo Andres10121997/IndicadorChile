@@ -52,6 +52,7 @@ ScaffoldingReadMe.txt
 launch[Ss]ettings.json
 appsettings.json
 appsettings.*.json
+lib/
 
 # Visual C++ cache files
 ipch/
