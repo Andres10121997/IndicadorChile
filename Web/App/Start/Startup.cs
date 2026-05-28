@@ -15,47 +15,47 @@ namespace Web.App.Start
 
             builder = WebApplication.CreateBuilder(args: args);
 
-            ConfigureService(builder);
+            ConfigureService(Builder: builder);
 
             application = builder.Build();
 
-            Configure(application);
+            Configure(Application: application);
 
             return application;
         }
 
         #region Configure
-        private static void Configure(WebApplication app)
+        private static void Configure(WebApplication Application)
         {
             // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
             // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (!Application.Environment.IsDevelopment())
             {
-                app.UseExceptionHandler("/Error");
+                Application.UseExceptionHandler("/Error");
                 // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
+                Application.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            Application.UseHttpsRedirection();
 
-            app.UseRouting();
+            Application.UseRouting();
 
-            app.UseAuthentication();
-            app.UseAuthorization();
+            Application.UseAuthentication();
+            Application.UseAuthorization();
 
-            app.UseStaticFiles();
-            app.MapStaticAssets();
+            Application.UseStaticFiles();
+            Application.MapStaticAssets();
 
-            app.MapControllerRoute(
+            Application.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"
             );
         }
 
-        private static void ConfigureService(WebApplicationBuilder builder)
+        private static void ConfigureService(WebApplicationBuilder Builder)
         {
             // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            Builder.Services.AddControllersWithViews();
         }
         #endregion
     }

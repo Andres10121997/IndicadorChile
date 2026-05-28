@@ -9,7 +9,7 @@ namespace Web.App.Start
         {
             WebApplication app;
 
-            app = Startup.InitApp(args);
+            app = Startup.InitApp(args: args);
 
             await app.RunAsync();
         }
