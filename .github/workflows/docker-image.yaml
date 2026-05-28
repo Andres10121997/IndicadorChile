@@ -33,8 +33,8 @@ jobs:
         username: ${{ github.actor }} # Usa tu nombre de usuario de GitHub
         password: ${{ secrets.DOCKER_TOKEN }} # Usa el token de acceso personal guardado como secreto
 
-    - name: Build and push Docker image (API)
-      id: buildPushImageApi
+    - name: Build and push Docker image (${{ matrix.project }})
+      id: buildPushImage
       uses: docker/build-push-action@v7 # Acción para construir y subir imágenes de Docker
       with:
         context: . # Construye desde el directorio raíz del proyecto
