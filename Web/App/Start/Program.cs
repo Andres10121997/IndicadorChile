@@ -1,4 +1,6 @@
-namespace Web
+using Microsoft.AspNetCore.Builder;
+
+namespace Web.App.Start
 {
     public class Program
     {
