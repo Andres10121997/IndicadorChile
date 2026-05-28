@@ -40,17 +40,22 @@ namespace Web.App.Start
 
             app.UseRouting();
 
+            app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseStaticFiles();
             app.MapStaticAssets();
-            app.MapRazorPages()
-               .WithStaticAssets();
+
+            app.MapControllerRoute(
+                name: "default",
+                pattern: "{controller=Home}/{action=Index}/{id?}"
+            );
         }
 
         private static void ConfigureService(WebApplicationBuilder builder)
         {
             // Add services to the container.
-            builder.Services.AddRazorPages();
+            builder.Services.AddControllersWithViews();
         }
         #endregion
     }
