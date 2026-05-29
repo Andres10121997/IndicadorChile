@@ -23,7 +23,10 @@ namespace Web.Controllers
 
         public ActionResult Index()
         {
-            this.ViewDataTitle(Controller: "Principal", Title: "Index");
+            this.ViewDataTitle(
+                Controller: "Principal",
+                Title: "Index"
+            );
             
             return View();
         }

@@ -3,7 +3,8 @@
 namespace Web.Controllers
 {
     [
-        AutoValidateAntiforgeryToken
+        AutoValidateAntiforgeryToken,
+        RequireHttps
     ]
     public abstract class BaseController : Controller
     {
@@ -16,7 +17,9 @@ namespace Web.Controllers
         #endregion
 
 
-        protected void ViewDataTitle(string Controller, string Title)
+
+        protected void ViewDataTitle(string Controller,
+                                     string Title)
         {
             ViewData["Title"] = $"{Controller} - {Title}";
         }
