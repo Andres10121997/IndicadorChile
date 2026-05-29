@@ -26,6 +26,23 @@
             </legend>
 
             <div class="row">
+                <!-- CurrencyType -->
+                <div class="col-md-6">
+                    <div class="input-group input-group-sm mb-3">
+                        @Html.LabelFor(
+                            expression: model => model.CurrencyType,
+                            htmlAttributes: new
+                            {
+                                @class = "input-group-text"
+                            }
+                        )
+
+                        <select asp-items="Html.GetEnumSelectList<Utils.currencyTypeEnum>()" class="form-select" id="CurrencyType" name="CurrencyType">
+                        </select>
+                    </div>
+                </div>
+                
+                <!-- Year -->
                 <div class="col-md-6">
                     <div class="input-group input-group-sm mb-3">
                         @Html.LabelFor(
@@ -49,9 +66,12 @@
                         )
                     </div>
 
-                    @Html.ValidationMessageFor(expression: model => model.Year)
+                    @Html.ValidationMessageFor(
+                        expression: model => model.Year
+                    )
                 </div>
 
+                <!-- Month -->
                 <div class="col-md-6">
                     <div class="input-group input-group-sm mb-3">
                         @Html.LabelFor(
@@ -75,7 +95,9 @@
                         )
                     </div>
 
-                    @Html.ValidationMessageFor(expression: model => model.Month)
+                    @Html.ValidationMessageFor(
+                        expression: model => model.Month
+                    )
                 </div>
             </div>
 

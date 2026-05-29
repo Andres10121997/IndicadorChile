@@ -7,7 +7,6 @@ namespace Web.Models
     public sealed record SearchFilterModel : IValidatableObject
     {
         #region Field
-        /*
         [
             Display(
                 AutoGenerateField = false,
@@ -27,7 +26,7 @@ namespace Web.Models
             )
         ]
         public required string CurrencyType { get; init; }
-        */
+        
         [
             DataType(
                 dataType: DataType.Currency
