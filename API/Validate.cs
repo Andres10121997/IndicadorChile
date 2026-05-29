@@ -1,5 +1,5 @@
 ﻿using API.App.DTO.Currency;
-using API.Models;
+using Models;
 using System;
 using System.Linq;
 

@@ -1,10 +1,11 @@
 ﻿using API.App.DTO.Currency;
 using API.App.DTO.HTML;
 using API.App.Information;
-using API.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Models;
+using Models.Utils;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -28,10 +29,10 @@ namespace API.Controllers
         #region Constructor Method
         public SIIController(ILogger<SIIController> Logger)
             : base(Logger: Logger,
-                   URLs: new Dictionary<currencyTypeEnum, CurrencyInfoDto[]>
+                   URLs: new Dictionary<Enums.currencyTypeEnum, CurrencyInfoDto[]>
                          {
                              {
-                                 currencyTypeEnum.USD,
+                                 Enums.currencyTypeEnum.USD,
                                  new CurrencyInfoDto[2]
                                  {
                                      new CurrencyInfoDto
@@ -74,7 +75,7 @@ namespace API.Controllers
                                  }
                              },
                              {
-                                 currencyTypeEnum.UF,
+                                 Enums.currencyTypeEnum.UF,
                                  new CurrencyInfoDto[]
                                  {
                                      new CurrencyInfoDto

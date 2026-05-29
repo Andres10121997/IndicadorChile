@@ -1,6 +1,7 @@
 ﻿using API.App.DTO.Currency;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Models.Utils;
 using System;
 using System.Collections.Generic;
 
@@ -21,22 +22,14 @@ namespace API.Controllers
         #endregion
 
         #region Collections
-        private readonly Dictionary<currencyTypeEnum, CurrencyInfoDto[]> urls;
-        #endregion
-
-        #region Enum
-        public enum currencyTypeEnum : byte
-        {
-            USD,
-            UF
-        }
+        private readonly Dictionary<Enums.currencyTypeEnum, CurrencyInfoDto[]> urls;
         #endregion
 
 
 
         #region Constructor Method
         public BaseController(ILogger<BaseController> Logger,
-                              Dictionary<currencyTypeEnum, CurrencyInfoDto[]> URLs)
+                              Dictionary<Enums.currencyTypeEnum, CurrencyInfoDto[]> URLs)
             : base()
         {
             #region Interfaces
@@ -53,7 +46,7 @@ namespace API.Controllers
 
         #region Field
         #region Collections
-        protected Dictionary<currencyTypeEnum, CurrencyInfoDto[]> URLs
+        protected Dictionary<Enums.currencyTypeEnum, CurrencyInfoDto[]> URLs
         {
             get => this.urls;
         }

@@ -1,4 +1,4 @@
-﻿@model Web.Models.SearchFilterModel
+﻿@model Models.SearchFilterModel
 @{
     const string formId = "GetCurrencyForm";
 }
@@ -37,7 +37,7 @@
                             }
                         )
 
-                        <select asp-items="Html.GetEnumSelectList<Utils.currencyTypeEnum>()" class="form-select" id="CurrencyType" name="CurrencyType">
+                        <select asp-items="Html.GetEnumSelectList<Enums.currencyTypeEnum>()" class="form-select" id="CurrencyType" name="CurrencyType">
                         </select>
                     </div>
                 </div>

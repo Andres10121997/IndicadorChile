@@ -1,10 +1,10 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Web
+namespace Models.Utils
 {
-    internal static class Utils
+    public class Enums
     {
-        internal enum currencyTypeEnum : byte
+        public enum currencyTypeEnum : byte
         {
             [Display(Name = "USD")]
             USD,

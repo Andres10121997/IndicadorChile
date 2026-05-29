@@ -1,9 +1,7 @@
-﻿using API.Controllers;
-using System;
-using System.Collections.Generic;
+﻿using Models.Utils;
 using System.ComponentModel.DataAnnotations;
 
-namespace API.Models
+namespace Models
 {
     public sealed record SearchFilterModel : IValidatableObject
     {
@@ -23,14 +21,13 @@ namespace API.Models
                 allowEdit: true
             ),
             EnumDataType(
-                enumType: typeof(BaseController.currencyTypeEnum)
+                enumType: typeof(Enums.currencyTypeEnum)
             ),
             Required(
-                AllowEmptyStrings = false,
-                ErrorMessageResourceType = typeof(BaseController.currencyTypeEnum)
+                AllowEmptyStrings = false
             )
         ]
-        public required BaseController.currencyTypeEnum CurrencyType { get; init; }
+        public required Enums.currencyTypeEnum CurrencyType { get; init; }
 
         [
             Display(
@@ -47,13 +44,11 @@ namespace API.Models
                 allowEdit: true
             ),
             Required(
-                AllowEmptyStrings = false,
-                ErrorMessageResourceType = typeof(ushort)
+                AllowEmptyStrings = false
             ),
             Range(
                 minimum: 2013,
-                maximum: ushort.MaxValue,
-                ErrorMessageResourceType = typeof(ushort)
+                maximum: ushort.MaxValue
             )
         ]
         public required ushort Year { get; init; }
@@ -74,8 +69,7 @@ namespace API.Models
             ),
             Range(
                 minimum: 1,
-                maximum: 12,
-                ErrorMessageResourceType = typeof(byte?)
+                maximum: 12
             )
         ]
         public byte? Month { get; init; }
