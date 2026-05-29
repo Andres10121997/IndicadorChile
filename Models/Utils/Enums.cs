@@ -6,9 +6,32 @@ namespace Models.Utils
     {
         public enum currencyTypeEnum : byte
         {
-            [Display(Name = "USD")]
+            [
+                Display(
+                    AutoGenerateField = false,
+                    AutoGenerateFilter = false,
+                    Description = "",
+                    GroupName = "Divisa",
+                    Name = "Dólar estadounidense",
+                    Order = 1,
+                    Prompt = "",
+                    ShortName = "USD"
+                )
+            ]
             USD,
-            [Display(Name = "UF")]
+
+            [
+                Display(
+                    AutoGenerateField = false,
+                    AutoGenerateFilter = false,
+                    Description = "",
+                    GroupName = "Divisa",
+                    Name = "Unidad de fomento",
+                    Order = 2,
+                    Prompt = "",
+                    ShortName = "UF"
+                )
+            ]
             UF
         }
     }
