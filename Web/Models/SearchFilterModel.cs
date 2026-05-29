@@ -7,6 +7,7 @@ namespace Web.Models
     public sealed record SearchFilterModel : IValidatableObject
     {
         #region Field
+        /*
         [
             Display(
                 AutoGenerateField = false,
@@ -26,8 +27,11 @@ namespace Web.Models
             )
         ]
         public required string CurrencyType { get; init; }
-
+        */
         [
+            DataType(
+                dataType: DataType.Currency
+            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
@@ -42,18 +46,19 @@ namespace Web.Models
                 allowEdit: true
             ),
             Required(
-                AllowEmptyStrings = false,
-                ErrorMessageResourceType = typeof(ushort)
+                AllowEmptyStrings = false
             ),
             Range(
                 minimum: 2013,
-                maximum: ushort.MaxValue,
-                ErrorMessageResourceType = typeof(ushort)
+                maximum: ushort.MaxValue
             )
         ]
         public required ushort Year { get; init; }
 
         [
+            DataType(
+                dataType: DataType.Currency
+            ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
@@ -69,8 +74,7 @@ namespace Web.Models
             ),
             Range(
                 minimum: 1,
-                maximum: 12,
-                ErrorMessageResourceType = typeof(byte?)
+                maximum: 12
             )
         ]
         public byte? Month { get; init; }
