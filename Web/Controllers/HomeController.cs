@@ -3,7 +3,7 @@ using Microsoft.Extensions.Logging;
 
 namespace Web.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
         #region Interfaces
         private readonly ILogger<HomeController> logger;
@@ -23,6 +23,8 @@ namespace Web.Controllers
 
         public ActionResult Index()
         {
+            this.ViewDataTitle(Controller: "Principal", Title: "Index");
+            
             return View();
         }
     }
