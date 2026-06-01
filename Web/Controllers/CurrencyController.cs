@@ -28,6 +28,7 @@ namespace Web.Controllers
 
 
         #region Views
+        #region Search
         [
             HttpGet(
                 template: "[action]"
@@ -52,6 +53,7 @@ namespace Web.Controllers
             
             return this.View();
         }
+        #endregion
         #endregion
     }
 }

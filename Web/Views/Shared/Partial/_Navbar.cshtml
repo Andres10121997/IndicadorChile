@@ -33,19 +33,9 @@
 
                     <ul class="dropdown-menu">
                         <li>
-                            @Html.ActionLink(
-                                linkText: "Buscar",
-                                actionName: "Search",
-                                controllerName: "Currency",
-                                routeValues: new
-                                {
-                                    @area = ""
-                                },
-                                htmlAttributes: new
-                                {
-                                    @class = "dropdown-item"
-                                }
-                            )
+                            <a asp-action="Search" asp-controller="Currency" asp-area="" class="dropdown-item text-center" title="Buscar">
+                                <i class="fa-solid fa-magnifying-glass"></i>
+                            </a>
                         </li>
                     </ul>
                 </li>
