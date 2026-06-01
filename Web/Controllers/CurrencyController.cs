@@ -4,6 +4,11 @@ using Models;
 
 namespace Web.Controllers
 {
+    [
+        Route(
+            template: "[controller]"
+        )
+    ]
     public class CurrencyController : BaseController
     {
         #region Interfaces
@@ -24,7 +29,9 @@ namespace Web.Controllers
 
         #region Views
         [
-            HttpGet
+            HttpGet(
+                template: "[action]"
+            )
         ]
         public ActionResult Search()
         {
@@ -32,7 +39,9 @@ namespace Web.Controllers
         }
 
         [
-            HttpGet("[action]/{id}")
+            HttpGet(
+                template: "[action]/{id}"
+            )
         ]
         public ActionResult Search(SearchFilterModel SearchFilter)
         {
