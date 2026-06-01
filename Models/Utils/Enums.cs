@@ -26,7 +26,7 @@ namespace Models.Utils
                     AutoGenerateFilter = false,
                     Description = "",
                     GroupName = "Divisa",
-                    Name = "Unidad de fomento",
+                    Name = "Unidad de Fomento",
                     Order = 2,
                     Prompt = "",
                     ShortName = "UF"

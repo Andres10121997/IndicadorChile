@@ -37,8 +37,14 @@
                             }
                         )
 
-                        <select asp-items="Html.GetEnumSelectList<Enums.currencyTypeEnum>()" class="form-select" id="CurrencyType" name="CurrencyType">
-                        </select>
+                        @Html.DropDownListFor(
+                            expression: model => model.CurrencyType,
+                            selectList: Html.GetEnumSelectList<Enums.currencyTypeEnum>(),
+                            htmlAttributes: new
+                            {
+                                @class = "form-select"
+                            }
+                        )
                     </div>
                 </div>
                 
