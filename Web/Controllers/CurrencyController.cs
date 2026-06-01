@@ -22,9 +22,27 @@ namespace Web.Controllers
 
 
 
+        #region Views
+        [
+            HttpGet
+        ]
         public ActionResult Search()
         {
-            return View();
+            return this.View();
         }
+
+        [
+            HttpGet("[action]/{id}")
+        ]
+        public ActionResult Search(SearchFilterModel SearchFilter)
+        {
+            if (!ModelState.IsValid)
+            {
+                return this.View();
+            }
+            
+            return this.View();
+        }
+        #endregion
     }
 }
