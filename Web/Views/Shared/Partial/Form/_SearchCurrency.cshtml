@@ -46,6 +46,10 @@
                             }
                         )
                     </div>
+
+                    @Html.ValidationMessageFor(
+                        expression: model => model.CurrencyType
+                    )
                 </div>
                 
                 <!-- Year -->
