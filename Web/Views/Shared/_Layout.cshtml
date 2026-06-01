@@ -2,27 +2,42 @@
 
 <html lang="es">
     <head>
-        <!-- Meta, start -->
+        <!-- meta charset|http-equivalent|viewport -->
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta name="viewport" content="width=device-width, initial-scale=1" />
-        <!-- Meta, end -->
 
-        <!-- Bootstrap, start -->
+        <!-- title -->
+        <title> Indicadores de Chile | @(ViewData["Title"] as string) </title>
+
+        <!-- preconnect -->
+        @* n/a *@
+
+        <!-- script async -->
+        @* n/a *@
+
+        <!-- CSS que incluye import -->
+        @* n/a *@
+
+        <!-- JS Sincrónico -->
+        @* n/a *@
+
+        <!-- CSS Sincrónico -->
         <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <script charset="utf-8" crossorigin="anonymous" defer src="~/lib/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-        <!-- Bootstrap, end -->
-
-        <!-- Font Awesome, start -->
         <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" type="text/css" />
+
+        <!-- preload -->
+        @* n/a *@
+
+        <!-- script defer -->
+        <script charset="utf-8" crossorigin="anonymous" defer src="~/lib/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
         <script charset="utf-8" crossorigin="anonymous" defer src="~/lib/font-awesome/js/all.min.js" type="text/javascript"></script>
-        <!-- Font Awesome, end -->
-        
-        <!-- Title, start -->
-        <title>
-            Indicadores de Chile | @(ViewData["Title"] as string)
-        </title>
-        <!-- Title, end -->
+
+        <!-- prefetch / prerender -->
+        @* n/a *@
+
+        <!-- Todo lo demás ('SEO', meta tags, icons, Open Graph, etc) -->
+        @* n/a *@
     </head>
     <body>
         @await Html.PartialAsync(
