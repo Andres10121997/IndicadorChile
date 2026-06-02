@@ -21,6 +21,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Content Remove="wwwroot\script\TypeScript\ct.ts" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Include="..\LICENSE">
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
@@ -37,6 +41,10 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Models\Models.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <TypeScriptCompile Include="wwwroot\script\TypeScript\ct.ts" />
   </ItemGroup>
 
 </Project>

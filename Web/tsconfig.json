@@ -1,0 +1,24 @@
+{
+  "compilerOptions": {
+    "target": "es6",
+
+    // Type Checking
+    "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+
+    "noEmitOnError": true,
+    "removeComments": false,
+    "sourceMap": true,
+
+    "rootDir": "./wwwroot/script/TypeScript",
+    "outDir": "./wwwroot/script/JavaScript"
+  },
+  "compileOnSave": true,
+  "exclude": [
+    "node_modules"
+  ]
+}
