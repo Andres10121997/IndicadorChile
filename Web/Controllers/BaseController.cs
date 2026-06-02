@@ -27,6 +27,7 @@ namespace Web.Controllers
 
 
 
+        #region Field
         protected string Action
         {
             get => this.action;
@@ -37,6 +38,7 @@ namespace Web.Controllers
         {
             get => this.controller;
         }
+        #endregion
 
 
 
