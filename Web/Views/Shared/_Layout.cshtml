@@ -2,9 +2,10 @@
 
 <html lang="es">
     <head>
-        @* meta charset|http-equivalent|viewport *@
+        @* meta charset|http-equivalent|viewport|etc *@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="keywords" content="@(ViewData["Keywords"] as string)">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         @* title *@
@@ -36,9 +37,8 @@
         @* prefetch / prerender *@
         @* n/a *@
 
-        @* Todo lo demás ('SEO', meta tags, icons, Open Graph, etc) *@
-        <!-- meta tags -->
-        <meta name="keywords" content="@(ViewData["Keywords"] as string)">
+        @* Todo lo demás ('SEO', icons, Open Graph, etc) *@
+        @* n/a *@
     </head>
     <body>
         @await Html.PartialAsync(
