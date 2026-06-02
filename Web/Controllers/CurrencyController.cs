@@ -19,7 +19,7 @@ namespace Web.Controllers
 
         #region Constructor Method
         public CurrencyController(ILogger<CurrencyController> Logger)
-            : base()
+            : base(Action: string.Empty, Controller: "Divisa")
         {
             this.logger = Logger;
         }
@@ -36,6 +36,8 @@ namespace Web.Controllers
         ]
         public ActionResult Search()
         {
+            this.SearchContent();
+            
             return this.View();
         }
 
@@ -48,12 +50,36 @@ namespace Web.Controllers
         {
             if (!ModelState.IsValid)
             {
+                this.SearchContent();
+                
                 return this.View();
             }
-            
+
+            this.SearchContent();
+
             return this.View();
         }
         #endregion
         #endregion
+
+
+
+        private void SearchContent()
+        {
+            this.Action = "Buscar";
+            
+            this.ViewDataKeywords(
+                Keywords: new string[]
+                {
+                    this.Controller,
+                    this.Action
+                }
+            );
+
+            this.ViewDataTitle(
+                Controller: this.Controller,
+                Title: this.Action
+            );
+        }
     }
 }

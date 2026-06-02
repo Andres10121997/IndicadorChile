@@ -13,7 +13,8 @@ namespace Web.Controllers
 
         #region Constructor Method
         public HomeController(ILogger<HomeController> Logger)
-            : base()
+            : base(Action: "Index",
+                   Controller: "Principal")
         {
             this.logger = Logger;
         }
@@ -24,8 +25,16 @@ namespace Web.Controllers
         public ActionResult Index()
         {
             this.ViewDataTitle(
-                Controller: "Principal",
-                Title: "Index"
+                Controller: this.Controller,
+                Title: this.Action
+            );
+
+            this.ViewDataKeywords(
+                Keywords: new string[]
+                {
+                    this.Controller,
+                    this.Action
+                }
             );
             
             return View();
