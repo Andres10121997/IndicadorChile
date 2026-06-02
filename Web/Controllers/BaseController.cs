@@ -16,7 +16,8 @@ namespace Web.Controllers
 
 
         #region Constructor Method
-        public BaseController(string Action, string Controller)
+        public BaseController(string Action,
+                              string Controller)
             : base()
         {
             this.action = Action;
@@ -28,13 +29,13 @@ namespace Web.Controllers
 
         protected string Action
         {
-            get => this.Action;
-            set => this.Action = value;
+            get => this.action;
+            set => this.action = value;
         }
 
         protected string Controller
         {
-            get => this.Controller;
+            get => this.controller;
         }
 
 

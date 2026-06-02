@@ -22,13 +22,19 @@ namespace Web.Controllers
 
 
 
+        #region View
         public ActionResult Index()
         {
-            this.ViewDataTitle(
-                Controller: this.Controller,
-                Title: this.Action
-            );
+            this.IndexContent();
+            
+            return View();
+        }
+        #endregion
 
+
+
+        private void IndexContent()
+        {
             this.ViewDataKeywords(
                 Keywords: new string[]
                 {
@@ -36,8 +42,11 @@ namespace Web.Controllers
                     this.Action
                 }
             );
-            
-            return View();
+
+            this.ViewDataTitle(
+                Controller: this.Controller,
+                Title: this.Action
+            );
         }
     }
 }
