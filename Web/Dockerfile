@@ -28,14 +28,3 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Web.dll"]
-
-
-
-# Instalar la herramienta de compilación de LibMan globalmente
-RUN dotnet tool install -g Microsoft.Web.LibraryManager.Build
-
-# Asegurarse de que las herramientas de .NET estén en el PATH
-ENV PATH="$PATH:/root/.dotnet/tools"
-
-# Restaurar las bibliotecas definidas en libman.json antes de publicar
-RUN libman restore
