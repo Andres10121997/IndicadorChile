@@ -5,6 +5,7 @@ on:
     branches: [ main ]
   pull_request:
     branches: [ main ]
+  workflow_call: # Esto permite que este archivo sea llamado por otros
 
 jobs:
   build-and-push-image:
