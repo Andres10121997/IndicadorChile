@@ -23,6 +23,9 @@ jobs:
             dockerfile: ./Web/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/web
     
+    container:
+      image: ${{ vars.IMAGE_NAME }}-api
+    
     steps:
     - name: Checkout code
       id: checkoutCode
