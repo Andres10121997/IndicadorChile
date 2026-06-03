@@ -25,7 +25,7 @@ jobs:
             image_name: ${{ vars.IMAGE_NAME }}/web
 
     container:
-      image: ghcr.io/${{ matrix.image_name }}
+      image: ${{ matrix.image_name }}
       credentials:
         username: ${{ github.actor }}
       env:
