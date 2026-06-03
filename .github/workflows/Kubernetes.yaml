@@ -1,0 +1,51 @@
+name: build-and-deploy-kubernetes
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+  workflow_call:    # Esto permite que este archivo sea llamado por otros
+
+jobs:
+  build-and-deploy-kubernetes:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - project: API
+            dockerfile: ./API/Dockerfile
+            image_name: ${{ vars.IMAGE_NAME }}/api
+          - project: Web
+            dockerfile: ./Web/Dockerfile
+            image_name: ${{ vars.IMAGE_NAME }}/web
+
+    steps:
+      - name: Checkout code
+        id: checkoutCode
+        uses: actions/checkout@v4 # Obtiene el código de tu repositorio
+        
+      - name: Log in to GitHub Container Registry | ${{ matrix.project }}
+        id: logInGitHub
+        uses: docker/login-action@v4 # Permite iniciar sesión en el registro de contenedores
+        with:
+          registry: ghcr.io # Usa el registro de contenedores de GitHub
+          username: ${{ github.actor }} # Usa tu nombre de usuario de GitHub
+          password: ${{ secrets.DOCKER_TOKEN }} # Usa el token de acceso personal guardado como secreto
+        
+      - name: Configurar el contexto de Kubernetes
+        uses: azure/k8s-set-context@v4
+        with:
+          method: kubeconfig
+          kubeconfig: ${{ secrets.KUBECONFIG_SECRET }}
+      
+      - name: Desplegar en Kubernetes
+        uses: azure/k8s-deploy@v5
+        with:
+          manifests: |
+            k8s/deployment.yaml
+            k8s/service.yaml
+          images: |
+            ghcr.io/${{ matrix.image_name }}:latest
