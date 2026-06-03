@@ -1,11 +1,14 @@
-name: build-and-deploy-kubernetes
+name: Build and deploy kubernetes
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_call:    # Esto permite que este archivo sea llamado por otros
+  workflow_run:
+    workflows: ["Build and Push Docker Image"]
+    types:
+      - completed
 
 jobs:
   build-and-deploy-kubernetes:
