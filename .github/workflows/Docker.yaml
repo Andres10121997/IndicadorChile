@@ -1,14 +1,13 @@
-name: Build and Push Docker Image
+name: Docker
 
 on:
   push:
     branches: [ main ]
   pull_request:
     branches: [ main ]
-  workflow_call: # Esto permite que este archivo sea llamado por otros
 
 jobs:
-  build-and-push-image:
+  build-and-push-docker-image:
     runs-on: ubuntu-latest
     
     strategy:
