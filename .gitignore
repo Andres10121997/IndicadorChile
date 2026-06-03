@@ -48,11 +48,11 @@ ScaffoldingReadMe.txt
 # Visual Studio
 .vs/
 .vscode/
+lib/
 *.slnLaunch
 launch[Ss]ettings.json
 appsettings.json
 appsettings.*.json
-lib/
 
 # Visual C++ cache files
 ipch/
@@ -108,3 +108,6 @@ logs/
 # Imágenes/Contenedores compilados
 # (Si haces build local)
 # .docker-build/
+
+# Scripts
+*.js.map
