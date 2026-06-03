@@ -26,6 +26,9 @@ jobs:
 
     container:
       image: ${{ matrix.image_name }}
+      credentials:
+        username: ${{ github.actor }}
+        password: ${{ secrets.github_token }}
       env:
         TZ: America/Santiago
     
