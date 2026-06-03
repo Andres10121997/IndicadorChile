@@ -21,36 +21,37 @@ jobs:
       matrix:
         include:
           - project: API
-            dockerfile: ./API/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/api
           - project: Web
-            dockerfile: ./Web/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/web
 
     steps:
+      # 1. Descargar el código del repositorio
       - name: Checkout code
         id: checkoutCode
         uses: actions/checkout@v4 # Obtiene el código de tu repositorio
-        
-      - name: Log in to GitHub Container Registry | ${{ matrix.project }}
-        id: logInGitHub
-        uses: docker/login-action@v4 # Permite iniciar sesión en el registro de contenedores
-        with:
-          registry: ghcr.io # Usa el registro de contenedores de GitHub
-          username: ${{ github.actor }} # Usa tu nombre de usuario de GitHub
-          password: ${{ secrets.DOCKER_TOKEN }} # Usa el token de acceso personal guardado como secreto
-        
-      - name: Configurar el contexto de Kubernetes
-        uses: azure/k8s-set-context@v4
-        with:
-          method: kubeconfig
-          kubeconfig: ${{ secrets.KUBECONFIG_SECRET }}
       
-      - name: Desplegar en Kubernetes
-        uses: azure/k8s-deploy@v5
+      # 2. Instalar kubectl en el entorno virtual
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v4
         with:
-          manifests: |
-            k8s/deployment.yaml
-            k8s/service.yaml
-          images: |
-            ghcr.io/${{ matrix.image_name }}:latest
+          version: 'latest'
+      
+      # 3. Configurar el archivo de acceso a Kubernetes descodificando el secreto
+      - name: Configure Kubeconfig
+        run: |
+          mkdir -p ~/.kube
+          echo "${{ secrets.KUBECONFIG }}" | base64 -d > ~/.kube/config
+          chmod 600 ~/.kube/config
+      
+      # 4. Actualizar la etiqueta de la imagen y desplegar los manifiestos
+      - name: Deploy to Kubernetes Cluster
+        run: |
+          # Reemplazar dinámicamente la imagen en tus manifiestos con el tag del commit actual
+          sed -i "s|image: .*|image: ghcr.io/${{ matrix.image_name }}:${{ github.sha }}|g" k8s/deployment.yaml
+          
+          # Aplicar los cambios en el clúster
+          kubectl apply -f k8s/
+          
+          # Verificar que el despliegue termine correctamente
+          kubectl rollout status deployment/mi-deployment-name -n default
