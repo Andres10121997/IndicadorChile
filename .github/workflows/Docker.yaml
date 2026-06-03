@@ -24,7 +24,7 @@ jobs:
             image_name: ${{ vars.IMAGE_NAME }}/web
     
     container:
-      image: ${{ vars.IMAGE_NAME }}-api
+      image: ${{ matrix.dockerfile }}
     
     steps:
     - name: Checkout code
