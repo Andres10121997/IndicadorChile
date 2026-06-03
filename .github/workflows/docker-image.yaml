@@ -44,35 +44,3 @@ jobs:
         tags: | # Asigna etiquetas a la imagen
           ghcr.io/${{ matrix.image_name }}:${{ github.sha }}
           ghcr.io/${{ matrix.image_name }}:latest
-  
-  build-and-deploy-kubernetes:
-    runs-on: ubuntu-latest
-
-    needs: build-and-push-image
-
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - project: API
-            dockerfile: ./API/Dockerfile
-            image_name: ${{ vars.IMAGE_NAME }}/api
-          - project: Web
-            dockerfile: ./Web/Dockerfile
-            image_name: ${{ vars.IMAGE_NAME }}/web
-
-    steps:
-    - name: Configurar el contexto de Kubernetes
-      uses: azure/k8s-set-context@v4
-      with:
-        method: kubeconfig
-        kubeconfig: ${{ secrets.image_name }}
-    
-    - name: 5. Desplegar en Kubernetes
-      uses: azure/k8s-deploy@v5
-      with:
-        manifests: |
-          k8s/deployment.yaml
-          k8s/service.yaml
-        images: |
-          ghcr.io/${{ matrix.image_name }}:latest
