@@ -14,6 +14,8 @@ jobs:
   build-and-deploy-kubernetes:
     runs-on: ubuntu-latest
 
+    if: ${{ github.event.workflow_run.conclusion == 'success' }} # Solo si el primero fue exitoso
+
     strategy:
       fail-fast: false
       matrix:
