@@ -8,6 +8,8 @@ on:
 
 jobs:
   build-and-push-docker-image:
+    runs-on: [ubuntu-latest, windows-latest]
+    
     strategy:
       fail-fast: false
       matrix:
@@ -18,8 +20,6 @@ jobs:
           - project: Web
             dockerfile: ./Web/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/web
-    
-    runs-on: [ubuntu-latest, windows-latest]
     
     steps:
     - name: Checkout code
