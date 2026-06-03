@@ -16,10 +16,13 @@ jobs:
         include:
           - project: API
             os: ubuntu-latest
+            name: "API"
             dockerfile: ./API/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/api
+          
           - project: Web
             os: ubuntu-latest
+            name: "Web"
             dockerfile: ./Web/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/web
     
@@ -36,7 +39,7 @@ jobs:
         username: ${{ github.actor }} # Usa tu nombre de usuario de GitHub
         password: ${{ secrets.DOCKER_TOKEN }} # Usa el token de acceso personal guardado como secreto
 
-    - name: Build and push Docker image | ${{ matrix.project }}
+    - name: Build and push Docker image | ${{ matrix.name }}
       id: buildPushImage
       uses: docker/build-push-action@v7 # Acción para construir y subir imágenes de Docker
       with:
