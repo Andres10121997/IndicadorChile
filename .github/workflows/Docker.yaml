@@ -15,12 +15,12 @@ jobs:
       matrix:
         include:
           - project: API
-            os: [ubuntu-latest, windows-latest]
+            os: ubuntu-latest
             dockerfile: ./API/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/api
           
           - project: Web
-            os: [ubuntu-latest, windows-latest]
+            os: ubuntu-latest
             dockerfile: ./Web/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/web
     
