@@ -49,10 +49,10 @@ jobs:
           ghcr.io/${{ matrix.image_name }}:latest
   
   test-and-build:
-    runs-on: ubuntu-latest
+    runs-on: ${{ matrix.os }}
     
     needs: build-and-push-docker-image
-    
+
     steps:
       - name: Clonar repositorio
         uses: actions/checkout@v4
@@ -64,7 +64,7 @@ jobs:
         run: docker ps -a
 
       - name: Ejecutar pruebas (ejemplo)
-        run: docker compose exec -T mi-servicio npm test
+        run: docker compose exec -T ${{ matrix.image_name }} npm test
 
       - name: Detener y limpiar contenedores
         if: always() # Asegura que se ejecute incluso si los pasos anteriores fallan
