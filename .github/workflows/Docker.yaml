@@ -25,7 +25,7 @@ jobs:
             image_name: ${{ vars.IMAGE_NAME }}/web
 
     container:
-      image: ${{ matrix.dockerfile }}
+      image: "${{ matrix.dockerfile }},,"
       env:
         TZ: America/Santiago
     
