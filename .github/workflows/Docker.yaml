@@ -14,14 +14,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, windows-latest]
         include:
           - project: API
-            os: [ubuntu-latest, windows-latest]
             dockerfile: ./API/Dockerfile
             image_name: $IMAGE_NAME/api
-            
           - project: Web
-            os: [ubuntu-latest, windows-latest]
             dockerfile: ./Web/Dockerfile
             image_name: $IMAGE_NAME/web
     
