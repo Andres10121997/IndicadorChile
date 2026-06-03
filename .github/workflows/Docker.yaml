@@ -25,9 +25,7 @@ jobs:
             image_name: ${{ vars.IMAGE_NAME }}/web
 
     container:
-      image: ${{ matrix.image_name }}
-      credentials:
-        username: ${{ github.actor }}
+      image: ${{ matrix.image_name }}:latest
       env:
         TZ: America/Santiago
     
