@@ -23,6 +23,11 @@ jobs:
             os: ubuntu-latest
             dockerfile: ./Web/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/web
+
+    container:
+      image: ${{ matrix.dockerfile }}
+      env:
+        TZ: America/Santiago
     
     steps:
     - name: Checkout code
