@@ -16,13 +16,11 @@ jobs:
         include:
           - project: API
             os: ubuntu-latest
-            name: "API"
             dockerfile: ./API/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/api
           
           - project: Web
             os: ubuntu-latest
-            name: "Web"
             dockerfile: ./Web/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/web
     
@@ -31,7 +29,7 @@ jobs:
       id: checkoutCode
       uses: actions/checkout@v4 # Obtiene el código de tu repositorio
 
-    - name: Log in to GitHub Container Registry | ${{ matrix.project }}
+    - name: Log in to GitHub Container Registry
       id: logInGitHub
       uses: docker/login-action@v4 # Permite iniciar sesión en el registro de contenedores
       with:
@@ -39,7 +37,7 @@ jobs:
         username: ${{ github.actor }} # Usa tu nombre de usuario de GitHub
         password: ${{ secrets.DOCKER_TOKEN }} # Usa el token de acceso personal guardado como secreto
 
-    - name: Build and push Docker image | ${{ matrix.name }}
+    - name: Build and push Docker image
       id: buildPushImage
       uses: docker/build-push-action@v7 # Acción para construir y subir imágenes de Docker
       with:
