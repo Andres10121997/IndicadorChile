@@ -28,7 +28,7 @@ jobs:
       image: ${{ matrix.image_name }}
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.github_token }}
+        password: ${{ secrets.DOCKER_TOKEN }}
       env:
         TZ: America/Santiago
     
