@@ -2,10 +2,9 @@
 
 <html lang="es">
     <head>
-        @* meta charset|http-equivalent|viewport|etc *@
+        @* meta charset|http-equivalent|viewport *@
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-        <meta name="keywords" content="@(ViewData["Keywords"] as string)">
         <meta name="viewport" content="width=device-width, initial-scale=1" />
 
         @* title *@
@@ -24,8 +23,8 @@
         @* n/a *@
 
         @* CSS Sincrónico *@
-        <link href="~/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet" type="text/css" />
-        <link href="~/lib/font-awesome/css/all.min.css" rel="stylesheet" type="text/css" />
+        <link href="~/lib/bootstrap/css/bootstrap.min.css" hreflang="en" rel="stylesheet" type="text/css" />
+        <link href="~/lib/font-awesome/css/all.min.css" hreflang="en" rel="stylesheet" type="text/css" />
 
         @* preload *@
         @* n/a *@
@@ -37,8 +36,9 @@
         @* prefetch / prerender *@
         @* n/a *@
 
-        @* Todo lo demás ('SEO', icons, Open Graph, etc) *@
-        @* n/a *@
+        @* Todo lo demás ('SEO', meta tags, icons, Open Graph, etc) *@
+        <!-- meta tags -->
+        <meta name="keywords" content="@(ViewData["Keywords"] as string)">
     </head>
     <body>
         @await Html.PartialAsync(
