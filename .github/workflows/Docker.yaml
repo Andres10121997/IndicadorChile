@@ -24,7 +24,7 @@ jobs:
             dockerfile: ./Web/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/web
     env:
-      DockerFile: ${{ matrix.dockerfile }}
+      DockerFile: "${{ matrix.dockerfile }}"
 
     container:
       image: "${DockerFile,,}"
