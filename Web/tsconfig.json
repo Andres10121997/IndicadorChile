@@ -10,6 +10,16 @@
     "strictBindCallApply": true,
     "strictPropertyInitialization": true,
     "noImplicitThis": true,
+    "noFallthroughCasesInSwitch": true,
+    "noUncheckedIndexedAccess": false,
+    "noImplicitOverride": true,
+    "noPropertyAccessFromIndexSignature": true,
+    "allowUnusedLabels": false,
+    "allowUnreachableCode": false,
+
+    // Backwards Compatibility
+    "noImplicitUseStrict": false,
+    "suppressExcessPropertyErrors": false,
 
     "noEmitOnError": true,
     "removeComments": false,
