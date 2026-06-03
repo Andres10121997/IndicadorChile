@@ -25,10 +25,9 @@ jobs:
             image_name: ${{ vars.IMAGE_NAME }}/web
 
     container:
-      image: ${{ matrix.image_name }}
+      image: ghcr.io/${{ matrix.image_name }}
       credentials:
         username: ${{ github.actor }}
-        password: ${{ secrets.DOCKER_TOKEN }}
       env:
         TZ: America/Santiago
     
