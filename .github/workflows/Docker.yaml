@@ -8,16 +8,19 @@ on:
 
 jobs:
   build-and-push-docker-image:
-    runs-on: [ubuntu-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
     
     strategy:
       fail-fast: false
       matrix:
+        os: [ubuntu-latest, windows-latest]
         include:
           - project: API
+            os: ubuntu-latest
             dockerfile: ./API/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/api
           - project: Web
+            os: ubuntu-latest
             dockerfile: ./Web/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/web
     
