@@ -23,9 +23,11 @@ jobs:
             os: ubuntu-latest
             dockerfile: ./Web/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/web
+    env:
+      DockerFile: ${{ matrix.dockerfile }}
 
     container:
-      image: "${{ matrix.dockerfile }},,"
+      image: "${DockerFile,,}"
       env:
         TZ: America/Santiago
     
