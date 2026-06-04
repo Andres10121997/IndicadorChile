@@ -41,7 +41,7 @@
 
         @* Todo lo demás ('SEO', meta tags, icons, Open Graph, etc) *@
         <!-- meta tags -->
-        <meta name="keywords" content="@(ViewData["Keywords"] as string)">
+        <meta name="keywords" content="@(ViewData["Keywords"] as string)" />
     </head>
     <body>
         @await Html.PartialAsync(
