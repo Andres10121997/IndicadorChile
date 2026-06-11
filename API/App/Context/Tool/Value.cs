@@ -1,6 +1,7 @@
 ﻿using API.App.DTO;
 using API.App.DTO.Currency;
 using API.App.DTO.HTML;
+using DTO.Currency;
 using Models;
 using System;
 using System.Collections.Generic;

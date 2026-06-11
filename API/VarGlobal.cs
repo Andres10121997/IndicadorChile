@@ -1,4 +1,4 @@
-﻿using API.App.DTO.Currency;
+﻿using DTO.Currency;
 using System;
 using System.Numerics;
 using System.Threading.Tasks;

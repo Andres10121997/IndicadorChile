@@ -1,6 +1,7 @@
 ﻿using API.App.Context.Tool;
 using API.App.DTO;
 using API.App.DTO.Currency;
+using DTO.Currency;
 using Models;
 using System.Net.Http;
 using System.Numerics;

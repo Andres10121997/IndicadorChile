@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Numerics;
 
-namespace API.App.DTO.Currency
+namespace DTO.Currency
 {
     public sealed record CurrencyDto<T>
         where T : struct, IFloatingPointConstants<T>

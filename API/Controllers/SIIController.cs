@@ -1,6 +1,7 @@
 ﻿using API.App.DTO.Currency;
 using API.App.DTO.HTML;
 using API.App.Information;
+using DTO.Currency;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
