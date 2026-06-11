@@ -8,23 +8,7 @@ namespace DTO.Currency
     {
         #region Field
         public required DateTime ConsultationDateTime { get; init; }
-
-        public required ushort Year
-        {
-            get;
-            init
-            {
-                #region Exception
-                ArgumentOutOfRangeException.ThrowIfGreaterThan<int>(
-                    value: value,
-                    other: DateTime.Now.Year
-                );
-                #endregion
-
-                field = value;
-            }
-        }
-
+        public required ushort Year { get; init; }
         public string? MonthName { get; init; }
         public required CurrencyDto<T>[] Currencies { get; init; }
         #endregion
