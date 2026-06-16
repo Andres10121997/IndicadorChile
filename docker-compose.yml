@@ -1,24 +1,20 @@
-# https://learn.microsoft.com/es-es/visualstudio/containers/tutorial-multicontainer?view=visualstudio
+# https://learn.microsoft.com/es-mx/visualstudio/containers/tutorial-multicontainer?view=visualstudio
+# https://learn.microsoft.com/es-mx/visualstudio/containers/launch-profiles?view=visualstudio
 version: "3.9"
 
 services:
-    api:
-        image: ${DOCKER_REGISTRY-}api
+    web:
+        image: ${DOCKER_REGISTRY-}web
         restart: always
         depends_on:
-            redis:
-                condition: service_started
+            api:
+                condition: service_healthy
         ports:
-            - "1970:8080"
-            - "1973:8081"
-        healthcheck:
-            test: curl --fail https://localhost:1973/api/SII/GetCurrencyList?CurrencyType=USD&Year=2025 || exit 1
-            interval: 20s
-            timeout: 20s
-            retries: 5
+            - "1971:8080"
+            - "1974:8081"
         build:
             context: .
-            dockerfile: API/Dockerfile
+            dockerfile: Web/Dockerfile
         environment:
             # Asp Net Core
             - ASPNETCORE_ENVIRONMENT=Development
@@ -37,18 +33,23 @@ services:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     
-    web:
-        image: ${DOCKER_REGISTRY-}web
+    api:
+        image: ${DOCKER_REGISTRY-}api
         restart: always
         depends_on:
-            api:
-                condition: service_healthy
+            redis:
+                condition: service_started
         ports:
-            - "1971:8080"
-            - "1974:8081"
+            - "1970:8080"
+            - "1973:8081"
+        healthcheck:
+            test: curl --fail https://localhost:1973/api/SII/GetCurrencyList?CurrencyType=USD&Year=2025 || exit 1
+            interval: 20s
+            timeout: 20s
+            retries: 5
         build:
             context: .
-            dockerfile: Web/Dockerfile
+            dockerfile: API/Dockerfile
         environment:
             # Asp Net Core
             - ASPNETCORE_ENVIRONMENT=Development
