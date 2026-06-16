@@ -1,5 +1,5 @@
-﻿using API.App.DTO;
-using API.App.DTO.HTML;
+﻿using API.App.DTO.HTML;
+using ResultPattern;
 using System.Text.RegularExpressions;
 
 namespace API.App.Context.Tool

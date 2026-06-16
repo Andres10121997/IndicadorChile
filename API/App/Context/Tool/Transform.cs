@@ -1,6 +1,6 @@
-﻿using API.App.DTO;
-using DTO.Currency;
+﻿using DTO.Currency;
 using Models;
+using ResultPattern;
 using System;
 using System.Collections.Generic;
 using System.Linq;

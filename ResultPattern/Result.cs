@@ -1,7 +1,6 @@
-﻿using API.App.DTO;
-using System;
+﻿using System;
 
-namespace API
+namespace ResultPattern
 {
     public sealed class Result<TValue>
         where TValue : notnull
@@ -42,7 +41,7 @@ namespace API
                 {
                     throw new Exception(message: "Operación inválida: no se puede obtener el valor de un resultado fallido.");
                 }
-                
+
                 return this.value;
             }
         }
@@ -55,7 +54,7 @@ namespace API
                 {
                     throw new Exception(message: "Operación inválida: no se puede obtener el error de un resultado exitoso.");
                 }
-                
+
                 return this.error;
             }
         }

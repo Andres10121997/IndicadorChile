@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace API.App.DTO
+namespace ResultPattern
 {
     public sealed record ResultErrorDto
     {
