@@ -27,7 +27,9 @@
 
         @* CSS Sincrónico *@
         <link href="~/lib/bootstrap/css/bootstrap.min.css" fetchpriority="high" hreflang="en" lang="en" rel="stylesheet" type="text/css" />
-        <link href="~/lib/font-awesome/css/all.min.css" fetchpriority="auto" hreflang="en" lang="en" rel="stylesheet" type="text/css" />
+        <environment include="Development" exclude="Staging,Production">
+            <link href="~/lib/font-awesome/css/all.min.css" fetchpriority="auto" hreflang="en" lang="en" rel="stylesheet" type="text/css" />
+        </environment>
 
         @* preload *@
         @* n/a *@
