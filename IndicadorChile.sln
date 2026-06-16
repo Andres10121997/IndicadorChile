@@ -13,6 +13,10 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "Models\Models.csp
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DTO", "DTO\DTO.csproj", "{BE8C6294-6394-4530-93A0-17A71E80B5E2}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "App", "App", "{C7876FC8-C147-469E-A89E-04F144E331AC}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Lib", "Lib", "{6F9AADB4-E8BC-4EA0-96F3-3BB7E28CEBA9}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,6 +46,12 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CBFA08EA-AECE-205F-7B85-326FD0B81BAD} = {C7876FC8-C147-469E-A89E-04F144E331AC}
+		{6DEB327A-E4D7-4D41-A846-4F34A6A8728D} = {C7876FC8-C147-469E-A89E-04F144E331AC}
+		{C81F3440-F1A6-4A63-AA24-667E903ED0C6} = {6F9AADB4-E8BC-4EA0-96F3-3BB7E28CEBA9}
+		{BE8C6294-6394-4530-93A0-17A71E80B5E2} = {6F9AADB4-E8BC-4EA0-96F3-3BB7E28CEBA9}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7A1E850D-48B3-41C9-8582-4FF3484B8164}
