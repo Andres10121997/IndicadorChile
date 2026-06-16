@@ -44,7 +44,9 @@ namespace API.App.Start
                 .AddJsonOptions(
                     configure: options =>
                     {
-                        options.JsonSerializerOptions.Converters.Add(item: new JsonStringEnumConverter());
+                        options.JsonSerializerOptions.Converters.Add(
+                            item: new JsonStringEnumConverter()
+                        );
                     }
                 );
             Builder.Services.AddEndpointsApiExplorer();
@@ -80,17 +82,6 @@ namespace API.App.Start
                         Title = "Indicadores de Chile",
                         Version = "v1",
                         Description = "Una API para obtener, principalmente, la lista de distintas \"divisas\", como la UF y el dólar.",
-                        Contact = new OpenApiContact
-                        {
-                            Name = "Andrés Sagredo",
-                            Email = string.Empty,
-                            Url = new Uri(uriString: "https://github.com/Andres10121997")
-                        },
-                        License = new OpenApiLicense
-                        {
-                            Name = "Uso bajo Apache 2.0",
-                            Url = new Uri(uriString: "https://www.apache.org/licenses/LICENSE-2.0")
-                        }
                     }
                 );
             });
@@ -113,7 +104,9 @@ namespace API.App.Start
             App.UseAuthorization();
 
             App.MapControllers()
-                .RequireRateLimiting(policyName: "Limiter");
+                .RequireRateLimiting(
+                    policyName: "Limiter"
+                );
         }
         #endregion
     }
