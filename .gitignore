@@ -96,9 +96,9 @@ nunit-*.xml
 # Docker
 docker-compose.override.yml
 docker-compose.override.yaml
-.env
-.env.local
-.env.*.local
+*.env
+*.env.local
+*.env.*.local
 
 # Volúmenes y Datos (ajusta según tus carpetas de montajes)
 data/
