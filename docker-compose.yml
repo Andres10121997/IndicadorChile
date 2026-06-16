@@ -4,9 +4,17 @@ services:
     api:
         image: ${DOCKER_REGISTRY-}api
         restart: always
+        depends_on:
+            redis:
+                condition: service_started
         ports:
             - "1970:8080"
             - "1973:8081"
+        healthcheck:
+            test: curl --fail https://localhost:1973/api/SII/GetCurrencyList?CurrencyType=USD&Year=2025 || exit 1
+            interval: 20s
+            timeout: 20s
+            retries: 5
         build:
             context: .
             dockerfile: API/Dockerfile
@@ -56,3 +64,6 @@ services:
             # Microsoft
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+    
+    redis:
+        image: redis
