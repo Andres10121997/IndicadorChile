@@ -1,3 +1,4 @@
+# https://learn.microsoft.com/es-es/visualstudio/containers/tutorial-multicontainer?view=visualstudio
 version: "3.9"
 
 services:
@@ -40,7 +41,8 @@ services:
         image: ${DOCKER_REGISTRY-}web
         restart: always
         depends_on:
-            - api
+            api:
+                condition: service_healthy
         ports:
             - "1971:8080"
             - "1974:8081"
