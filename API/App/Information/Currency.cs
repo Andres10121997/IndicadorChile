@@ -1,5 +1,4 @@
 ﻿using API.App.Context;
-using API.App.DTO.Currency;
 using DTO.Currency;
 using Models;
 using ResultPattern;

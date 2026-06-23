@@ -1,7 +1,7 @@
-﻿using API.App.DTO.HTML;
+﻿using DTO.HTML;
 using System;
 
-namespace API.App.DTO.Currency
+namespace DTO.Currency
 {
     public sealed record CurrencyInfoDto
     {

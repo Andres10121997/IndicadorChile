@@ -1,4 +1,4 @@
-﻿namespace API.App.DTO.HTML
+﻿namespace DTO.HTML
 {
     public sealed record HtmlDto
     {
