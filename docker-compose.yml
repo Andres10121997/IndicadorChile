@@ -3,42 +3,10 @@
 version: "3.9"
 
 services:
-    web:
-        image: ${DOCKER_REGISTRY-}web
-        restart: always
-        depends_on:
-            api:
-                condition: service_healthy
-        ports:
-            - "1971:8080"
-            - "1974:8081"
-        build:
-            context: .
-            dockerfile: Web/Dockerfile
-        environment:
-            # Asp Net Core
-            - ASPNETCORE_ENVIRONMENT=Development
-            - ASPNETCORE_HTTP_PORTS=8080
-            - ASPNETCORE_HTTPS_PORTS=8081
-            # Time Zone
-            - TZ=America/Santiago
-            # Idioma
-            - LANG=es_CL.UTF-8
-            - LANGUAGE=es_CL:es
-            - LC_ALL=es_CL.UTF-8
-        volumes:
-            # Configuración del almacenamiento persistente
-            - '/path/to/host/uptime/:/app/data'
-            # Microsoft
-            - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
-    
     api:
         image: ${DOCKER_REGISTRY-}api
+        container_name: indicadoreschile_api
         restart: always
-        depends_on:
-            redis:
-                condition: service_started
         ports:
             - "1970:8080"
             - "1973:8081"
@@ -68,5 +36,32 @@ services:
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
     
-    redis:
-        image: redis
+    web:
+        image: ${DOCKER_REGISTRY-}web
+        container_name: indicadoreschile_web
+        restart: always
+        depends_on:
+            - api
+        ports:
+            - "1971:8080"
+            - "1974:8081"
+        build:
+            context: .
+            dockerfile: Web/Dockerfile
+        environment:
+            # Asp Net Core
+            - ASPNETCORE_ENVIRONMENT=Development
+            - ASPNETCORE_HTTP_PORTS=8080
+            - ASPNETCORE_HTTPS_PORTS=8081
+            # Time Zone
+            - TZ=America/Santiago
+            # Idioma
+            - LANG=es_CL.UTF-8
+            - LANGUAGE=es_CL:es
+            - LC_ALL=es_CL.UTF-8
+        volumes:
+            # Configuración del almacenamiento persistente
+            - '/path/to/host/uptime/:/app/data'
+            # Microsoft
+            - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
+            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
