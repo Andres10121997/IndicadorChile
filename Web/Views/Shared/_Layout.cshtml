@@ -27,16 +27,16 @@
 
         @* CSS Sincrónico *@
         <link href="~/lib/bootstrap/css/bootstrap.min.css" fetchpriority="high" hreflang="en" lang="en" rel="stylesheet" type="text/css" />
-        <environment include="Development" exclude="Staging,Production">
-            <link href="~/lib/font-awesome/css/all.min.css" fetchpriority="auto" hreflang="en" lang="en" rel="stylesheet" type="text/css" />
-        </environment>
+        <link href="~/lib/font-awesome/css/all.min.css" fetchpriority="auto" hreflang="en" lang="en" rel="stylesheet" type="text/css" />
 
         @* preload *@
         @* n/a *@
 
         @* script defer *@
         <script charset="utf-8" crossorigin="anonymous" defer fetchpriority="high" lang="en" src="~/lib/bootstrap/js/bootstrap.bundle.min.js" type="text/javascript"></script>
-        <script charset="utf-8" crossorigin="anonymous" defer fetchpriority="low" lang="en" src="~/script/JavaScript/ct.js" type="text/javascript"></script>
+        <environment include="Development" exclude="Staging,Production">
+            <script charset="utf-8" crossorigin="anonymous" defer fetchpriority="low" lang="en" src="~/script/JavaScript/ct.js" type="text/javascript"></script>
+        </environment>
 
         @* prefetch / prerender *@
         @* n/a *@
