@@ -5,14 +5,14 @@ version: "3.9"
 services:
     db:
         image: mysql:latest
-        container_name: indicador_chile_db
+        container_name: indicadores_de_chile_db
         restart: always
         environment:
             MYSQL_ROOT_PASSWORD: example
 
     api:
         image: ${DOCKER_REGISTRY-}api
-        container_name: indicador_chile_api
+        container_name: indicadores_de_chile_api
         restart: always
         depends_on:
             - db
@@ -47,7 +47,7 @@ services:
     
     web:
         image: ${DOCKER_REGISTRY-}web
-        container_name: indicador_chile_web
+        container_name: indicadores_de_chile_web
         restart: always
         depends_on:
             - api

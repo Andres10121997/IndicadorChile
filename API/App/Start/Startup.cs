@@ -7,7 +7,6 @@ using Microsoft.OpenApi;
 using System;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
-using System.Threading.Tasks;
 
 namespace API.App.Start
 {
@@ -31,8 +30,6 @@ namespace API.App.Start
 
             return app;
         }
-
-        public static async Task<WebApplication> InitAppAsync(string[] args) => await Task.Run<WebApplication>(function: () => InitApp(args: args));
         #endregion
 
 
@@ -51,12 +48,6 @@ namespace API.App.Start
                 );
             
             Builder.Services.AddEndpointsApiExplorer();
-
-            Builder.Services.AddStackExchangeRedisCache(options =>
-            {
-                options.Configuration = "redis:6379"; // redis is the container name of the redis service. 6379 is the default port
-                options.InstanceName = "SampleInstance";
-            });
 
             // Limitar peticiones por IP.
             // https://www.youtube.com/shorts/EoJl5wgE5UQ

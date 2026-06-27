@@ -11,7 +11,7 @@ namespace API.App.Start
             WebApplication App;
             #endregion
 
-            App = await Startup.InitAppAsync(args: args);
+            App = Startup.InitApp(args: args);
 
             await App.RunAsync();
         }
