@@ -124,7 +124,10 @@ namespace API.App.Context.Tool
                                                replacement: ""),
                               result: out byte day))
             {
-                Set(CellMatches: CellMatches, Day: day);
+                Set(
+                    CellMatches: CellMatches,
+                    Day: day
+                );
             }
         }
 
@@ -157,9 +160,9 @@ namespace API.App.Context.Tool
                     );
 
                 switch (T.TryParse(s: value,
-                                      style: NumberStyles.Number,
-                                      provider: CultureInfo.InvariantCulture,
-                                      result: out var currencyValue))
+                                   style: NumberStyles.Number,
+                                   provider: CultureInfo.InvariantCulture,
+                                   result: out var currencyValue))
                 {
                     case true:
                         values[i - 1] = currencyValue;
