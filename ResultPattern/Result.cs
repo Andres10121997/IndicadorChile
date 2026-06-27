@@ -64,12 +64,20 @@ namespace ResultPattern
 
         public static Result<TValue> Success(TValue Value)
         {
-            return new Result<TValue>(IsSuccess: true, Value: Value, Error: default!);
+            return new Result<TValue>(
+                IsSuccess: true,
+                Value: Value,
+                Error: default!
+            );
         }
 
         public static Result<TValue> Failure(ResultErrorDto Error)
         {
-            return new Result<TValue>(IsSuccess: false, Value: default!, Error: Error);
+            return new Result<TValue>(
+                IsSuccess: false,
+                Value: default!,
+                Error: Error
+            );
         }
     }
 }
