@@ -20,3 +20,6 @@ Qué cosas necesitas para instalar el software y cómo instalarlas:
 # Patron(es) de Diseño
 ## Result Pattern
 El Patrón Result es un patrón de diseño que se utiliza para representar el resultado de una operación. Hace explícita la intención de gestionar el éxito o el fracaso, reemplazando mecanismos ambiguos de manejo de errores como el lanzamiento de excepciones.
+
+## Licencia
+El proyecto Indicadores Chile es un software de código abierto con licencia `GNU General Public License v2.0`
