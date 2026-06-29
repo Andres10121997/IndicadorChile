@@ -1,6 +1,8 @@
 # Indicadores Chile
 
-Esta aplicación web API entrega datos sobre cuanto valen cierta(s) divisa(s) o unidad(es) de cuenta en pesos chilenos en días determinados.
+Este proyecto tiene 2 aplicaciones:
+1. **<ins>Aplicación API</ins>:** Cuyo propósito es obtener y enviar distintas divisas de Chile.
+2. **<ins>Aplicación web</ins>:** Cuyo propósito es mostrar las divisas obtenidas por la API.
 
 ## Comenzando
 
