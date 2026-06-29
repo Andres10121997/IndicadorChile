@@ -46,6 +46,7 @@ namespace Web.App.Start
             Application.UseStaticFiles();
             Application.MapStaticAssets();
 
+            Application.MapRazorPages();
             Application.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"
@@ -54,7 +55,10 @@ namespace Web.App.Start
 
         private static void ConfigureService(WebApplicationBuilder Builder)
         {
-            // Add services to the container.
+            // 1. Agregar los servicios para Razor Pages
+            Builder.Services.AddRazorPages();
+
+            // 2. Agregar los servicios para MVC (Controladores con Vistas, APIs, etc.)
             Builder.Services.AddControllersWithViews();
         }
         #endregion
