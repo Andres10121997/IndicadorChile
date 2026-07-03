@@ -1,6 +1,7 @@
 ﻿@page
 @model Web.Areas.Currency.Pages.IndicatorModel
 @{
+    const string formID = "SearchForm";
 }
 <h2>
     Indicador
@@ -8,20 +9,96 @@
 
 <hr />
 
-<table class="table">
-    <thead>
-        <tr>
-            <th scope="col">
-                #
-            </th>
+<form autocomplete="off" id="@formID" method="get" name="@formID">
+    <fieldset form="@formID">
+        <legend class="fs-1 fw-bold text-capitalize text-center text-decoration-underline">
+            Buscar divisa
+        </legend>
 
-            <th scope="col">
-                Divisa
-            </th>
-        </tr>
-    </thead>
+        <div class="row">
+            <!-- CurrencyType -->
+            <div class="col-md-12">
+                <div class="input-group input-group-sm mb-3">
+                    @Html.LabelFor(
+                        expression: model => model.SearchFilter.CurrencyType,
+                        htmlAttributes: new
+                        {
+                            @class = "input-group-text"
+                        }
+                    )
 
-    <tbody>
+                    @Html.DropDownListFor(
+                        expression: model => model.SearchFilter.CurrencyType,
+                        selectList: Html.GetEnumSelectList<Enums.currencyTypeEnum>(),
+                        htmlAttributes: new
+                        {
+                            @class = "form-select"
+                        }
+                    )
+                </div>
 
-    </tbody>
-</table>
+                @Html.ValidationMessageFor(
+                    expression: model => model.SearchFilter.CurrencyType
+                )
+            </div>
+
+            <!-- Year -->
+            <div class="col-md-6">
+                <div class="input-group input-group-sm mb-3">
+                    @Html.LabelFor(
+                        expression: model => model.SearchFilter.Year,
+                        htmlAttributes: new
+                        {
+                            @class = "input-group-text"
+                        }
+                    )
+
+                    @Html.EditorFor(
+                        expression: model => model.SearchFilter.Year,
+                        additionalViewData: new
+                        {
+                            htmlAttributes = new
+                            {
+                                @autocomplete = "off",
+                                @class = "form-control text-center"
+                            }
+                        }
+                    )
+                </div>
+
+                @Html.ValidationMessageFor(
+                    expression: model => model.SearchFilter.Year
+                )
+            </div>
+
+            <!-- Month -->
+            <div class="col-md-6">
+                <div class="input-group input-group-sm mb-3">
+                    @Html.LabelFor(
+                        expression: model => model.SearchFilter.Month,
+                        htmlAttributes: new
+                        {
+                            @class = "input-group-text"
+                        }
+                    )
+
+                    @Html.EditorFor(
+                        expression: model => model.SearchFilter.Month,
+                        additionalViewData: new
+                        {
+                            htmlAttributes = new
+                            {
+                                @autocomplete = "off",
+                                @class = "form-control text-center"
+                            }
+                        }
+                    )
+                </div>
+
+                @Html.ValidationMessageFor(
+                    expression: model => model.SearchFilter.Month
+                )
+            </div>
+        </div>
+    </fieldset>
+</form>

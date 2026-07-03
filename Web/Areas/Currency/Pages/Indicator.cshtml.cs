@@ -1,11 +1,13 @@
 using DTO.Currency;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using Models;
 
 namespace Web.Areas.Currency.Pages
 {
     public class IndicatorModel : PageModel
     {
-        #region Variables
+        #region Objects
+        private SearchFilterModel searchFilter;
         private CurrencyDto<float> currency;
         #endregion
 
@@ -19,6 +21,12 @@ namespace Web.Areas.Currency.Pages
 
 
         #region Field
+        public SearchFilterModel SearchFilter
+        {
+            get => this.searchFilter;
+            set => this.searchFilter = value;
+        }
+        
         public CurrencyDto<float> Currency
         {
             get => this.currency;
