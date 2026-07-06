@@ -17,12 +17,18 @@ namespace API.App.Context.Tool
         private static string htmlContent;
         #endregion
 
+        #region Objects
+        private static Result<CurrencyDto<T>[]> currenciesResult;
+        #endregion
+
 
 
         #region Constructor Method
         static Value()
         {
             htmlContent = string.Empty;
+
+            currenciesResult = default!;
         }
         #endregion
 
@@ -126,40 +132,40 @@ namespace API.App.Context.Tool
         private static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(CurrencyInfoDto CurrencyInfo,
                                                                         SearchFilterModel SearchFilter)
         {
-            var currencies = await CurrenciesAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter);
+            currenciesResult = await CurrenciesAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter);
 
-            if (!currencies.IsSuccess)
+            if (!currenciesResult.IsSuccess)
             {
-                return Result<CurrencyDto<T>[]>.Failure(currencies.Error);
+                return Result<CurrencyDto<T>[]>.Failure(currenciesResult.Error);
             }
 
-            return Result<CurrencyDto<T>[]>.Success(Value: currencies.Value);
+            return Result<CurrencyDto<T>[]>.Success(Value: currenciesResult.Value);
         }
 
         private static async Task<Result<CurrencyDto<T>[]>> MonthlyAsync(CurrencyInfoDto CurrencyInfo,
                                                                          SearchFilterModel SearchFilter)
         {
-            var currencies = await CurrenciesAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter);
+            currenciesResult = await CurrenciesAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter);
 
-            if (!currencies.IsSuccess)
+            if (!currenciesResult.IsSuccess)
             {
                 return Result<CurrencyDto<T>[]>.Failure(
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Value<T>),
                         MethodName = nameof(MonthlyAsync),
-                        VariableName = nameof(currencies.IsSuccess),
-                        Description = $"La variable ${nameof(currencies.IsSuccess)} no puede ser ${false}",
+                        VariableName = nameof(currenciesResult.IsSuccess),
+                        Description = $"La variable ${nameof(currenciesResult.IsSuccess)} no puede ser ${false}",
                         OtherErrors = new[]
                         {
-                            currencies.Error
+                            currenciesResult.Error
                         }
                     }
                 );
             }
 
             return Result<CurrencyDto<T>[]>.Success(
-                Value: currencies.Value
+                Value: currenciesResult.Value
                     .AsParallel()
                     .Where(predicate: Model => Model.Date.Year == SearchFilter.Year
                                                &&
