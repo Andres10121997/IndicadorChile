@@ -93,11 +93,36 @@ namespace API.App.Context.Tool
             );
         }
 
+        internal static async Task<Result<CurrencyDto<T>[]>> GetAsync(string HtmlContentAsync,
+                                                                      CurrencyInfoDto CurrencyInfo,
+                                                                      SearchFilterModel SearchFilter)
+        {
+            #region Objects
+            Result<CurrencyDto<T>[]> currenciesResult;
+            #endregion
+
+            switch (SearchFilter.Month.HasValue)
+            {
+                case true:
+                    currenciesResult = await MonthlyAsync(HtmlContentAsync: HtmlContentAsync,
+                                                          CurrencyInfo: CurrencyInfo,
+                                                          SearchFilter: SearchFilter);
+                    break;
+                case false:
+                    currenciesResult = await AnnualAsync(HtmlContentAsync: HtmlContentAsync,
+                                                         CurrencyInfo: CurrencyInfo,
+                                                         SearchFilter: SearchFilter);
+                    break;
+            }
+
+            return currenciesResult;
+        }
 
 
-        internal static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(CurrencyInfoDto CurrencyInfo,
-                                                                         SearchFilterModel SearchFilter,
-                                                                         string HtmlContentAsync)
+
+        private static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(string HtmlContentAsync,
+                                                                        CurrencyInfoDto CurrencyInfo,
+                                                                        SearchFilterModel SearchFilter)
         {
             var currencies = await CurrenciesAsync(
                 HtmlContentAsync,
@@ -113,9 +138,9 @@ namespace API.App.Context.Tool
             return Result<CurrencyDto<T>[]>.Success(Value: currencies.Value);
         }
 
-        internal static async Task<Result<CurrencyDto<T>[]>> MonthlyAsync(CurrencyInfoDto CurrencyInfo,
-                                                                          SearchFilterModel SearchFilter,
-                                                                          string HtmlContentAsync)
+        private static async Task<Result<CurrencyDto<T>[]>> MonthlyAsync(string HtmlContentAsync,
+                                                                         CurrencyInfoDto CurrencyInfo,
+                                                                         SearchFilterModel SearchFilter)
         {
             var currencies = await CurrenciesAsync(
                 HtmlContentAsync,

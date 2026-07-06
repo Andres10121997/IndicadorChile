@@ -55,23 +55,11 @@ namespace API.App.Context
             Result<CurrencyDto<T>[]> currenciesResult;
             #endregion
 
-            switch (this.SearchFilter.Month.HasValue)
-            {
-                case true:
-                    currenciesResult = await Value<T>.MonthlyAsync(
-                        CurrencyInfo: this.CurrencyInfo,
-                        SearchFilter: this.SearchFilter,
-                        HtmlContentAsync: await this.GetHtmlContentAsync()
-                    );
-                    break;
-                case false:
-                    currenciesResult = await Value<T>.AnnualAsync(
-                        CurrencyInfo: this.CurrencyInfo,
-                        SearchFilter: this.SearchFilter,
-                        HtmlContentAsync: await this.GetHtmlContentAsync()
-                    );
-                    break;
-            }
+            currenciesResult = await Value<T>.GetAsync(
+                HtmlContentAsync: await GetHtmlContentAsync(),
+                CurrencyInfo: CurrencyInfo,
+                SearchFilter: SearchFilter
+            );
 
             if (!currenciesResult.IsSuccess)
             {
