@@ -97,6 +97,19 @@ namespace API.App.Context.Tool
 
             tableHtml = tableMatchResult.Value.Groups[1].Value;
 
+            if (string.IsNullOrWhiteSpace(value: tableHtml))
+            {
+                return Result<string>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Table),
+                        MethodName = nameof(GetHtml),
+                        VariableName = nameof(tableHtml),
+                        Description = $"La variable {nameof(tableHtml)} no puede ser {null}, {nameof(string.Empty)} o 'White Space'"
+                    }
+                );
+            }
+
             return Result<string>.Success(Value: tableHtml);
         }
 
