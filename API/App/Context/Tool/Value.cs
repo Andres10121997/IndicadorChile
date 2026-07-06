@@ -22,9 +22,9 @@ namespace API.App.Context.Tool
 
 
 
-        private static async Task<Result<CurrencyDto<T>[]>> CurrenciesAsync(CurrencyInfoDto CurrencyInfo,
-                                                                            SearchFilterModel SearchFilter,
-                                                                            string HtmlContentAsync)
+        private static async Task<Result<CurrencyDto<T>[]>> CurrenciesAsync(string HtmlContentAsync,
+                                                                            CurrencyInfoDto CurrencyInfo,
+                                                                            SearchFilterModel SearchFilter)
         {
             #region Objects
             Result<CurrencyDto<T>[]> currencies;
@@ -99,12 +99,10 @@ namespace API.App.Context.Tool
                                                                          SearchFilterModel SearchFilter,
                                                                          string HtmlContentAsync)
         {
-            Result<CurrencyDto<T>[]> currencies;
-
-            currencies = await CurrenciesAsync(
+            var currencies = await CurrenciesAsync(
+                HtmlContentAsync,
                 CurrencyInfo,
-                SearchFilter,
-                HtmlContentAsync
+                SearchFilter
             );
 
             if (!currencies.IsSuccess)
@@ -119,92 +117,37 @@ namespace API.App.Context.Tool
                                                                           SearchFilterModel SearchFilter,
                                                                           string HtmlContentAsync)
         {
-            #region Objects
-            Result<CurrencyDto<T>[]> currencyResult;
-            #endregion
+            var currencies = await CurrenciesAsync(
+                HtmlContentAsync,
+                CurrencyInfo,
+                SearchFilter
+            );
 
-            currencyResult = await AnnualAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter, HtmlContentAsync: HtmlContentAsync);
-
-            if (!currencyResult.IsSuccess)
+            if (!currencies.IsSuccess)
             {
                 return Result<CurrencyDto<T>[]>.Failure(
                     new ResultErrorDto()
                     {
                         ClassName = nameof(Value<T>),
                         MethodName = nameof(MonthlyAsync),
-                        VariableName = nameof(currencyResult.IsSuccess),
-                        Description = $"La variable ${nameof(currencyResult.IsSuccess)} no puede ser ${false}",
+                        VariableName = nameof(currencies.IsSuccess),
+                        Description = $"La variable ${nameof(currencies.IsSuccess)} no puede ser ${false}",
                         OtherErrors = new[]
                         {
-                            currencyResult.Error
+                            currencies.Error
                         }
                     }
                 );
             }
 
-             VarGlobal<T>.Currencies = currencyResult.Value
-                .AsParallel()
-                .Where(predicate: Model => Model.Date.Year == SearchFilter.Year
-                                           &&
-                                           Model.Date.Month == SearchFilter.Month)
-                .ToArray<CurrencyDto<T>>();
-
-            return Result<CurrencyDto<T>[]>.Success(Value: VarGlobal<T>.Currencies);
-        }
-
-        internal static async Task<Result<CurrencyDto<T>>> DailyAsync(CurrencyInfoDto CurrencyInfo,
-                                                                      SearchFilterModel SearchFilter,
-                                                                      string HtmlContentAsync,
-                                                                      DateOnly Date)
-        {
-            #region Objects
-            CurrencyDto<T>? currency;
-            Result<CurrencyDto<T>[]> currencyResult;
-            #endregion
-
-            currencyResult = await AnnualAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter, HtmlContentAsync: HtmlContentAsync);
-
-            if (!currencyResult.IsSuccess)
-            {
-                return Result<CurrencyDto<T>>.Failure(
-                    Error: new ResultErrorDto()
-                    {
-                        ClassName = nameof(Value<T>),
-                        MethodName = nameof(DailyAsync),
-                        VariableName = nameof(currencyResult.IsSuccess),
-                        Description = $"La variable {nameof(currencyResult.IsSuccess)} no puede ser {false}",
-                        OtherErrors = new[]
-                        {
-                            currencyResult.Error
-                        }
-                    }
-                );
-            }
-
-            // Buscar valor exacto
-            currency = currencyResult.Value
-                       .FirstOrDefault(predicate: model => model.Date == Date)
-                       ??
-                       // Si no se encuentra, buscar el valor más reciente antes de la fecha (mensual)
-                       currencyResult.Value
-                       .Where(predicate: Model => Model.Date < Date)
-                       .OrderByDescending(keySelector: Model => Model.Date)
-                       .FirstOrDefault();
-
-            if (currency == null)
-            {
-                return Result<CurrencyDto<T>>.Failure(
-                    new ResultErrorDto()
-                    {
-                        ClassName = nameof(Value<T>),
-                        MethodName = nameof(DailyAsync),
-                        VariableName = nameof(currency),
-                        Description = $"La variable {nameof(currency)} no puede ser ${null}."
-                    }
-                );
-            }
-
-            return Result<CurrencyDto<T>>.Success(Value: currency);
+            return Result<CurrencyDto<T>[]>.Success(
+                Value: currencies.Value
+                    .AsParallel()
+                    .Where(predicate: Model => Model.Date.Year == SearchFilter.Year
+                                               &&
+                                               Model.Date.Month == SearchFilter.Month)
+                    .ToArray<CurrencyDto<T>>()
+            );
         }
     }
 }

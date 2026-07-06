@@ -80,10 +80,10 @@ namespace API.App.Information
                 ConsultationDateTime = DateTime.Now,
                 Year = this.searchFilter.Year,
                 MonthName = this.MonthName(),
-                Currencies = VarGlobal<T>.Currencies
+                Currencies = getResult.Value
             };
 
-            return Result<CurrencyHeaderDto<T>>.Success(currencyHeader);
+            return Result<CurrencyHeaderDto<T>>.Success(Value: currencyHeader);
         }
 
         private async Task<Result<CurrencyDto<T>[]>> GetAsync()
