@@ -38,10 +38,6 @@ namespace API.App.Context.Tool
                                                                       CurrencyInfoDto CurrencyInfo,
                                                                       SearchFilterModel SearchFilter)
         {
-            #region Objects
-            Result<CurrencyDto<T>[]> currenciesResult;
-            #endregion
-
             htmlContent = HtmlContent;
 
             switch (SearchFilter.Month.HasValue)
@@ -63,7 +59,6 @@ namespace API.App.Context.Tool
                                                                             SearchFilterModel SearchFilter)
         {
             #region Objects
-            Result<CurrencyDto<T>[]> currencies;
             Result<Dictionary<byte, T[]>> valuesResult;
             #endregion
 
@@ -95,27 +90,27 @@ namespace API.App.Context.Tool
                 );
             }
 
-            currencies = await new Transform<T>(SearchFilter: SearchFilter).ToCurrencyModelsAsync(CurrencyData: valuesResult.Value);
+            currenciesResult = await new Transform<T>(SearchFilter: SearchFilter).ToCurrencyModelsAsync(CurrencyData: valuesResult.Value);
 
-            if (!currencies.IsSuccess)
+            if (!currenciesResult.IsSuccess)
             {
                 return Result<CurrencyDto<T>[]>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Value<T>),
                         MethodName = nameof(CurrenciesAsync),
-                        VariableName = nameof(currencies.IsSuccess),
-                        Description = $"La variable {currencies.IsSuccess} es {false}",
+                        VariableName = nameof(currenciesResult.IsSuccess),
+                        Description = $"La variable {currenciesResult.IsSuccess} es {false}",
                         OtherErrors = new[]
                         {
-                            currencies.Error
+                            currenciesResult.Error
                         }
                     }
                 );
             }
 
             return Result<CurrencyDto<T>[]>.Success(
-                Value: currencies.Value
+                Value: currenciesResult.Value
                     .AsParallel()
                     .Where(predicate: Model => !T.IsNaN(value: Model.Currency)
                                                &&
