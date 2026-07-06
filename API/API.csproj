@@ -46,7 +46,7 @@
   <ItemGroup>
     <ProjectReference Include="..\DTO\DTO.csproj" />
     <ProjectReference Include="..\Models\Models.csproj" />
-    <ProjectReference Include="..\ResultPattern\ResultPattern.csproj" />
+    <ProjectReference Include="..\ResultPattern\Pattern.csproj" />
   </ItemGroup>
 
 </Project>
