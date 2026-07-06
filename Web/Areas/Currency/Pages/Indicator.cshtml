@@ -102,3 +102,48 @@
         </div>
     </fieldset>
 </form>
+
+<table class="table table-primary table-striped">
+    <thead>
+        <tr>
+            <th scope="col">
+                #
+            </th>
+
+            <th scope="col">
+                Fecha
+            </th>
+
+            <th scope="col">
+                Día
+            </th>
+
+            <th scope="col">
+                Divisa
+            </th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model.CurrencyHeader.Currencies)
+        {
+            <tr>
+                <th scope="row">
+                    @item.ID
+                </th>
+
+                <td>
+                    @item.Date
+                </td>
+
+                <td>
+                    @item.WeekdayName
+                </td>
+
+                <td>
+                    @item.Currency
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

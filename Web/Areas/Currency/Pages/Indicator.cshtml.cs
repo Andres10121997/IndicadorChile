@@ -8,7 +8,7 @@ namespace Web.Areas.Currency.Pages
     {
         #region Objects
         private SearchFilterModel searchFilter;
-        private CurrencyDto<float> currency;
+        private CurrencyHeaderDto<float> currencyHeader;
         #endregion
 
 
@@ -27,9 +27,9 @@ namespace Web.Areas.Currency.Pages
             set => this.searchFilter = value;
         }
         
-        public CurrencyDto<float> Currency
+        public CurrencyHeaderDto<float> CurrencyHeader
         {
-            get => this.currency;
+            get => this.currencyHeader;
         }
         #endregion
     }
