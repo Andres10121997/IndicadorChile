@@ -22,13 +22,13 @@ namespace API.App.Context.Tool
 
 
 
-        internal static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(CurrencyInfoDto CurrencyInfo,
-                                                                         SearchFilterModel SearchFilter,
-                                                                         string HtmlContentAsync)
+        private static async Task<Result<CurrencyDto<T>[]>> CurrenciesAsync(CurrencyInfoDto CurrencyInfo,
+                                                                            SearchFilterModel SearchFilter,
+                                                                            string HtmlContentAsync)
         {
             #region Objects
-            Result<CurrencyDto<T>[]> toCurrencyModelsResult;
-            Result <Dictionary<byte, T[]>> valuesResult;
+            Result<CurrencyDto<T>[]> currencies;
+            Result<Dictionary<byte, T[]>> valuesResult;
             #endregion
 
             valuesResult = await Extract<T>.ValuesAsync(
@@ -48,7 +48,7 @@ namespace API.App.Context.Tool
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Value<T>),
-                        MethodName = nameof(AnnualAsync),
+                        MethodName = nameof(CurrenciesAsync),
                         VariableName = nameof(valuesResult.IsSuccess),
                         Description = $"La variable {valuesResult.IsSuccess} es {false}",
                         OtherErrors = new[]
@@ -59,38 +59,60 @@ namespace API.App.Context.Tool
                 );
             }
 
-            toCurrencyModelsResult = await new Transform<T>(SearchFilter: SearchFilter).ToCurrencyModelsAsync(CurrencyData: valuesResult.Value);
+            currencies = await new Transform<T>(SearchFilter: SearchFilter).ToCurrencyModelsAsync(CurrencyData: valuesResult.Value);
 
-            if (!toCurrencyModelsResult.IsSuccess)
+            if (!currencies.IsSuccess)
             {
                 return Result<CurrencyDto<T>[]>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Value<T>),
-                        MethodName = nameof(AnnualAsync),
-                        VariableName = nameof(toCurrencyModelsResult.IsSuccess),
-                        Description = $"La variable {toCurrencyModelsResult.IsSuccess} es {false}",
+                        MethodName = nameof(CurrenciesAsync),
+                        VariableName = nameof(currencies.IsSuccess),
+                        Description = $"La variable {currencies.IsSuccess} es {false}",
                         OtherErrors = new[]
                         {
-                            toCurrencyModelsResult.Error
+                            currencies.Error
                         }
                     }
                 );
             }
 
-            VarGlobal<T>.Currencies = toCurrencyModelsResult.Value
-                .AsParallel()
-                .Where(predicate: Model => !T.IsNaN(value: Model.Currency)
-                                           &&
-                                           !T.IsZero(value: Model.Currency)
-                                           &&
-                                           !T.IsInfinity(value: Model.Currency)
-                                           &&
-                                           !T.IsNegative(value: Model.Currency))
-                .OrderBy<CurrencyDto<T>, DateOnly>(keySelector: Model => Model.Date)
-                .ToArray<CurrencyDto<T>>();
+            return Result<CurrencyDto<T>[]>.Success(
+                Value: currencies.Value
+                    .AsParallel()
+                    .Where(predicate: Model => !T.IsNaN(value: Model.Currency)
+                                               &&
+                                               !T.IsZero(value: Model.Currency)
+                                               &&
+                                               !T.IsInfinity(value: Model.Currency)
+                                               &&
+                                               !T.IsNegative(value: Model.Currency))
+                    .OrderBy<CurrencyDto<T>, DateOnly>(keySelector: Model => Model.Date)
+                    .ToArray<CurrencyDto<T>>()
+            );
+        }
 
-            return Result<CurrencyDto<T>[]>.Success(Value: VarGlobal<T>.Currencies);
+
+
+        internal static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(CurrencyInfoDto CurrencyInfo,
+                                                                         SearchFilterModel SearchFilter,
+                                                                         string HtmlContentAsync)
+        {
+            Result<CurrencyDto<T>[]> currencies;
+
+            currencies = await CurrenciesAsync(
+                CurrencyInfo,
+                SearchFilter,
+                HtmlContentAsync
+            );
+
+            if (!currencies.IsSuccess)
+            {
+                return Result<CurrencyDto<T>[]>.Failure(currencies.Error);
+            }
+
+            return Result<CurrencyDto<T>[]>.Success(Value: currencies.Value);
         }
 
         internal static async Task<Result<CurrencyDto<T>[]>> MonthlyAsync(CurrencyInfoDto CurrencyInfo,
