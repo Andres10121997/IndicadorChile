@@ -76,7 +76,7 @@ namespace API.App.Context.Tool
             if (!valuesResult.IsSuccess)
             {
                 return Result<CurrencyDto<T>[]>.Failure(
-                    Error: new ResultErrorDto()
+                    Error: new ResultErrorDto
                     {
                         ClassName = nameof(Value<T>),
                         MethodName = nameof(CurrenciesAsync),
@@ -95,7 +95,7 @@ namespace API.App.Context.Tool
             if (!currenciesResult.IsSuccess)
             {
                 return Result<CurrencyDto<T>[]>.Failure(
-                    Error: new ResultErrorDto()
+                    Error: new ResultErrorDto
                     {
                         ClassName = nameof(Value<T>),
                         MethodName = nameof(CurrenciesAsync),
@@ -127,11 +127,22 @@ namespace API.App.Context.Tool
         private static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(CurrencyInfoDto CurrencyInfo,
                                                                         SearchFilterModel SearchFilter)
         {
-            currenciesResult = await CurrenciesAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter);
+            currenciesResult = await CurrenciesAsync(
+                CurrencyInfo: CurrencyInfo,
+                SearchFilter: SearchFilter
+            );
 
             if (!currenciesResult.IsSuccess)
             {
-                return Result<CurrencyDto<T>[]>.Failure(currenciesResult.Error);
+                return Result<CurrencyDto<T>[]>.Failure(
+                    Error: new ResultErrorDto
+                    {
+                        ClassName = nameof(Value<T>),
+                        MethodName = nameof(AnnualAsync),
+                        VariableName = nameof(currenciesResult.IsSuccess),
+                        Description = $"La variable {nameof(currenciesResult.IsSuccess)} no puede ser {false}."
+                    }
+                );
             }
 
             return Result<CurrencyDto<T>[]>.Success(Value: currenciesResult.Value);
@@ -140,12 +151,15 @@ namespace API.App.Context.Tool
         private static async Task<Result<CurrencyDto<T>[]>> MonthlyAsync(CurrencyInfoDto CurrencyInfo,
                                                                          SearchFilterModel SearchFilter)
         {
-            currenciesResult = await CurrenciesAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter);
+            currenciesResult = await CurrenciesAsync(
+                CurrencyInfo: CurrencyInfo,
+                SearchFilter: SearchFilter
+            );
 
             if (!currenciesResult.IsSuccess)
             {
                 return Result<CurrencyDto<T>[]>.Failure(
-                    new ResultErrorDto()
+                    new ResultErrorDto
                     {
                         ClassName = nameof(Value<T>),
                         MethodName = nameof(MonthlyAsync),
