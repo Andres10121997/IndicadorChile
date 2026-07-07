@@ -46,7 +46,8 @@ namespace Web.App.Start
             Application.UseStaticFiles();
             Application.MapStaticAssets();
 
-            Application.MapRazorPages();
+            Application.MapRazorPages()
+                .WithStaticAssets();
             Application.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}"
