@@ -21,9 +21,12 @@ namespace API.App.Context.Tool
 
         internal static async Task<Result<Dictionary<byte, T[]>>> ValuesAsync(HtmlDto Html)
         {
-            #region Objects
+            #region Collections
             Dictionary<byte, T[]> data;
-            Result <MatchCollection> rowsResult;
+            #endregion
+
+            #region Objects
+            Result<MatchCollection> rowsResult;
             #endregion
 
             rowsResult = Table.GetRows(Html: Html);
