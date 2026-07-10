@@ -7,7 +7,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace API.App.Context.Tool
+namespace Context.Tool
 {
     internal class Transform<T>
         where T : struct, IFloatingPointConstants<T>
@@ -93,7 +93,7 @@ namespace API.App.Context.Tool
                     }
                 }
             );
-            
+
             return modelList.ToArray<TModel>();
         }
 

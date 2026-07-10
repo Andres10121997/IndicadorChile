@@ -1,4 +1,4 @@
-﻿using API.App.Context.Tool;
+﻿using Context.Tool;
 using DTO.Currency;
 using Models;
 using ResultPattern;
@@ -6,7 +6,7 @@ using System.Net.Http;
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace API.App.Context
+namespace Context
 {
     public class ContextBase<T>
         where T : struct, IFloatingPointConstants<T>
@@ -38,7 +38,7 @@ namespace API.App.Context
         {
             get => this.currencyInfo;
         }
-        
+
         protected SearchFilterModel SearchFilter
         {
             get => this.searchFilter;

@@ -8,7 +8,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace API.App.Context.Tool
+namespace Context.Tool
 {
     internal static class Value<T>
         where T : struct, IFloatingPointConstants<T>

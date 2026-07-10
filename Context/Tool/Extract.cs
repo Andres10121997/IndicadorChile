@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace API.App.Context.Tool
+namespace Context.Tool
 {
     internal static class Extract<T>
         where T : struct, IFloatingPointConstants<T>
@@ -13,7 +13,7 @@ namespace API.App.Context.Tool
         #region Constructor Method
         static Extract()
         {
-            
+
         }
         #endregion
 

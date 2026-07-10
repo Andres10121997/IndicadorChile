@@ -2,7 +2,7 @@
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace API
+namespace Context
 {
     internal static class VarGlobal<T>
         where T : struct, IFloatingPointConstants<T>
@@ -10,7 +10,7 @@ namespace API
         #region Constructor Method
         static VarGlobal()
         {
-            
+
         }
         #endregion
 

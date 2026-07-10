@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace API.App.Context.Tool
+namespace Context.Tool
 {
     internal static class Data<T>
         where T : struct, IFloatingPointConstants<T>
@@ -81,7 +81,7 @@ namespace API.App.Context.Tool
                 return Result<MatchCollection>.Failure(
                     Error: new ResultErrorDto()
                     {
-                        ClassName = nameof(Extract<T>),
+                        ClassName = nameof(Data<T>),
                         MethodName = nameof(Cell),
                         VariableName = nameof(cellMatches.Count),
                         Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser inferior a 0."
@@ -94,7 +94,7 @@ namespace API.App.Context.Tool
                 return Result<MatchCollection>.Failure(
                     Error: new ResultErrorDto()
                     {
-                        ClassName = nameof(Extract<T>),
+                        ClassName = nameof(Data<T>),
                         MethodName = nameof(Cell),
                         VariableName = nameof(cellMatches.Count),
                         Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser 0."

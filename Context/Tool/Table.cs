@@ -2,14 +2,14 @@
 using ResultPattern;
 using System.Text.RegularExpressions;
 
-namespace API.App.Context.Tool
+namespace Context.Tool
 {
     internal static class Table
     {
         #region Constructor Method
         static Table()
         {
-            
+
         }
         #endregion
 
@@ -125,7 +125,7 @@ namespace API.App.Context.Tool
                 pattern: Html.Table.Pattern,
                 options: RegexOptions.Singleline
             );
-            
+
             if (tableMatch.Success == false)
             {
                 return Result<Match>.Failure(

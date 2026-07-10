@@ -1,0 +1,48 @@
+﻿using DTO.Currency;
+using Models;
+using System;
+using System.Linq;
+
+namespace Context
+{
+    internal static class Validate
+    {
+        #region Range
+        internal static bool DateRange(SearchFilterModel SearchFilter, byte Day, byte Month)
+        {
+            #region Collections
+            bool[] range;
+            #endregion
+
+            range = new bool[2]
+            {
+                Day > 0,
+                Day <= DateTime.DaysInMonth(year: SearchFilter.Year, month: Month)
+            };
+
+            return range.All(predicate: value => value == true);
+        }
+
+        internal static bool YearRange(SearchFilterModel SearchFilter, CurrencyInfoDto CurrencyInfo)
+        {
+            #region Variables
+            bool validation;
+            #endregion
+
+            #region Collections
+            bool[] range;
+            #endregion
+
+            range = new bool[2]
+            {
+                SearchFilter.Year >= CurrencyInfo.StartDate.Year,
+                SearchFilter.Year <= CurrencyInfo.EndDate.Year
+            };
+
+            validation = range.All(predicate: value => value == true);
+
+            return validation;
+        }
+        #endregion
+    }
+}
