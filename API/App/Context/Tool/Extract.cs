@@ -22,8 +22,8 @@ namespace API.App.Context.Tool
         internal static async Task<Result<Dictionary<byte, T[]>>> ValuesAsync(HtmlDto Html)
         {
             #region Objects
-            Result<Dictionary<byte, T[]>> result;
-            Result<MatchCollection> rowsResult;
+            Dictionary<byte, T[]> data;
+            Result <MatchCollection> rowsResult;
             #endregion
 
             rowsResult = Table.GetRows(Html: Html);
@@ -45,35 +45,7 @@ namespace API.App.Context.Tool
                 );
             }
 
-            result = await OrganizeTheDataObtainedAsync(RowMatches: rowsResult.Value);
-
-            if (!result.IsSuccess)
-            {
-                return Result<Dictionary<byte, T[]>>.Failure(
-                    Error: new ResultErrorDto()
-                    {
-                        ClassName = nameof(Extract<T>),
-                        MethodName = nameof(ValuesAsync),
-                        VariableName = nameof(result.IsSuccess),
-                        Description = $"La variable {result.IsSuccess} no puede ser {false}.",
-                        OtherErrors = new[]
-                        {
-                            result.Error
-                        }
-                    }
-                );
-            }
-
-            return Result<Dictionary<byte, T[]>>.Success(Value: result.Value);
-        }
-
-        private static async Task<Result<Dictionary<byte, T[]>>> OrganizeTheDataObtainedAsync(MatchCollection RowMatches)
-        {
-            #region Collection
-            Dictionary<byte, T[]> data;
-            #endregion
-
-            data = await Data<T>.GetAsync(RowMatches: RowMatches);
+            data = await Data<T>.GetAsync(RowMatches: rowsResult.Value);
 
             if (data.Count == 0)
             {
@@ -81,7 +53,7 @@ namespace API.App.Context.Tool
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Extract<T>),
-                        MethodName = nameof(OrganizeTheDataObtainedAsync),
+                        MethodName = nameof(ValuesAsync),
                         VariableName = nameof(data.Count),
                         Description = $"La cantidad de datos de la variable {data.Count} no puede ser 0."
                     }
