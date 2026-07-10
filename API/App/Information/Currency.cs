@@ -37,7 +37,6 @@ namespace API.App.Information
             #endregion
 
             #region Objects
-            Result<CurrencyDto<T>[]> getResult;
             CurrencyHeaderDto<T> currencyHeader;
             #endregion
 
@@ -56,31 +55,12 @@ namespace API.App.Information
                 );
             }
 
-            getResult = await GetAsync();
-
-            if (!getResult.IsSuccess)
-            {
-                return Result<CurrencyHeaderDto<T>>.Failure(
-                    Error: new ResultErrorDto()
-                    {
-                        ClassName = nameof(Currency<T>),
-                        MethodName = nameof(GetAsync),
-                        VariableName = nameof(getResult.IsSuccess),
-                        Description = $"La variable {nameof(getResult.IsSuccess)} no puede ser {false}",
-                        OtherErrors = new[]
-                        {
-                            getResult.Error
-                        }
-                    }
-                );
-            }
-
             currencyHeader = new CurrencyHeaderDto<T>
             {
                 ConsultationDateTime = DateTime.Now,
                 Year = this.searchFilter.Year,
                 MonthName = this.MonthName(),
-                Currencies = getResult.Value
+                Currencies = (await GetAsync()).Value
             };
 
             return Result<CurrencyHeaderDto<T>>.Success(Value: currencyHeader);

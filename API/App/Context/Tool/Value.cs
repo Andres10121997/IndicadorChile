@@ -50,7 +50,7 @@ namespace API.App.Context.Tool
                     break;
             }
 
-            return currenciesResult;
+            return Result<CurrencyDto<T>[]>.Success(Value: currenciesResult.Value);
         }
 
 
