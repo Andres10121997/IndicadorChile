@@ -147,44 +147,45 @@ namespace API.Controllers
         {
             try
             {
-                switch (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out CurrencyInfoDto[]? Values))
+                if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out CurrencyInfoDto[]? Values))
                 {
-                    case true:
-                        foreach (CurrencyInfoDto Value in Values)
+                    foreach (CurrencyInfoDto Value in Values)
+                    {
+                        #region Object
+                        Currency<float> currency;
+                        CurrencyInfoDto updatedValue;
+                        Result<CurrencyHeaderDto<float>> currencyResult;
+                        #endregion
+
+                        updatedValue = Value with
                         {
-                            #region Object
-                            Currency<float> currency;
-                            CurrencyInfoDto updatedValue;
-                            Result<CurrencyHeaderDto<float>> currencyResult;
-                            #endregion
+                            Url = Value.Url.Replace(
+                                oldValue: "{Year}",
+                                newValue: SearchFilter.Year.ToString()
+                            )
+                        };
 
-                            updatedValue = Value with
-                            {
-                                Url = Value.Url.Replace(
-                                    oldValue: "{Year}",
-                                    newValue: SearchFilter.Year.ToString()
-                                )
-                            };
+                        currency = new Currency<float>(
+                            CurrencyInfo: updatedValue,
+                            SearchFilter: SearchFilter
+                        );
 
-                            currency = new Currency<float>(
-                                CurrencyInfo: updatedValue,
-                                SearchFilter: SearchFilter
-                            );
+                        currencyResult = await currency.HeaderAsync();
 
-                            currencyResult = await currency.HeaderAsync();
-
-                            if (!currencyResult.IsSuccess)
-                            {
-                                this.logger.LogWarning(message: currencyResult.ToString());
-                                break;
-                            }
-
-                            return this.Ok(value: currencyResult.Value);
+                        if (!currencyResult.IsSuccess)
+                        {
+                            this.logger.LogWarning(message: currencyResult.ToString());
+                            break;
                         }
 
-                        return this.StatusCode(statusCode: StatusCodes.Status422UnprocessableEntity);
-                    case false:
-                        return this.NotFound();
+                        return this.Ok(value: currencyResult.Value);
+                    }
+
+                    return this.StatusCode(statusCode: StatusCodes.Status422UnprocessableEntity);
+                }
+                else
+                {
+                    return this.NotFound();
                 }
             }
             catch (Exception ex)
