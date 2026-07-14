@@ -130,17 +130,6 @@ namespace API.Controllers
         [
             HttpGet(
                 template: "[action]"
-            ),
-            ProducesResponseType(
-                type: typeof(CurrencyHeaderDto<float>),
-                statusCode: StatusCodes.Status200OK
-            ),
-            ProducesResponseType(
-                statusCode: StatusCodes.Status404NotFound
-            ),
-            ProducesResponseType(
-                type: typeof(Exception),
-                statusCode: StatusCodes.Status500InternalServerError
             )
         ]
         public async Task<ActionResult<CurrencyHeaderDto<float>>> GetCurrencyListAsync([FromQuery] SearchFilterModel SearchFilter)
