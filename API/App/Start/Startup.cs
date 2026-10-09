@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.OpenApi;
+using Scalar.AspNetCore;
 using System;
 using System.Text.Json.Serialization;
 using System.Threading.RateLimiting;
@@ -90,8 +91,8 @@ namespace API.App.Start
             // Configure the HTTP request pipeline.
             if (App.Environment.IsDevelopment())
             {
-                App.UseSwagger();
-                App.UseSwaggerUI();
+                App.MapSwagger("/openapi/{documentName}.json");
+                App.MapScalarApiReference();
             }
 
             App.UseRateLimiter();
