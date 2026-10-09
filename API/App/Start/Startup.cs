@@ -91,7 +91,7 @@ namespace API.App.Start
             // Configure the HTTP request pipeline.
             if (App.Environment.IsDevelopment())
             {
-                App.MapSwagger("/openapi/{documentName}.json");
+                App.MapSwagger(pattern: "/openapi/{documentName}.json");
                 App.MapScalarApiReference();
             }
 
