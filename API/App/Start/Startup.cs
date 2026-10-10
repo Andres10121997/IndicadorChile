@@ -78,9 +78,9 @@ namespace API.App.Start
                     name: "v1",
                     info: new OpenApiInfo
                     {
-                        Title = "Indicadores de Chile",
+                        Title = Environment.GetEnvironmentVariable(variable: "AppName"),
                         Version = "v1",
-                        Description = "Una API para obtener, principalmente, la lista de distintas \"divisas\", como la UF y el dólar.",
+                        Description = Environment.GetEnvironmentVariable(variable: "AppDescription")
                     }
                 );
             });

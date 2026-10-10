@@ -36,7 +36,7 @@ namespace API.Controllers
                                  Enums.currencyTypeEnum.USD,
                                  new CurrencyInfoDto[2]
                                  {
-                                     new CurrencyInfoDto
+                                     new CurrencyInfoDto()
                                      {
                                          Url = "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
                                          Table = new TableDto
@@ -52,7 +52,7 @@ namespace API.Controllers
                                              dateTime: DateTime.Now
                                          )
                                      },
-                                     new CurrencyInfoDto
+                                     new CurrencyInfoDto()
                                      {
                                          Url = "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm",
                                          Table = new TableDto
@@ -79,7 +79,7 @@ namespace API.Controllers
                                  Enums.currencyTypeEnum.UF,
                                  new CurrencyInfoDto[]
                                  {
-                                     new CurrencyInfoDto
+                                     new CurrencyInfoDto()
                                      {
                                          Url = "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
                                          Table = new TableDto
@@ -95,7 +95,7 @@ namespace API.Controllers
                                              dateTime: DateTime.Now
                                          )
                                      },
-                                     new CurrencyInfoDto
+                                     new CurrencyInfoDto()
                                      {
                                          Url = "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm",
                                          Table = new TableDto
