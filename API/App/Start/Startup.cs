@@ -3,7 +3,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.OpenApi;
 using Scalar.AspNetCore;
 using System;
 using System.Text.Json.Serialization;
@@ -70,20 +69,7 @@ namespace API.App.Start
                 }
             );
 
-            // Cierta información que se visualiza en la interfaz de usuario.
-            Builder.Services.AddSwaggerGen(options =>
-            {
-                // https://learn.microsoft.com/es-mx/aspnet/core/tutorials/getting-started-with-swashbuckle?view=aspnetcore-3.1&tabs=visual-studio
-                options.SwaggerDoc(
-                    name: "v1",
-                    info: new OpenApiInfo
-                    {
-                        Title = Environment.GetEnvironmentVariable(variable: "AppName"),
-                        Version = "v1",
-                        Description = Environment.GetEnvironmentVariable(variable: "AppDescription")
-                    }
-                );
-            });
+            Builder.Services.AddOpenApi();
         }
 
         private static void Configure(WebApplication App)
@@ -91,7 +77,7 @@ namespace API.App.Start
             // Configure the HTTP request pipeline.
             if (App.Environment.IsDevelopment())
             {
-                App.MapSwagger(pattern: "/openapi/{documentName}.json");
+                App.MapOpenApi();
                 App.MapScalarApiReference();
             }
 
@@ -103,9 +89,9 @@ namespace API.App.Start
             App.UseAuthorization();
 
             App.MapControllers()
-                .RequireRateLimiting(
-                    policyName: "Limiter"
-                );
+               .RequireRateLimiting(
+                   policyName: "Limiter"
+               );
         }
         #endregion
     }
