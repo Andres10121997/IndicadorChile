@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 
 namespace DTO.Currency
@@ -8,6 +9,13 @@ namespace DTO.Currency
     {
         #region Field
         public required Guid ID { get; init; }
+
+        [
+            DataType(
+                dataType: DataType.Date
+            ),
+            Required
+        ]
         public required DateOnly Date { get; init; }
         public required string WeekdayName { get; init; }
         public required T Currency { get; init; }

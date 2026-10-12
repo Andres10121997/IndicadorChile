@@ -35,7 +35,7 @@ services:
             - LC_ALL=es_CL.UTF-8
             # Aplicación
             - AppName=Indicadores de Chile (API)
-            - AppDescription=Una API para obtener, principalmente, la lista de distintas "divisas", como la UF y el dólar.
+            - AppDescription=API para obtener, principalmente, la lista de distintas "divisas", como la UF y el dólar.
         volumes:
             # Configuración del almacenamiento persistente
             - '/path/to/host/uptime/:/app/data'

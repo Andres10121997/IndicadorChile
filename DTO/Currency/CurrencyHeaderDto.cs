@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 
 namespace DTO.Currency
@@ -7,7 +8,17 @@ namespace DTO.Currency
         where T : struct, IFloatingPointConstants<T>
     {
         #region Field
+        [
+            DataType(
+                dataType: DataType.DateTime
+            ),
+            Required
+        ]
         public required DateTime ConsultationDateTime { get; init; }
+
+        [
+            Required
+        ]
         public required ushort Year { get; init; }
         public string? MonthName { get; init; }
         public required CurrencyDto<T>[] Currencies { get; init; }
