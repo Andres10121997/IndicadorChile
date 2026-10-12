@@ -55,9 +55,27 @@ namespace API.App.DTO.Currency
                 Order = 3,
                 Prompt = "Ingrese aquí el nombre del día de la semana.",
                 ShortName = "Día"
-            )
+            ),
+            Required
         ]
         public required string WeekdayName { get; init; }
+
+        [
+            DataType(
+                dataType: DataType.Custom
+            ),
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
+                Description = "",
+                GroupName = nameof(CurrencyDto<T>),
+                Name = "Divisa",
+                Order = 4,
+                Prompt = "Ingrese aquí la divisa.",
+                ShortName = "Divisa"
+            ),
+            Required
+        ]
         public required T Currency { get; init; }
         #endregion
     }
