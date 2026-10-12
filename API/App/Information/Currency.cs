@@ -1,6 +1,6 @@
 ﻿using API.App.Context;
 using API.App.DTO.Currency;
-using Models;
+using API.App.Models;
 using ResultPattern;
 using System;
 using System.Numerics;

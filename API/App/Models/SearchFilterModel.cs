@@ -1,9 +1,9 @@
-﻿using Models.Utils;
+﻿using API.App.Utils;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Models
+namespace API.App.Models
 {
     public sealed record SearchFilterModel : IValidatableObject
     {

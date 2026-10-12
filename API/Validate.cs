@@ -1,5 +1,5 @@
 ﻿using API.App.DTO.Currency;
-using Models;
+using API.App.Models;
 using System;
 using System.Linq;
 
@@ -8,7 +8,9 @@ namespace API
     internal static class Validate
     {
         #region Range
-        internal static bool DateRange(SearchFilterModel SearchFilter, byte Day, byte Month)
+        internal static bool DateRange(SearchFilterModel SearchFilter,
+                                       byte Day,
+                                       byte Month)
         {
             #region Collections
             bool[] range;
@@ -23,7 +25,8 @@ namespace API
             return range.All(predicate: value => value == true);
         }
 
-        internal static bool YearRange(SearchFilterModel SearchFilter, CurrencyInfoDto CurrencyInfo)
+        internal static bool YearRange(SearchFilterModel SearchFilter,
+                                       CurrencyInfoDto CurrencyInfo)
         {
             #region Variables
             bool validation;

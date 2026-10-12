@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace Models.Utils
+namespace API.App.Utils
 {
     public class Enums
     {

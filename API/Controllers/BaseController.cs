@@ -1,7 +1,7 @@
 ﻿using API.App.DTO.Currency;
+using API.App.Utils;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Models.Utils;
 using System;
 using System.Collections.Generic;
 

@@ -1,11 +1,11 @@
 ﻿using API.App.DTO.Currency;
 using API.App.DTO.HTML;
 using API.App.Information;
+using API.App.Models;
+using API.App.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Models;
-using Models.Utils;
 using ResultPattern;
 using System;
 using System.Collections.Generic;
