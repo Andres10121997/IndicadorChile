@@ -1,4 +1,4 @@
-﻿using DTO.Currency;
+﻿using API.App.DTO.Currency;
 using Models;
 using ResultPattern;
 using System;
@@ -7,7 +7,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace Context.Tool
+namespace API.App.Context.Tool
 {
     internal class Transform<T>
         where T : struct, IFloatingPointConstants<T>

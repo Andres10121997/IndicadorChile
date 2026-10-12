@@ -2,7 +2,7 @@
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace Context
+namespace API.App.Context
 {
     internal static class VarGlobal<T>
         where T : struct, IFloatingPointConstants<T>

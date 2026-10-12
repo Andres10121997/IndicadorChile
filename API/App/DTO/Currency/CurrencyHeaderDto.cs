@@ -2,7 +2,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.Numerics;
 
-namespace DTO.Currency
+namespace API.App.DTO.Currency
 {
     public sealed record CurrencyHeaderDto<T>
         where T : struct, IFloatingPointConstants<T>

@@ -1,6 +1,6 @@
 ﻿using System.Text.RegularExpressions;
 
-namespace DTO.HTML
+namespace API.App.DTO.HTML
 {
     public sealed record TableDto
     {

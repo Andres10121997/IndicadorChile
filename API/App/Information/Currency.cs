@@ -1,5 +1,5 @@
-﻿using Context;
-using DTO.Currency;
+﻿using API.App.Context;
+using API.App.DTO.Currency;
 using Models;
 using ResultPattern;
 using System;

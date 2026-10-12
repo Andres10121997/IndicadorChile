@@ -1,8 +1,8 @@
-﻿using DTO.HTML;
+﻿using API.App.DTO.HTML;
 using ResultPattern;
 using System.Text.RegularExpressions;
 
-namespace Context.Tool
+namespace API.App.Context.Tool
 {
     internal static class Table
     {

@@ -5,7 +5,7 @@ using System.Numerics;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Context.Tool
+namespace API.App.Context.Tool
 {
     internal static class Data<T>
         where T : struct, IFloatingPointConstants<T>

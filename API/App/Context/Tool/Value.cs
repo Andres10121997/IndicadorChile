@@ -1,5 +1,5 @@
-﻿using DTO.Currency;
-using DTO.HTML;
+﻿using API.App.DTO.Currency;
+using API.App.DTO.HTML;
 using Models;
 using ResultPattern;
 using System;
@@ -8,7 +8,7 @@ using System.Linq;
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace Context.Tool
+namespace API.App.Context.Tool
 {
     internal static class Value<T>
         where T : struct, IFloatingPointConstants<T>

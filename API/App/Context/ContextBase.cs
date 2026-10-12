@@ -1,12 +1,12 @@
-﻿using Context.Tool;
-using DTO.Currency;
+﻿using API.App.Context.Tool;
+using API.App.DTO.Currency;
 using Models;
 using ResultPattern;
 using System.Net.Http;
 using System.Numerics;
 using System.Threading.Tasks;
 
-namespace Context
+namespace API.App.Context
 {
     public class ContextBase<T>
         where T : struct, IFloatingPointConstants<T>
