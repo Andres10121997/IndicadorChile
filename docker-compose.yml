@@ -3,13 +3,6 @@
 version: "3.9"
 
 services:
-    db:
-        image: mysql:latest
-        container_name: indicadores_de_chile_db
-        restart: always
-        environment:
-            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
-
     api:
         image: ${DOCKER_REGISTRY-}api
         container_name: indicadores_de_chile_api
@@ -35,7 +28,7 @@ services:
             - LC_ALL=es_CL.UTF-8
             # Aplicación
             - AppName=Indicadores de Chile (API)
-            - AppDescription=API para obtener, principalmente, la lista de distintas "divisas", como la UF y el dólar.
+            - AppDescription=API para obtener, principalmente, la lista de distintas "divisas", como la UF y el Dólar.
         volumes:
             # Configuración del almacenamiento persistente
             - '/path/to/host/uptime/:/app/data'
