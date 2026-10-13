@@ -7,15 +7,15 @@ using System.Threading.Tasks;
 
 namespace API.App.Context.Tool
 {
-    internal static class Data<T>
-        where T : struct, IFloatingPointConstants<T>
+    internal static class Data<TCurrency>
+        where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
         #region Objects
         private static object lockObject;
         #endregion
 
         #region Collections
-        private static Dictionary<byte, T[]> data;
+        private static Dictionary<byte, TCurrency[]> data;
         #endregion
 
 
@@ -28,18 +28,18 @@ namespace API.App.Context.Tool
             #endregion
 
             #region Collections
-            data = new Dictionary<byte, T[]>();
+            data = new Dictionary<byte, TCurrency[]>();
             #endregion
         }
         #endregion
 
 
 
-        internal static async Task<Dictionary<byte, T[]>> GetAsync(MatchCollection RowMatches)
+        internal static async Task<Dictionary<byte, TCurrency[]>> GetAsync(MatchCollection RowMatches)
         {
             await Parallel.ForEachAsync<Match>(
                 source: RowMatches,
-                parallelOptions: VarGlobal<T>.ParallelForEachOptions,
+                parallelOptions: VarGlobal<TCurrency>.ParallelForEachOptions,
                 body: async (RowMatch, CancellationToken) =>
                 {
                     #region Objects
@@ -81,7 +81,7 @@ namespace API.App.Context.Tool
                 return Result<MatchCollection>.Failure(
                     Error: new ResultErrorDto()
                     {
-                        ClassName = nameof(Data<T>),
+                        ClassName = nameof(Data<TCurrency>),
                         MethodName = nameof(Cell),
                         VariableName = nameof(cellMatches.Count),
                         Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser inferior a 0."
@@ -94,7 +94,7 @@ namespace API.App.Context.Tool
                 return Result<MatchCollection>.Failure(
                     Error: new ResultErrorDto()
                     {
-                        ClassName = nameof(Data<T>),
+                        ClassName = nameof(Data<TCurrency>),
                         MethodName = nameof(Cell),
                         VariableName = nameof(cellMatches.Count),
                         Description = $"La cantidad de datos de la lista {nameof(cellMatches.Count)} no puede ser 0."
@@ -135,10 +135,10 @@ namespace API.App.Context.Tool
                                 byte Day)
         {
             #region Collections
-            T[] values;
+            TCurrency[] values;
             #endregion
 
-            values = new T[12];
+            values = new TCurrency[12];
 
             for (byte i = 1; i < CellMatches.Count; i++)
             {
@@ -159,16 +159,16 @@ namespace API.App.Context.Tool
                         newValue: "."
                     );
 
-                switch (T.TryParse(s: value,
-                                   style: NumberStyles.Number,
-                                   provider: CultureInfo.InvariantCulture,
-                                   result: out var currencyValue))
+                switch (TCurrency.TryParse(s: value,
+                                           style: NumberStyles.Number,
+                                           provider: CultureInfo.InvariantCulture,
+                                           result: out var currencyValue))
                 {
                     case true:
                         values[i - 1] = currencyValue;
                         break;
                     case false:
-                        values[i - 1] = T.Zero;
+                        values[i - 1] = TCurrency.Zero;
                         break;
                 }
             }

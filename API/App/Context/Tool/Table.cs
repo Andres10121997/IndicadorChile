@@ -6,15 +6,6 @@ namespace API.App.Context.Tool
 {
     internal static class Table
     {
-        #region Constructor Method
-        static Table()
-        {
-
-        }
-        #endregion
-
-
-
         #region Get
         internal static Result<MatchCollection> GetRows(HtmlDto Html)
         {
@@ -126,7 +117,9 @@ namespace API.App.Context.Tool
                 options: RegexOptions.Singleline
             );
 
-            if (tableMatch.Success == false)
+            if (tableMatch.Success == false
+                ||
+                tableMatch.Success.Equals(obj: false))
             {
                 return Result<Match>.Failure(
                     Error: new ResultErrorDto()

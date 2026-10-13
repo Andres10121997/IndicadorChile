@@ -10,19 +10,19 @@ using System.Threading.Tasks;
 
 namespace API.App.Context.Tool
 {
-    internal static class Value<T>
-        where T : struct, IFloatingPointConstants<T>
+    internal static class Value<TCurrency>
+        where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
-        internal static async Task<Result<CurrencyDto<T>[]>> CurrenciesAsync(string htmlContent,
-                                                                             CurrencyInfoDto CurrencyInfo,
-                                                                             SearchFilterModel SearchFilter)
+        internal static async Task<Result<CurrencyDto<TCurrency>[]>> CurrenciesAsync(string htmlContent,
+                                                                                     CurrencyInfoDto CurrencyInfo,
+                                                                                     SearchFilterModel SearchFilter)
         {
             #region Objects
-            Result<CurrencyDto<T>[]> currenciesResult;
-            Result<Dictionary<byte, T[]>> valuesResult;
+            Result<CurrencyDto<TCurrency>[]> currenciesResult;
+            Result<Dictionary<byte, TCurrency[]>> valuesResult;
             #endregion
 
-            valuesResult = await Extract<T>.ValuesAsync(
+            valuesResult = await Extract<TCurrency>.ValuesAsync(
                 Html: new HtmlDto
                 {
                     Content = htmlContent,
@@ -35,10 +35,10 @@ namespace API.App.Context.Tool
 
             if (!valuesResult.IsSuccess)
             {
-                return Result<CurrencyDto<T>[]>.Failure(
+                return Result<CurrencyDto<TCurrency>[]>.Failure(
                     Error: new ResultErrorDto
                     {
-                        ClassName = nameof(Value<T>),
+                        ClassName = nameof(Value<TCurrency>),
                         MethodName = nameof(CurrenciesAsync),
                         VariableName = nameof(valuesResult.IsSuccess),
                         Description = $"La variable {valuesResult.IsSuccess} es {false}",
@@ -50,14 +50,14 @@ namespace API.App.Context.Tool
                 );
             }
 
-            currenciesResult = await new Transform<T>(SearchFilter: SearchFilter).ToCurrencyModelsAsync(CurrencyData: valuesResult.Value);
+            currenciesResult = await new Transform<TCurrency>(SearchFilter: SearchFilter).ToCurrencyModelsAsync(CurrencyData: valuesResult.Value);
 
             if (!currenciesResult.IsSuccess)
             {
-                return Result<CurrencyDto<T>[]>.Failure(
+                return Result<CurrencyDto<TCurrency>[]>.Failure(
                     Error: new ResultErrorDto
                     {
-                        ClassName = nameof(Value<T>),
+                        ClassName = nameof(Value<TCurrency>),
                         MethodName = nameof(CurrenciesAsync),
                         VariableName = nameof(currenciesResult.IsSuccess),
                         Description = $"La variable {currenciesResult.IsSuccess} es {false}",
@@ -69,18 +69,18 @@ namespace API.App.Context.Tool
                 );
             }
 
-            return Result<CurrencyDto<T>[]>.Success(
+            return Result<CurrencyDto<TCurrency>[]>.Success(
                 Value: currenciesResult.Value
                     .AsParallel()
-                    .Where(predicate: Model => !T.IsNaN(value: Model.Currency)
+                    .Where(predicate: Model => !TCurrency.IsNaN(value: Model.Currency)
                                                &&
-                                               !T.IsZero(value: Model.Currency)
+                                               !TCurrency.IsZero(value: Model.Currency)
                                                &&
-                                               !T.IsInfinity(value: Model.Currency)
+                                               !TCurrency.IsInfinity(value: Model.Currency)
                                                &&
-                                               !T.IsNegative(value: Model.Currency))
-                    .OrderBy<CurrencyDto<T>, DateOnly>(keySelector: Model => Model.Date)
-                    .ToArray<CurrencyDto<T>>()
+                                               !TCurrency.IsNegative(value: Model.Currency))
+                    .OrderBy<CurrencyDto<TCurrency>, DateOnly>(keySelector: Model => Model.Date)
+                    .ToArray<CurrencyDto<TCurrency>>()
             );
         }
     }

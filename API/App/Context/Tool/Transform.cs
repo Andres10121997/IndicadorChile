@@ -9,8 +9,8 @@ using System.Threading.Tasks;
 
 namespace API.App.Context.Tool
 {
-    internal class Transform<T>
-        where T : struct, IFloatingPointConstants<T>
+    internal class Transform<TCurrency>
+        where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
         #region Object
         private SearchFilterModel searchFilter;
@@ -37,8 +37,8 @@ namespace API.App.Context.Tool
 
 
         #region To
-        private async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, T[]> Data,
-                                                           Func<DateOnly, T, TModel> ModelFactory)
+        private async Task<TModel[]> ToModelsAsync<TModel>(Dictionary<byte, TCurrency[]> Data,
+                                                           Func<DateOnly, TCurrency, TModel> ModelFactory)
         {
             #region Objects
             object lockObject;
@@ -53,9 +53,9 @@ namespace API.App.Context.Tool
             modelList = new List<TModel>();
             #endregion
 
-            await Parallel.ForEachAsync<KeyValuePair<byte, T[]>>(
+            await Parallel.ForEachAsync<KeyValuePair<byte, TCurrency[]>>(
                 source: Data,
-                parallelOptions: VarGlobal<T>.ParallelForEachOptions,
+                parallelOptions: VarGlobal<TCurrency>.ParallelForEachOptions,
                 body: async (Item, CancellationToken) =>
                 {
                     #region Variables
@@ -67,7 +67,7 @@ namespace API.App.Context.Tool
                         if (Validate.DateRange(SearchFilter: this.SearchFilter, Day: day, Month: month))
                         {
                             #region Variables
-                            T value;
+                            TCurrency value;
                             #endregion
 
                             #region Objects
@@ -97,15 +97,15 @@ namespace API.App.Context.Tool
             return modelList.ToArray<TModel>();
         }
 
-        internal async Task<Result<CurrencyDto<T>[]>> ToCurrencyModelsAsync(Dictionary<byte, T[]> CurrencyData)
+        internal async Task<Result<CurrencyDto<TCurrency>[]>> ToCurrencyModelsAsync(Dictionary<byte, TCurrency[]> CurrencyData)
         {
             #region Collections
-            CurrencyDto<T>[] currencies;
+            CurrencyDto<TCurrency>[] currencies;
             #endregion
 
-            currencies = await this.ToModelsAsync<CurrencyDto<T>>(
+            currencies = await this.ToModelsAsync<CurrencyDto<TCurrency>>(
                 Data: CurrencyData,
-                ModelFactory: (Date, Value) => new CurrencyDto<T>
+                ModelFactory: (Date, Value) => new CurrencyDto<TCurrency>
                 {
                     // https://www.youtube.com/shorts/UwcOL3ZL3go
                     ID = Guid.CreateVersion7(
@@ -129,10 +129,10 @@ namespace API.App.Context.Tool
 
             if (currencies.Length == 0)
             {
-                return Result<CurrencyDto<T>[]>.Failure(
+                return Result<CurrencyDto<TCurrency>[]>.Failure(
                     Error: new ResultErrorDto()
                     {
-                        ClassName = nameof(Transform<T>),
+                        ClassName = nameof(Transform<TCurrency>),
                         MethodName = nameof(ToCurrencyModelsAsync),
                         VariableName = nameof(currencies.Length),
                         Description = $"La cantidad de datos de la variable {nameof(currencies.Length)} no pude ser 0."
@@ -140,7 +140,7 @@ namespace API.App.Context.Tool
                 );
             }
 
-            return Result<CurrencyDto<T>[]>.Success(Value: currencies);
+            return Result<CurrencyDto<TCurrency>[]>.Success(Value: currencies);
         }
         #endregion
     }
