@@ -4,8 +4,8 @@ using System.Threading.Tasks;
 
 namespace API.App.Context
 {
-    internal static class VarGlobal<T>
-        where T : struct, IFloatingPointConstants<T>
+    internal static class VarGlobal<TCurrency>
+        where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
         #region Constructor Method
         static VarGlobal()

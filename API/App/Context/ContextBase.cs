@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace API.App.Context
 {
-    public class ContextBase<T>
-        where T : struct, IFloatingPointConstants<T>
+    public class ContextBase<TCurrency>
+        where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
         #region Objects
         private CurrencyInfoDto currencyInfo;
@@ -49,13 +49,13 @@ namespace API.App.Context
 
 
         #region Values
-        public async Task<Result<CurrencyDto<T>[]>> Values()
+        public async Task<Result<CurrencyDto<TCurrency>[]>> Values()
         {
             #region Objects
-            Result<CurrencyDto<T>[]> currenciesResult;
+            Result<CurrencyDto<TCurrency>[]> currenciesResult;
             #endregion
 
-            currenciesResult = await Term<T>.GetAsync(
+            currenciesResult = await Term<TCurrency>.GetAsync(
                 HtmlContent: await GetHtmlContentAsync(),
                 CurrencyInfo: CurrencyInfo,
                 SearchFilter: SearchFilter
@@ -63,10 +63,10 @@ namespace API.App.Context
 
             if (!currenciesResult.IsSuccess)
             {
-                return Result<CurrencyDto<T>[]>.Failure(
+                return Result<CurrencyDto<TCurrency>[]>.Failure(
                     Error: new ResultErrorDto()
                     {
-                        ClassName = nameof(ContextBase<T>),
+                        ClassName = nameof(ContextBase<TCurrency>),
                         MethodName = nameof(Values),
                         VariableName = nameof(currenciesResult),
                         Description = $"La variable {nameof(currenciesResult)} no puede ser {false}.",
@@ -78,7 +78,7 @@ namespace API.App.Context
                 );
             }
 
-            return Result<CurrencyDto<T>[]>.Success(Value: currenciesResult.Value);
+            return Result<CurrencyDto<TCurrency>[]>.Success(Value: currenciesResult.Value);
         }
         #endregion
 
