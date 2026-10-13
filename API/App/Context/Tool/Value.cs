@@ -13,10 +13,6 @@ namespace API.App.Context.Tool
     internal static class Value<T>
         where T : struct, IFloatingPointConstants<T>
     {
-        #region Variables
-        private static string htmlContent;
-        #endregion
-
         #region Objects
         private static Result<CurrencyDto<T>[]> currenciesResult;
         #endregion
@@ -26,43 +22,15 @@ namespace API.App.Context.Tool
         #region Constructor Method
         static Value()
         {
-            htmlContent = string.Empty;
-
             currenciesResult = default!;
         }
         #endregion
 
 
 
-        internal static async Task<Result<CurrencyDto<T>[]>> GetAsync(string HtmlContent,
-                                                                      CurrencyInfoDto CurrencyInfo,
-                                                                      SearchFilterModel SearchFilter)
-        {
-            htmlContent = HtmlContent;
-
-            switch (SearchFilter.Month.HasValue)
-            {
-                case true:
-                    currenciesResult = await MonthlyAsync(
-                        CurrencyInfo: CurrencyInfo,
-                        SearchFilter: SearchFilter
-                    );
-                    break;
-                case false:
-                    currenciesResult = await AnnualAsync(
-                        CurrencyInfo: CurrencyInfo,
-                        SearchFilter: SearchFilter
-                    );
-                    break;
-            }
-
-            return Result<CurrencyDto<T>[]>.Success(Value: currenciesResult.Value);
-        }
-
-
-
-        private static async Task<Result<CurrencyDto<T>[]>> CurrenciesAsync(CurrencyInfoDto CurrencyInfo,
-                                                                            SearchFilterModel SearchFilter)
+        internal static async Task<Result<CurrencyDto<T>[]>> CurrenciesAsync(string htmlContent,
+                                                                             CurrencyInfoDto CurrencyInfo,
+                                                                             SearchFilterModel SearchFilter)
         {
             #region Objects
             Result<Dictionary<byte, T[]>> valuesResult;
@@ -126,65 +94,6 @@ namespace API.App.Context.Tool
                                                &&
                                                !T.IsNegative(value: Model.Currency))
                     .OrderBy<CurrencyDto<T>, DateOnly>(keySelector: Model => Model.Date)
-                    .ToArray<CurrencyDto<T>>()
-            );
-        }
-
-        private static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(CurrencyInfoDto CurrencyInfo,
-                                                                        SearchFilterModel SearchFilter)
-        {
-            currenciesResult = await CurrenciesAsync(
-                CurrencyInfo: CurrencyInfo,
-                SearchFilter: SearchFilter
-            );
-
-            if (!currenciesResult.IsSuccess)
-            {
-                return Result<CurrencyDto<T>[]>.Failure(
-                    Error: new ResultErrorDto
-                    {
-                        ClassName = nameof(Value<T>),
-                        MethodName = nameof(AnnualAsync),
-                        VariableName = nameof(currenciesResult.IsSuccess),
-                        Description = $"La variable {nameof(currenciesResult.IsSuccess)} no puede ser {false}."
-                    }
-                );
-            }
-
-            return Result<CurrencyDto<T>[]>.Success(Value: currenciesResult.Value);
-        }
-
-        private static async Task<Result<CurrencyDto<T>[]>> MonthlyAsync(CurrencyInfoDto CurrencyInfo,
-                                                                         SearchFilterModel SearchFilter)
-        {
-            currenciesResult = await CurrenciesAsync(
-                CurrencyInfo: CurrencyInfo,
-                SearchFilter: SearchFilter
-            );
-
-            if (!currenciesResult.IsSuccess)
-            {
-                return Result<CurrencyDto<T>[]>.Failure(
-                    new ResultErrorDto
-                    {
-                        ClassName = nameof(Value<T>),
-                        MethodName = nameof(MonthlyAsync),
-                        VariableName = nameof(currenciesResult.IsSuccess),
-                        Description = $"La variable ${nameof(currenciesResult.IsSuccess)} no puede ser ${false}",
-                        OtherErrors = new[]
-                        {
-                            currenciesResult.Error
-                        }
-                    }
-                );
-            }
-
-            return Result<CurrencyDto<T>[]>.Success(
-                Value: currenciesResult.Value
-                    .AsParallel()
-                    .Where(predicate: Model => Model.Date.Year == SearchFilter.Year
-                                               &&
-                                               Model.Date.Month == SearchFilter.Month)
                     .ToArray<CurrencyDto<T>>()
             );
         }

@@ -55,7 +55,7 @@ namespace API.App.Context
             Result<CurrencyDto<T>[]> currenciesResult;
             #endregion
 
-            currenciesResult = await Value<T>.GetAsync(
+            currenciesResult = await Term<T>.GetAsync(
                 HtmlContent: await GetHtmlContentAsync(),
                 CurrencyInfo: CurrencyInfo,
                 SearchFilter: SearchFilter
