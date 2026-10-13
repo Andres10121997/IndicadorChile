@@ -12,11 +12,11 @@ namespace API.App.Models
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
-                Description = "",
+                Description = "0 = Dólar; 1 = UF",
                 GroupName = nameof(SearchFilterModel),
                 Name = "Tipo de divisa",
                 Order = 1,
-                Prompt = "",
+                Prompt = "Ingrese aquí el tipo de divisa.",
                 ShortName = "Tipo de divisa"
             ),
             Editable(
