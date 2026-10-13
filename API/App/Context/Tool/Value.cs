@@ -43,10 +43,16 @@ namespace API.App.Context.Tool
             switch (SearchFilter.Month.HasValue)
             {
                 case true:
-                    currenciesResult = await MonthlyAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter);
+                    currenciesResult = await MonthlyAsync(
+                        CurrencyInfo: CurrencyInfo,
+                        SearchFilter: SearchFilter
+                    );
                     break;
                 case false:
-                    currenciesResult = await AnnualAsync(CurrencyInfo: CurrencyInfo, SearchFilter: SearchFilter);
+                    currenciesResult = await AnnualAsync(
+                        CurrencyInfo: CurrencyInfo,
+                        SearchFilter: SearchFilter
+                    );
                     break;
             }
 

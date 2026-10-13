@@ -19,7 +19,10 @@ namespace API.App.Context
             range = new bool[2]
             {
                 Day > 0,
-                Day <= DateTime.DaysInMonth(year: SearchFilter.Year, month: Month)
+                Day <= DateTime.DaysInMonth(
+                    year: SearchFilter.Year,
+                    month: Month
+                )
             };
 
             return range.All(predicate: value => value == true);
