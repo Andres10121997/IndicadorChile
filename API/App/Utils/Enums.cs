@@ -1,9 +1,11 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using System;
+using System.ComponentModel.DataAnnotations;
 
 namespace API.App.Utils
 {
     public class Enums
     {
+        [Flags]
         public enum currencyTypeEnum : byte
         {
             [

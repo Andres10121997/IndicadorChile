@@ -163,7 +163,13 @@ namespace API.Controllers
 
                         if (!currencyResult.IsSuccess)
                         {
-                            this.logger.LogWarning(message: currencyResult.ToString());
+                            this.logger.LogWarning(
+                                message: currencyResult.ToString(),
+                                args: [
+                                    DateTime.Now
+                                ]
+                            );
+
                             break;
                         }
 
@@ -179,7 +185,13 @@ namespace API.Controllers
             }
             catch (Exception ex)
             {
-                this.LoggerError(ex: ex);
+                this.logger.LogError(
+                    message: "Exception",
+                    args: [
+                        DateTime.Now,
+                        ex
+                    ]
+                );
                 
                 return this.StatusCode(
                     statusCode: StatusCodes.Status500InternalServerError,

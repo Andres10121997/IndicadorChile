@@ -52,46 +52,5 @@ namespace API.Controllers
         }
         #endregion
         #endregion
-
-
-
-        #region Logger
-        #region Error
-        protected void LoggerError(Exception ex)
-        {
-            this.logger.LogError(
-                exception: ex,
-                message: "---" +
-                         "\n" +
-
-                         "Fecha y hora: {0}" +
-
-                         "\n" +
-                         "---",
-
-                DateTime.Now   // {0}
-            );
-        }
-        #endregion
-
-        #region Information
-        protected void LoggerInformation(string Message)
-        {
-            this.logger.LogInformation(
-                message: "---" +
-                         "\n" +
-
-                         "Fecha y hora: {0}" +
-                         "\n" +
-                         Message +
-
-                         "\n" +
-                         "---",
-
-                DateTime.Now   // {0}
-            );
-        }
-        #endregion
-        #endregion
     }
 }
