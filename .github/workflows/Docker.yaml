@@ -8,8 +8,6 @@ on:
 
 jobs:
   build-and-push-docker-image:
-    runs-on: ${{ matrix.os }}
-    
     strategy:
       fail-fast: false
       matrix:
@@ -18,6 +16,8 @@ jobs:
             os: ubuntu-latest
             dockerfile: ./API/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/api
+
+    runs-on: ${{ matrix.os }}
     
     steps:
     - name: Checkout code
