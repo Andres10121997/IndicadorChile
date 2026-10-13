@@ -13,26 +13,12 @@ namespace API.App.Context.Tool
     internal static class Value<T>
         where T : struct, IFloatingPointConstants<T>
     {
-        #region Objects
-        private static Result<CurrencyDto<T>[]> currenciesResult;
-        #endregion
-
-
-
-        #region Constructor Method
-        static Value()
-        {
-            currenciesResult = default!;
-        }
-        #endregion
-
-
-
         internal static async Task<Result<CurrencyDto<T>[]>> CurrenciesAsync(string htmlContent,
                                                                              CurrencyInfoDto CurrencyInfo,
                                                                              SearchFilterModel SearchFilter)
         {
             #region Objects
+            Result<CurrencyDto<T>[]> currenciesResult;
             Result<Dictionary<byte, T[]>> valuesResult;
             #endregion
 
