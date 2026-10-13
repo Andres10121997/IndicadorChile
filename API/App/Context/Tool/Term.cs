@@ -10,7 +10,9 @@ namespace API.App.Context.Tool
     internal static class Term<T>
         where T : struct, IFloatingPointConstants<T>
     {
+        #region Objects
         private static Result<CurrencyDto<T>[]> currenciesResult;
+        #endregion
 
 
 
@@ -27,20 +29,18 @@ namespace API.App.Context.Tool
                                                                       CurrencyInfoDto CurrencyInfo,
                                                                       SearchFilterModel SearchFilter)
         {
-            string htmlContent = HtmlContent;
-
             switch (SearchFilter.Month.HasValue)
             {
                 case true:
                     currenciesResult = await MonthlyAsync(
-                        htmlContent: htmlContent,
+                        HtmlContent: HtmlContent,
                         CurrencyInfo: CurrencyInfo,
                         SearchFilter: SearchFilter
                     );
                     break;
                 case false:
                     currenciesResult = await AnnualAsync(
-                        htmlContent: htmlContent,
+                        HtmlContent: HtmlContent,
                         CurrencyInfo: CurrencyInfo,
                         SearchFilter: SearchFilter
                     );
@@ -50,12 +50,12 @@ namespace API.App.Context.Tool
             return Result<CurrencyDto<T>[]>.Success(Value: currenciesResult.Value);
         }
 
-        private static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(string htmlContent,
+        private static async Task<Result<CurrencyDto<T>[]>> AnnualAsync(string HtmlContent,
                                                                         CurrencyInfoDto CurrencyInfo,
                                                                         SearchFilterModel SearchFilter)
         {
             currenciesResult = await Value<T>.CurrenciesAsync(
-                htmlContent: htmlContent,
+                htmlContent: HtmlContent,
                 CurrencyInfo: CurrencyInfo,
                 SearchFilter: SearchFilter
             );
@@ -76,12 +76,12 @@ namespace API.App.Context.Tool
             return Result<CurrencyDto<T>[]>.Success(Value: currenciesResult.Value);
         }
 
-        private static async Task<Result<CurrencyDto<T>[]>> MonthlyAsync(string htmlContent,
+        private static async Task<Result<CurrencyDto<T>[]>> MonthlyAsync(string HtmlContent,
                                                                          CurrencyInfoDto CurrencyInfo,
                                                                          SearchFilterModel SearchFilter)
         {
             currenciesResult = await Value<T>.CurrenciesAsync(
-                htmlContent: htmlContent,
+                htmlContent: HtmlContent,
                 CurrencyInfo: CurrencyInfo,
                 SearchFilter: SearchFilter
             );
