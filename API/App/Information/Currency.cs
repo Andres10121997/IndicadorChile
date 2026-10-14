@@ -8,8 +8,8 @@ using System.Threading.Tasks;
 
 namespace API.App.Information
 {
-    public class Currency<T>
-        where T : struct, IFloatingPointConstants<T>
+    public class Currency<TCurrency>
+        where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
         #region Objects
         private CurrencyInfoDto currencyInfo;
@@ -30,24 +30,24 @@ namespace API.App.Information
 
 
 
-        public async Task<Result<CurrencyHeaderDto<T>>> HeaderAsync()
+        public async Task<Result<CurrencyHeaderDto<TCurrency>>> HeaderAsync()
         {
             #region Variables
             bool validation;
             #endregion
 
             #region Objects
-            CurrencyHeaderDto<T> currencyHeader;
+            CurrencyHeaderDto<TCurrency> currencyHeader;
             #endregion
 
             validation = Validate.YearRange(SearchFilter: this.searchFilter, CurrencyInfo: this.currencyInfo);
 
             if (!validation)
             {
-                return Result<CurrencyHeaderDto<T>>.Failure(
+                return Result<CurrencyHeaderDto<TCurrency>>.Failure(
                     Error: new ResultErrorDto()
                     {
-                        ClassName = nameof(Currency<T>),
+                        ClassName = nameof(Currency<TCurrency>),
                         MethodName = nameof(HeaderAsync),
                         VariableName = nameof(validation),
                         Description = $"La variable {nameof(validation)} no puede ser {false}"
@@ -55,49 +55,35 @@ namespace API.App.Information
                 );
             }
 
-            currencyHeader = new CurrencyHeaderDto<T>
+            currencyHeader = new CurrencyHeaderDto<TCurrency>
             {
                 ConsultationDateTime = DateTime.Now,
                 Year = this.searchFilter.Year,
                 MonthName = this.MonthName(),
-                Currencies = (await GetAsync()).Value
+                Currencies = await GetAsync()
             };
 
-            return Result<CurrencyHeaderDto<T>>.Success(Value: currencyHeader);
+            return Result<CurrencyHeaderDto<TCurrency>>.Success(Value: currencyHeader);
         }
 
-        private async Task<Result<CurrencyDto<T>[]>> GetAsync()
+        private async Task<CurrencyDto<TCurrency>[]> GetAsync()
         {
-            #region Objects
-            ContextBase<T> context;
-            Result<CurrencyDto<T>[]> result;
+            #region Collections
+            CurrencyDto<TCurrency>[] currencies;
             #endregion
 
-            context = new ContextBase<T>(
+            #region Objects
+            ContextBase<TCurrency> context;
+            #endregion
+
+            context = new ContextBase<TCurrency>(
                 CurrencyInfo: this.currencyInfo,
                 SearchFilter: this.searchFilter
             );
 
-            result = await context.Values();
+            currencies = await context.Values();
 
-            if (!result.IsSuccess)
-            {
-                return Result<CurrencyDto<T>[]>.Failure(
-                    Error: new ResultErrorDto()
-                    {
-                        ClassName = nameof(Currency<T>),
-                        MethodName = nameof(GetAsync),
-                        VariableName = nameof(result.IsSuccess),
-                        Description = $"La variable {nameof(result.IsSuccess)} no puede ser {false}",
-                        OtherErrors = new[]
-                        {
-                            result.Error
-                        }
-                    }
-                );
-            }
-
-            return Result<CurrencyDto<T>[]>.Success(Value: result.Value);
+            return currencies;
         }
 
         private string? MonthName()

@@ -89,7 +89,9 @@ namespace API.App.Context.Tool
                 );
             }
 
-            if (cellMatches.Count == 0)
+            if (cellMatches.Count == 0
+                ||
+                cellMatches.Count.Equals(obj: 0))
             {
                 return Result<MatchCollection>.Failure(
                     Error: new ResultErrorDto()
@@ -131,8 +133,8 @@ namespace API.App.Context.Tool
             }
         }
 
-        private static void Set(MatchCollection CellMatches,
-                                byte Day)
+        private static void Set(byte Day,
+                                MatchCollection CellMatches)
         {
             #region Collections
             TCurrency[] values;
