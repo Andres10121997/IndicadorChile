@@ -21,7 +21,9 @@ namespace API.App.Context.Tool
         #region Constructor Method
         public Transform(SearchFilterModel SearchFilter)
         {
+            #region Object
             this.searchFilter = SearchFilter;
+            #endregion
         }
         #endregion
 

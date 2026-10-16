@@ -40,7 +40,10 @@ namespace API.App.Information
             CurrencyHeaderDto<TCurrency> currencyHeader;
             #endregion
 
-            validation = Validate.YearRange(SearchFilter: this.searchFilter, CurrencyInfo: this.currencyInfo);
+            validation = Validate.YearRange(
+                SearchFilter: this.searchFilter,
+                CurrencyInfo: this.currencyInfo
+            );
 
             if (!validation)
             {

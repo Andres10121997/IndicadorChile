@@ -49,7 +49,7 @@ namespace API.App.Context.Tool
                         ClassName = nameof(Extract<TCurrency>),
                         MethodName = nameof(ValuesAsync),
                         VariableName = nameof(data.Count),
-                        Description = $"La cantidad de datos de la variable {data.Count} no puede ser 0."
+                        Description = $"La cantidad de datos de la variable {nameof(data.Count)} no puede ser 0."
                     }
                 );
             }
