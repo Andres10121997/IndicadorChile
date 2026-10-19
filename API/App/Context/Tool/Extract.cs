@@ -41,7 +41,9 @@ namespace API.App.Context.Tool
 
             data = await Data<TCurrency>.GetAsync(RowMatches: rowsResult.Value);
 
-            if (data.Count == 0)
+            if (data.Count == 0
+                ||
+                data.Count.Equals(obj: 0))
             {
                 return Result<Dictionary<byte, TCurrency[]>>.Failure(
                     Error: new ResultErrorDto()

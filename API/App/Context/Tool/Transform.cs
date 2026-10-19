@@ -66,7 +66,9 @@ namespace API.App.Context.Tool
 
                     for (byte month = 1; month <= values.Length; month++)
                     {
-                        if (Validate.DateRange(SearchFilter: this.SearchFilter, Day: day, Month: month))
+                        if (Validate.DateRange(SearchFilter: this.SearchFilter,
+                                               Day: day,
+                                               Month: month))
                         {
                             #region Variables
                             TCurrency value;
@@ -129,7 +131,9 @@ namespace API.App.Context.Tool
                 }
             );
 
-            if (currencies.Length == 0)
+            if (currencies.Length == 0
+                ||
+                currencies.Length.Equals(obj: 0))
             {
                 return Result<CurrencyDto<TCurrency>[]>.Failure(
                     Error: new ResultErrorDto()
