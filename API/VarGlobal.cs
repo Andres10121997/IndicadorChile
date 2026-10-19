@@ -1,11 +1,9 @@
 ﻿using System;
-using System.Numerics;
 using System.Threading.Tasks;
 
-namespace API.App.Context
+namespace API
 {
-    internal static class VarGlobal<TCurrency>
-        where TCurrency : struct, IFloatingPointConstants<TCurrency>
+    internal static class VarGlobal
     {
         #region Constructor Method
         static VarGlobal()
