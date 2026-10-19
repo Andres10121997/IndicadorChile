@@ -89,19 +89,18 @@ namespace API.App.Information
             return currencies;
         }
 
-        private string? MonthName()
+        private string MonthName()
         {
-            switch (this.searchFilter.Month.HasValue)
+            if (!this.searchFilter.Month.HasValue)
             {
-                case true:
-                    return new DateOnly(
-                        year: this.searchFilter.Year,
-                        month: Convert.ToInt32(value: this.searchFilter.Month),
-                        day: 1
-                    ).ToString(format: "MMMM");
-                case false:
-                    return null;
+                return string.Empty;
             }
+
+            return new DateOnly(
+                year: this.searchFilter.Year,
+                month: Convert.ToInt32(value: this.searchFilter.Month),
+                day: 1
+            ).ToString(format: "MMMM");
         }
     }
 }

@@ -56,7 +56,7 @@ namespace API.App.DTO.Currency
                 ShortName = "Mes"
             )
         ]
-        public string? MonthName { get; init; }
+        public required string MonthName { get; init; }
         public required CurrencyDto<T>[] Currencies { get; init; }
         #endregion
     }
