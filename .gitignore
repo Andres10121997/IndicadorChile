@@ -49,6 +49,7 @@ ScaffoldingReadMe.txt
 .vs/
 .vscode/
 lib/
+Properties/
 *.slnLaunch
 launch[Ss]ettings.json
 appsettings.json
