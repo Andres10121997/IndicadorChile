@@ -161,17 +161,16 @@ namespace API.App.Context.Tool
                         newValue: "."
                     );
 
-                switch (TCurrency.TryParse(s: value,
-                                           style: NumberStyles.Number,
-                                           provider: CultureInfo.InvariantCulture,
-                                           result: out var currencyValue))
+                if (TCurrency.TryParse(s: value,
+                                       style: NumberStyles.Number,
+                                       provider: CultureInfo.InvariantCulture,
+                                       result: out var currencyValue))
                 {
-                    case true:
-                        values[i - 1] = currencyValue;
-                        break;
-                    case false:
-                        values[i - 1] = TCurrency.Zero;
-                        break;
+                    values[i - 1] = currencyValue;
+                }
+                else
+                {
+                    values[i - 1] = TCurrency.Zero;
                 }
             }
 
