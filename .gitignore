@@ -51,7 +51,6 @@ ScaffoldingReadMe.txt
 lib/
 Properties/
 *.slnLaunch
-launch[Ss]ettings.json
 appsettings.json
 appsettings.*.json
 
