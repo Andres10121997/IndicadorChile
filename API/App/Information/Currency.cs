@@ -61,6 +61,7 @@ namespace API.App.Information
             currencyHeader = new CurrencyHeaderDto<TCurrency>
             {
                 ConsultationDateTime = DateTime.Now,
+                CurrencyName = this.searchFilter.CurrencyType.ToString(),
                 Year = this.searchFilter.Year,
                 MonthName = this.MonthName(),
                 Currencies = await GetAsync()

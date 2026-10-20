@@ -26,6 +26,8 @@ namespace API.App.DTO.Currency
         ]
         public required DateTime ConsultationDateTime { get; init; }
 
+        public required string CurrencyName { get; init; }
+
         [
             Display(
                 AutoGenerateField = false,
