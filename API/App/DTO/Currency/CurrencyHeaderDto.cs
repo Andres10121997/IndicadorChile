@@ -27,31 +27,13 @@ namespace API.App.DTO.Currency
         public required DateTime ConsultationDateTime { get; init; }
 
         [
-            DataType(
-                dataType: DataType.Text
-            ),
-            Display(
-                AutoGenerateField = false,
-                AutoGenerateFilter = false,
-                Description = "",
-                GroupName = nameof(CurrencyHeaderDto<TCurrency>),
-                Name = "Nombre divisa",
-                Order = 2,
-                Prompt = "",
-                ShortName = "Divisa"
-            ),
-            Required
-        ]
-        public required string CurrencyName { get; init; }
-
-        [
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
                 GroupName = nameof(CurrencyHeaderDto<TCurrency>),
                 Name = "Año",
-                Order = 3,
+                Order = 2,
                 Prompt = "",
                 ShortName = "Año"
             ),
@@ -69,12 +51,31 @@ namespace API.App.DTO.Currency
                 Description = "",
                 GroupName = nameof(CurrencyHeaderDto<TCurrency>),
                 Name = "Mes",
-                Order = 4,
+                Order = 3,
                 Prompt = "",
                 ShortName = "Mes"
             )
         ]
         public required string MonthName { get; init; }
+
+        [
+            DataType(
+                dataType: DataType.Text
+            ),
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
+                Description = "",
+                GroupName = nameof(CurrencyHeaderDto<TCurrency>),
+                Name = "Nombre divisa",
+                Order = 4,
+                Prompt = "",
+                ShortName = "Divisa"
+            ),
+            Required
+        ]
+        public required string CurrencyName { get; init; }
+
         public required CurrencyDto<TCurrency>[] Currencies { get; init; }
         #endregion
     }
