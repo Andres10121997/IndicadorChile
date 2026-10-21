@@ -92,16 +92,22 @@ namespace API.App.Information
 
         private string MonthName()
         {
+            string name;
+            
             if (!this.searchFilter.Month.HasValue)
             {
                 return string.Empty;
             }
 
-            return new DateOnly(
+            name = new DateOnly(
                 year: this.searchFilter.Year,
                 month: Convert.ToInt32(value: this.searchFilter.Month),
                 day: 1
-            ).ToString(format: "MMMM");
+            )
+            .ToString(format: "MMMM")
+            .Trim();
+
+            return name;
         }
     }
 }
