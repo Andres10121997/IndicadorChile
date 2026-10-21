@@ -36,24 +36,23 @@ namespace API.App.Context.Tool
                                                                       CurrencyInfoDto CurrencyInfo,
                                                                       SearchFilterModel SearchFilter)
         {
-            switch (SearchFilter.Month.HasValue)
+            if (SearchFilter.Month.HasValue)
             {
-                case true:
-                    currencies = await MonthlyAsync(
-                        HtmlContent: HtmlContent,
-                        CurrencyInfo: CurrencyInfo,
-                        SearchFilter: SearchFilter
-                    );
-                    break;
-                case false:
-                    currencies = await AnnualAsync(
-                        HtmlContent: HtmlContent,
-                        CurrencyInfo: CurrencyInfo,
-                        SearchFilter: SearchFilter
-                    );
-                    break;
+                currencies = await MonthlyAsync(
+                    HtmlContent: HtmlContent,
+                    CurrencyInfo: CurrencyInfo,
+                    SearchFilter: SearchFilter
+                );
             }
-
+            else
+            {
+                currencies = await AnnualAsync(
+                    HtmlContent: HtmlContent,
+                    CurrencyInfo: CurrencyInfo,
+                    SearchFilter: SearchFilter
+                );
+            }
+            
             return currencies;
         }
 

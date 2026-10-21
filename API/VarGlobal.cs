@@ -8,7 +8,7 @@ namespace API
         #region Constructor Method
         static VarGlobal()
         {
-
+            
         }
         #endregion
 
