@@ -4,8 +4,8 @@ using System.Numerics;
 
 namespace API.App.DTO.Currency
 {
-    public sealed record CurrencyDto<T>
-        where T : struct, IFloatingPointConstants<T>
+    public sealed record CurrencyDto<TCurrency>
+        where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
         #region Field
         [
@@ -13,7 +13,7 @@ namespace API.App.DTO.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyDto<T>),
+                GroupName = nameof(CurrencyDto<TCurrency>),
                 Name = "Llave primaria",
                 Order = 1,
                 Prompt = "Ingrese aquí el identificador único.",
@@ -32,7 +32,7 @@ namespace API.App.DTO.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyDto<T>),
+                GroupName = nameof(CurrencyDto<TCurrency>),
                 Name = "Fecha",
                 Order = 2,
                 Prompt = "Ingrese aquí la fecha.",
@@ -50,7 +50,7 @@ namespace API.App.DTO.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyDto<T>),
+                GroupName = nameof(CurrencyDto<TCurrency>),
                 Name = "Nombre del día.",
                 Order = 3,
                 Prompt = "Ingrese aquí el nombre del día de la semana.",
@@ -68,7 +68,7 @@ namespace API.App.DTO.Currency
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
-                GroupName = nameof(CurrencyDto<T>),
+                GroupName = nameof(CurrencyDto<TCurrency>),
                 Name = "Divisa",
                 Order = 4,
                 Prompt = "Ingrese aquí la divisa.",
@@ -76,7 +76,7 @@ namespace API.App.DTO.Currency
             ),
             Required
         ]
-        public required T Currency { get; init; }
+        public required TCurrency Currency { get; init; }
         #endregion
     }
 }
