@@ -34,10 +34,11 @@ namespace API.App.Information
         {
             #region Variables
             bool validation;
+            DateTime ConsultationDateTime;
             #endregion
 
             #region Objects
-            CurrencyHeaderDto<TCurrency> currencyHeader;
+            CurrencyHeaderDto <TCurrency> currencyHeader;
             #endregion
 
             validation = Validate.YearRange(
@@ -58,9 +59,12 @@ namespace API.App.Information
                 );
             }
 
+            ConsultationDateTime = DateTime.Now;
+
             currencyHeader = new CurrencyHeaderDto<TCurrency>
             {
-                ConsultationDateTime = DateTime.Now,
+                ConsultationDate = DateOnly.FromDateTime(dateTime: ConsultationDateTime),
+                ConsultationTime = TimeOnly.FromDateTime(dateTime: ConsultationDateTime),
                 Year = this.searchFilter.Year,
                 MonthName = this.MonthName(),
                 CurrencyName = this.searchFilter.CurrencyType.ToString(),

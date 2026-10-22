@@ -10,21 +10,39 @@ namespace API.App.DTO.Currency
         #region Field
         [
             DataType(
-                dataType: DataType.DateTime
+                dataType: DataType.Date
             ),
             Display(
                 AutoGenerateField = false,
                 AutoGenerateFilter = false,
                 Description = "",
                 GroupName = nameof(CurrencyHeaderDto<TCurrency>),
-                Name = "Fecha y hora de la consulta",
+                Name = "Fecha de la consulta",
                 Order = 1,
                 Prompt = "",
                 ShortName = "Consulta"
             ),
             Required
         ]
-        public required DateTime ConsultationDateTime { get; init; }
+        public required DateOnly ConsultationDate { get; init; }
+
+        [
+            DataType(
+                dataType: DataType.Time
+            ),
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
+                Description = "",
+                GroupName = nameof(CurrencyHeaderDto<TCurrency>),
+                Name = "Hora de la consulta",
+                Order = 2,
+                Prompt = "",
+                ShortName = "Consulta"
+            ),
+            Required
+        ]
+        public required TimeOnly ConsultationTime { get; init; }
 
         [
             Display(
@@ -33,7 +51,7 @@ namespace API.App.DTO.Currency
                 Description = "",
                 GroupName = nameof(CurrencyHeaderDto<TCurrency>),
                 Name = "Año",
-                Order = 2,
+                Order = 3,
                 Prompt = "",
                 ShortName = "Año"
             ),
@@ -51,7 +69,7 @@ namespace API.App.DTO.Currency
                 Description = "",
                 GroupName = nameof(CurrencyHeaderDto<TCurrency>),
                 Name = "Mes",
-                Order = 3,
+                Order = 4,
                 Prompt = "",
                 ShortName = "Mes"
             )
@@ -68,7 +86,7 @@ namespace API.App.DTO.Currency
                 Description = "",
                 GroupName = nameof(CurrencyHeaderDto<TCurrency>),
                 Name = "Nombre divisa",
-                Order = 4,
+                Order = 5,
                 Prompt = "",
                 ShortName = "Divisa"
             ),
