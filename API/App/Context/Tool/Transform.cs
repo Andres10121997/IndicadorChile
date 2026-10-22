@@ -66,9 +66,9 @@ namespace API.App.Context.Tool
 
                     for (byte month = 1; month <= values.Length; month++)
                     {
-                        if (Validate.DateRange(SearchFilter: this.SearchFilter,
-                                               Day: day,
-                                               Month: month))
+                        if (Validate.Range.Date(Day: day,
+                                                Month: month,
+                                                SearchFilter: this.SearchFilter))
                         {
                             #region Variables
                             TCurrency value;

@@ -41,7 +41,7 @@ namespace API.App.Information
             CurrencyHeaderDto <TCurrency> currencyHeader;
             #endregion
 
-            validation = Validate.YearRange(
+            validation = Validate.Range.Year(
                 SearchFilter: this.searchFilter,
                 CurrencyInfo: this.currencyInfo
             );

@@ -3,14 +3,13 @@ using API.App.Models;
 using System;
 using System.Linq;
 
-namespace API
+namespace API.App.Validate
 {
-    internal static class Validate
+    internal static class Range
     {
-        #region Range
-        internal static bool DateRange(SearchFilterModel SearchFilter,
-                                       byte Day,
-                                       byte Month)
+        internal static bool Date(byte Day,
+                                  byte Month,
+                                  SearchFilterModel SearchFilter)
         {
             #region Collections
             bool[] range;
@@ -28,8 +27,8 @@ namespace API
             return range.All(predicate: value => value == true);
         }
 
-        internal static bool YearRange(SearchFilterModel SearchFilter,
-                                       CurrencyInfoDto CurrencyInfo)
+        internal static bool Year(CurrencyInfoDto CurrencyInfo,
+                                  SearchFilterModel SearchFilter)
         {
             #region Variables
             bool validation;
@@ -49,6 +48,5 @@ namespace API
 
             return validation;
         }
-        #endregion
     }
 }
