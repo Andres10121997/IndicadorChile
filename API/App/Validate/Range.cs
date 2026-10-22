@@ -1,5 +1,6 @@
 ﻿using API.App.DTO.Currency;
 using API.App.Models;
+using ResultPattern;
 using System;
 using System.Linq;
 
@@ -7,9 +8,13 @@ namespace API.App.Validate
 {
     internal static class Range
     {
-        internal static bool Date(byte Day,
-                                  byte Month,
-                                  SearchFilterModel SearchFilter)
+        private static bool all;
+
+
+
+        internal static Result<bool> Date(byte Day,
+                                          byte Month,
+                                          SearchFilterModel SearchFilter)
         {
             #region Collections
             bool[] range;
@@ -24,16 +29,27 @@ namespace API.App.Validate
                 )
             };
 
-            return range.All(predicate: value => value == true);
+            all = range.All(predicate: value => value == true);
+
+            if (!all)
+            {
+                return Result<bool>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Range),
+                        MethodName = nameof(Date),
+                        VariableName = nameof(all),
+                        Description = $"La variable {nameof(all)} no puede ser {false}."
+                    }
+                );
+            }
+
+            return Result<bool>.Success(Value: true);
         }
 
-        internal static bool Year(CurrencyInfoDto CurrencyInfo,
-                                  SearchFilterModel SearchFilter)
+        internal static Result<bool> Year(CurrencyInfoDto CurrencyInfo,
+                                          SearchFilterModel SearchFilter)
         {
-            #region Variables
-            bool validation;
-            #endregion
-
             #region Collections
             bool[] range;
             #endregion
@@ -44,9 +60,22 @@ namespace API.App.Validate
                 SearchFilter.Year <= CurrencyInfo.EndDate.Year
             };
 
-            validation = range.All(predicate: value => value == true);
+            all = range.All(predicate: value => value == true);
 
-            return validation;
+            if (!all)
+            {
+                return Result<bool>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Range),
+                        MethodName = nameof(Year),
+                        VariableName = nameof(all),
+                        Description = $"La variable {nameof(all)} no puede ser {false}."
+                    }
+                );
+            }
+
+            return Result<bool>.Success(Value: true);
         }
     }
 }

@@ -6,7 +6,6 @@ using API.App.Utils;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using ResultPattern;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
@@ -143,7 +142,7 @@ namespace API.Controllers
                         #region Object
                         Currency<float> currency;
                         CurrencyInfoDto updatedValue;
-                        Result<CurrencyHeaderDto<float>> currencyResult;
+                        CurrencyHeaderDto<float> CurrencyHeader;
                         #endregion
 
                         updatedValue = Value with
@@ -159,12 +158,12 @@ namespace API.Controllers
                             SearchFilter: SearchFilter
                         );
 
-                        currencyResult = await currency.HeaderAsync();
+                        CurrencyHeader = await currency.HeaderAsync();
 
-                        if (!currencyResult.IsSuccess)
+                        if (CurrencyHeader == default!)
                         {
                             this.logger.LogWarning(
-                                message: currencyResult.ToString(),
+                                message: $"El objeto {nameof(CurrencyHeader)} no puede ser {default!}",
                                 args: [
                                     DateTime.Now
                                 ]
@@ -173,7 +172,7 @@ namespace API.Controllers
                             break;
                         }
 
-                        return this.Ok(value: currencyResult.Value);
+                        return this.Ok(value: CurrencyHeader);
                     }
 
                     return this.StatusCode(statusCode: StatusCodes.Status422UnprocessableEntity);

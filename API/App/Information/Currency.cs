@@ -30,33 +30,25 @@ namespace API.App.Information
 
 
 
-        public async Task<Result<CurrencyHeaderDto<TCurrency>>> HeaderAsync()
+        public async Task<CurrencyHeaderDto<TCurrency>> HeaderAsync()
         {
             #region Variables
-            bool validation;
             DateTime ConsultationDateTime;
             #endregion
 
             #region Objects
-            CurrencyHeaderDto <TCurrency> currencyHeader;
+            Result<bool> yearRangeResult;
+            CurrencyHeaderDto<TCurrency> currencyHeader;
             #endregion
 
-            validation = Validate.Range.Year(
+            yearRangeResult = Validate.Range.Year(
                 SearchFilter: this.searchFilter,
                 CurrencyInfo: this.currencyInfo
             );
 
-            if (!validation)
+            if (!yearRangeResult.IsSuccess)
             {
-                return Result<CurrencyHeaderDto<TCurrency>>.Failure(
-                    Error: new ResultErrorDto()
-                    {
-                        ClassName = nameof(Currency<TCurrency>),
-                        MethodName = nameof(HeaderAsync),
-                        VariableName = nameof(validation),
-                        Description = $"La variable {nameof(validation)} no puede ser {false}"
-                    }
-                );
+                return default!;
             }
 
             ConsultationDateTime = DateTime.Now;
@@ -71,7 +63,7 @@ namespace API.App.Information
                 Currencies = await GetAsync()
             };
 
-            return Result<CurrencyHeaderDto<TCurrency>>.Success(Value: currencyHeader);
+            return currencyHeader;
         }
 
         private async Task<CurrencyDto<TCurrency>[]> GetAsync()
