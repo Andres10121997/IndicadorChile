@@ -57,6 +57,7 @@ namespace API.App.Information
             {
                 ConsultationDate = DateOnly.FromDateTime(dateTime: ConsultationDateTime),
                 ConsultationTime = TimeOnly.FromDateTime(dateTime: ConsultationDateTime),
+                URL = new Uri(uriString: currencyInfo.Url),
                 Year = this.searchFilter.Year,
                 MonthName = this.MonthName(),
                 CurrencyName = this.searchFilter.CurrencyType.ToString(),

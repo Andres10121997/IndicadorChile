@@ -44,6 +44,8 @@ namespace API.App.DTO.Currency
         ]
         public required TimeOnly ConsultationTime { get; init; }
 
+        public required Uri URL { get; init; }
+
         [
             Display(
                 AutoGenerateField = false,
