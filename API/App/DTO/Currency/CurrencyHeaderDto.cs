@@ -44,7 +44,23 @@ namespace API.App.DTO.Currency
         ]
         public required TimeOnly ConsultationTime { get; init; }
 
-        public required Uri URL { get; init; }
+        [
+            DataType(
+                dataType: DataType.Url
+            ),
+            Display(
+                AutoGenerateField = false,
+                AutoGenerateFilter = false,
+                Description = "",
+                // GroupName = nameof(CurrencyHeaderDto<TCurrency>),
+                Name = "URL",
+                Order = 3,
+                Prompt = "",
+                ShortName = "URL"
+            ),
+            Required
+        ]
+        public required Uri Url { get; init; }
 
         [
             Display(
@@ -53,7 +69,7 @@ namespace API.App.DTO.Currency
                 Description = "",
                 // GroupName = nameof(CurrencyHeaderDto<TCurrency>),
                 Name = "Año",
-                Order = 3,
+                Order = 4,
                 Prompt = "",
                 ShortName = "Año"
             ),
@@ -71,7 +87,7 @@ namespace API.App.DTO.Currency
                 Description = "",
                 // GroupName = nameof(CurrencyHeaderDto<TCurrency>),
                 Name = "Mes",
-                Order = 4,
+                Order = 5,
                 Prompt = "",
                 ShortName = "Mes"
             )
@@ -88,7 +104,7 @@ namespace API.App.DTO.Currency
                 Description = "",
                 // GroupName = nameof(CurrencyHeaderDto<TCurrency>),
                 Name = "Nombre divisa",
-                Order = 5,
+                Order = 6,
                 Prompt = "",
                 ShortName = "Divisa"
             ),
