@@ -117,9 +117,20 @@ namespace API.App.Context.Tool
                 options: RegexOptions.Singleline
             );
 
-            if (tableMatch.Success == false
-                ||
-                tableMatch.Success.Equals(obj: false))
+            if (tableMatch.Equals(obj: null))
+            {
+                return Result<Match>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Table),
+                        MethodName = nameof(GetHtml),
+                        VariableName = nameof(tableMatch),
+                        Description = $"La variable {nameof(tableMatch)} no puede ser {false}."
+                    }
+                );
+            }
+
+            if (tableMatch.Success.Equals(obj: false))
             {
                 return Result<Match>.Failure(
                     Error: new ResultErrorDto()

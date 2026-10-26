@@ -41,9 +41,20 @@ namespace API.App.Context.Tool
 
             data = await Data<TCurrency>.GetAsync(RowMatches: rowsResult.Value);
 
-            if (data.Count == 0
-                ||
-                data.Count.Equals(obj: 0))
+            if (data == null)
+            {
+                return Result<Dictionary<byte, TCurrency[]>>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Extract<TCurrency>),
+                        MethodName = nameof(ValuesAsync),
+                        VariableName = nameof(data),
+                        Description = $"La variable {nameof(data)} no puede ser {null}."
+                    }
+                );
+            }
+
+            if (data.Count.Equals(obj: 0))
             {
                 return Result<Dictionary<byte, TCurrency[]>>.Failure(
                     Error: new ResultErrorDto()
