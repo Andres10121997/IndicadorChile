@@ -37,7 +37,7 @@ namespace API.Controllers
                                  {
                                      new CurrencyInfoDto()
                                      {
-                                         Url = "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm",
+                                         Url = new Uri(uriString: "https://www.sii.cl/valores_y_fechas/dolar/dolar{Year}.htm"),
                                          Table = new TableDto
                                          {
                                              ID = "table_export"
@@ -53,7 +53,7 @@ namespace API.Controllers
                                      },
                                      new CurrencyInfoDto()
                                      {
-                                         Url = "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm",
+                                         Url = new Uri(uriString: "https://www.sii.cl/pagina/valores/dolar/dolar{Year}.htm"),
                                          Table = new TableDto
                                          {
                                              ID = "tabla"
@@ -80,7 +80,7 @@ namespace API.Controllers
                                  {
                                      new CurrencyInfoDto()
                                      {
-                                         Url = "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm",
+                                         Url = new Uri(uriString: "https://www.sii.cl/valores_y_fechas/uf/uf{Year}.htm"),
                                          Table = new TableDto
                                          {
                                              ID = "table_export"
@@ -96,7 +96,7 @@ namespace API.Controllers
                                      },
                                      new CurrencyInfoDto()
                                      {
-                                         Url = "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm",
+                                         Url = new Uri(uriString: "https://www.sii.cl/pagina/valores/uf/uf{Year}.htm"),
                                          Table = new TableDto
                                          {
                                              ID = "tabla"
@@ -147,9 +147,11 @@ namespace API.Controllers
 
                         updatedValue = Value with
                         {
-                            Url = Value.Url.Replace(
-                                oldValue: "{Year}",
-                                newValue: SearchFilter.Year.ToString()
+                            Url = new Uri(
+                                Value.Url.OriginalString.Replace(
+                                    oldValue: "{Year}",
+                                    newValue: SearchFilter.Year.ToString()
+                                )
                             )
                         };
 

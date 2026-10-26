@@ -9,11 +9,11 @@ namespace API.App.DTO.Currency
         #region Field
         [
             DataType(
-                dataType: DataType.Text
+                dataType: DataType.Custom
             ),
             Required
         ]
-        public required string Url { get; init; }
+        public required Uri Url { get; init; }
 
         [
             Required
