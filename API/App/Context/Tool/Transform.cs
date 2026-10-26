@@ -136,9 +136,20 @@ namespace API.App.Context.Tool
                 }
             );
 
-            if (currencies.Length == 0
-                ||
-                currencies.Length.Equals(obj: 0))
+            if (currencies == null)
+            {
+                return Result<CurrencyDto<TCurrency>[]>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Transform<TCurrency>),
+                        MethodName = nameof(ToCurrencyModelsAsync),
+                        VariableName = nameof(currencies),
+                        Description = $"La variable {nameof(currencies)} no puede ser {null}."
+                    }
+                );
+            }
+
+            if (currencies.Length.Equals(obj: 0))
             {
                 return Result<CurrencyDto<TCurrency>[]>.Failure(
                     Error: new ResultErrorDto()

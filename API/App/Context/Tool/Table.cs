@@ -96,7 +96,7 @@ namespace API.App.Context.Tool
                         ClassName = nameof(Table),
                         MethodName = nameof(GetHtml),
                         VariableName = nameof(tableHtml),
-                        Description = $"La variable {nameof(tableHtml)} no puede ser {null}, {nameof(string.Empty)} o 'White Space'"
+                        Description = $"La variable {nameof(tableHtml)} no puede ser {null}, {nameof(string.Empty)} o 'White Space'."
                     }
                 );
             }

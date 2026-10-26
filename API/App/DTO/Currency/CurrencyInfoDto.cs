@@ -9,7 +9,7 @@ namespace API.App.DTO.Currency
         #region Field
         [
             DataType(
-                dataType: DataType.Custom
+                dataType: DataType.Url
             ),
             Required
         ]

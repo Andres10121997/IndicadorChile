@@ -30,7 +30,7 @@ namespace API.App.Context.Tool
                         ClassName = nameof(Extract<TCurrency>),
                         MethodName = nameof(ValuesAsync),
                         VariableName = nameof(rowsResult.IsSuccess),
-                        Description = $"La variable {nameof(rowsResult.IsSuccess)} no puede ser {false}",
+                        Description = $"La variable {nameof(rowsResult.IsSuccess)} no puede ser {false}.",
                         OtherErrors = new[]
                         {
                             rowsResult.Error
