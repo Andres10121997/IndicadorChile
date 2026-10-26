@@ -76,6 +76,19 @@ namespace API.App.Context.Tool
                 options: RegexOptions.Singleline
             );
 
+            if (cellMatches.Equals(obj: null))
+            {
+                return Result<MatchCollection>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Data<TCurrency>),
+                        MethodName = nameof(Cell),
+                        VariableName = nameof(cellMatches),
+                        Description = $"La variable {nameof(cellMatches)} no puede ser {null}."
+                    }
+                );
+            }
+
             if (cellMatches.Count < 0)
             {
                 return Result<MatchCollection>.Failure(
@@ -89,9 +102,7 @@ namespace API.App.Context.Tool
                 );
             }
 
-            if (cellMatches.Count == 0
-                ||
-                cellMatches.Count.Equals(obj: 0))
+            if (cellMatches.Count.Equals(obj: 0))
             {
                 return Result<MatchCollection>.Failure(
                     Error: new ResultErrorDto()
