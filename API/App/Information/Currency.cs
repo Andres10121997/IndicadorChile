@@ -89,8 +89,10 @@ namespace API.App.Information
 
         private string MonthName()
         {
+            #region Variables
             string name;
-            
+            #endregion
+
             if (!this.searchFilter.Month.HasValue)
             {
                 return string.Empty;

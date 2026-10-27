@@ -135,7 +135,8 @@ namespace API.Controllers
         {
             try
             {
-                if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType, value: out CurrencyInfoDto[]? Values))
+                if (this.URLs.TryGetValue(key: SearchFilter.CurrencyType,
+                                          value: out CurrencyInfoDto[]? Values))
                 {
                     foreach (CurrencyInfoDto Value in Values)
                     {
@@ -165,7 +166,7 @@ namespace API.Controllers
                         if (CurrencyHeader == default!)
                         {
                             this.logger.LogWarning(
-                                message: $"El objeto {nameof(CurrencyHeader)} no puede ser {default!}",
+                                message: $"El objeto {nameof(CurrencyHeader)} no puede ser {default!}.",
                                 args: [
                                     DateTime.Now
                                 ]
