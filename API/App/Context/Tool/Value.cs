@@ -41,7 +41,7 @@ namespace API.App.Context.Tool
                         ClassName = nameof(Value<TCurrency>),
                         MethodName = nameof(CurrenciesAsync),
                         VariableName = nameof(valuesResult.IsSuccess),
-                        Description = $"La variable {valuesResult.IsSuccess} es {false}",
+                        Description = $"La variable {valuesResult.IsSuccess} es {false}.",
                         OtherErrors = new[]
                         {
                             valuesResult.Error
@@ -60,7 +60,7 @@ namespace API.App.Context.Tool
                         ClassName = nameof(Value<TCurrency>),
                         MethodName = nameof(CurrenciesAsync),
                         VariableName = nameof(currenciesResult.IsSuccess),
-                        Description = $"La variable {currenciesResult.IsSuccess} es {false}",
+                        Description = $"La variable {currenciesResult.IsSuccess} es {false}.",
                         OtherErrors = new[]
                         {
                             currenciesResult.Error

@@ -8,7 +8,22 @@ namespace API.App.Validate
 {
     internal static class Range
     {
+        #region Variables
         private static bool all;
+        #endregion
+
+        #region Collections
+        private static bool[] range;
+        #endregion
+
+
+
+        #region Constructor Method
+        static Range()
+        {
+            range = Array.Empty<bool>();
+        }
+        #endregion
 
 
 
@@ -16,10 +31,6 @@ namespace API.App.Validate
                                           byte Month,
                                           SearchFilterModel SearchFilter)
         {
-            #region Collections
-            bool[] range;
-            #endregion
-
             range = new bool[2]
             {
                 Day > 0,
@@ -50,10 +61,6 @@ namespace API.App.Validate
         internal static Result<bool> Year(CurrencyInfoDto CurrencyInfo,
                                           SearchFilterModel SearchFilter)
         {
-            #region Collections
-            bool[] range;
-            #endregion
-
             range = new bool[2]
             {
                 SearchFilter.Year >= CurrencyInfo.StartDate.Year,
