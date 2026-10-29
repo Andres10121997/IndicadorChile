@@ -10,31 +10,40 @@ namespace API.App.Context.Tool
     internal static class Extract<TCurrency>
         where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
-        internal static async Task<Result<Dictionary<byte, TCurrency[]>>> ValuesAsync(HtmlDto Html)
+        internal static async Task<Result<Dictionary<byte, TCurrency[]>, ResultErrorDto>> ValuesAsync(HtmlDto Html)
         {
             #region Collections
             Dictionary<byte, TCurrency[]> data;
             #endregion
 
             #region Objects
-            Result<MatchCollection> rowsResult;
+            Result<MatchCollection, ResultErrorDto> rowsResult;
             #endregion
 
             rowsResult = Table.GetRows(Html: Html);
 
             if (!rowsResult.IsSuccess)
             {
-                return Result<Dictionary<byte, TCurrency[]>>.Failure(
+                return Result<Dictionary<byte, TCurrency[]>, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Extract<TCurrency>),
                         MethodName = nameof(ValuesAsync),
                         VariableName = nameof(rowsResult.IsSuccess),
-                        Description = $"La variable {nameof(rowsResult.IsSuccess)} no puede ser {false}.",
-                        OtherErrors = new[]
-                        {
-                            rowsResult.Error
-                        }
+                        Description = $"La variable {nameof(rowsResult.IsSuccess)} no puede ser {false}."
+                    }
+                );
+            }
+
+            if (rowsResult.Value == null)
+            {
+                return Result<Dictionary<byte, TCurrency[]>, ResultErrorDto>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Extract<TCurrency>),
+                        MethodName = nameof(ValuesAsync),
+                        VariableName = nameof(rowsResult.Value),
+                        Description = $"La variable {nameof(rowsResult.Value)} no puede ser {null}."
                     }
                 );
             }
@@ -43,7 +52,7 @@ namespace API.App.Context.Tool
 
             if (data == null)
             {
-                return Result<Dictionary<byte, TCurrency[]>>.Failure(
+                return Result<Dictionary<byte, TCurrency[]>, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Extract<TCurrency>),
@@ -56,7 +65,7 @@ namespace API.App.Context.Tool
 
             if (data.Count.Equals(obj: 0))
             {
-                return Result<Dictionary<byte, TCurrency[]>>.Failure(
+                return Result<Dictionary<byte, TCurrency[]>, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Extract<TCurrency>),
@@ -67,7 +76,7 @@ namespace API.App.Context.Tool
                 );
             }
 
-            return Result<Dictionary<byte, TCurrency[]>>.Success(Value: data);
+            return Result<Dictionary<byte, TCurrency[]>, ResultErrorDto>.Success(Value: data);
         }
     }
 }

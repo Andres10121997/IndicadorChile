@@ -67,7 +67,7 @@ namespace API.App.Context.Tool
                     for (byte month = 1; month <= values.Length; month++)
                     {
                         #region Objects
-                        Result<bool> dateRangeResult;
+                        Result<bool, ResultErrorDto> dateRangeResult;
                         #endregion
 
                         #region Init
@@ -111,7 +111,7 @@ namespace API.App.Context.Tool
             return modelList.ToArray<TModel>();
         }
 
-        internal async Task<Result<CurrencyDto<TCurrency>[]>> ToCurrencyModelsAsync(Dictionary<byte, TCurrency[]> CurrencyData)
+        internal async Task<Result<CurrencyDto<TCurrency>[], ResultErrorDto>> ToCurrencyModelsAsync(Dictionary<byte, TCurrency[]> CurrencyData)
         {
             #region Collections
             CurrencyDto<TCurrency>[] currencies;
@@ -143,7 +143,7 @@ namespace API.App.Context.Tool
 
             if (currencies == null)
             {
-                return Result<CurrencyDto<TCurrency>[]>.Failure(
+                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Transform<TCurrency>),
@@ -156,7 +156,7 @@ namespace API.App.Context.Tool
 
             if (currencies.Length.Equals(obj: 0))
             {
-                return Result<CurrencyDto<TCurrency>[]>.Failure(
+                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Transform<TCurrency>),
@@ -167,7 +167,7 @@ namespace API.App.Context.Tool
                 );
             }
 
-            return Result<CurrencyDto<TCurrency>[]>.Success(Value: currencies);
+            return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Success(Value: currencies);
         }
         #endregion
     }

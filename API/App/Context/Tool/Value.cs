@@ -13,13 +13,13 @@ namespace API.App.Context.Tool
     internal static class Value<TCurrency>
         where TCurrency : struct, IFloatingPointConstants<TCurrency>
     {
-        internal static async Task<Result<CurrencyDto<TCurrency>[]>> CurrenciesAsync(string htmlContent,
-                                                                                     CurrencyInfoDto CurrencyInfo,
-                                                                                     SearchFilterModel SearchFilter)
+        internal static async Task<Result<CurrencyDto<TCurrency>[], ResultErrorDto>> CurrenciesAsync(string htmlContent,
+                                                                                                     CurrencyInfoDto CurrencyInfo,
+                                                                                                     SearchFilterModel SearchFilter)
         {
             #region Objects
-            Result<CurrencyDto<TCurrency>[]> currenciesResult;
-            Result<Dictionary<byte, TCurrency[]>> valuesResult;
+            Result<CurrencyDto<TCurrency>[], ResultErrorDto> currenciesResult;
+            Result<Dictionary<byte, TCurrency[]>, ResultErrorDto> valuesResult;
             #endregion
 
             valuesResult = await Extract<TCurrency>.ValuesAsync(
@@ -35,17 +35,26 @@ namespace API.App.Context.Tool
 
             if (!valuesResult.IsSuccess)
             {
-                return Result<CurrencyDto<TCurrency>[]>.Failure(
+                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto
                     {
                         ClassName = nameof(Value<TCurrency>),
                         MethodName = nameof(CurrenciesAsync),
                         VariableName = nameof(valuesResult.IsSuccess),
-                        Description = $"La variable {valuesResult.IsSuccess} es {false}.",
-                        OtherErrors = new[]
-                        {
-                            valuesResult.Error
-                        }
+                        Description = $"La variable {valuesResult.IsSuccess} es {false}."
+                    }
+                );
+            }
+
+            if (valuesResult.Value == null)
+            {
+                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
+                    Error: new ResultErrorDto
+                    {
+                        ClassName = nameof(Value<TCurrency>),
+                        MethodName = nameof(CurrenciesAsync),
+                        VariableName = nameof(valuesResult.Value),
+                        Description = $"La variable {valuesResult.Value} es {null}."
                     }
                 );
             }
@@ -54,22 +63,31 @@ namespace API.App.Context.Tool
 
             if (!currenciesResult.IsSuccess)
             {
-                return Result<CurrencyDto<TCurrency>[]>.Failure(
+                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
                     Error: new ResultErrorDto
                     {
                         ClassName = nameof(Value<TCurrency>),
                         MethodName = nameof(CurrenciesAsync),
                         VariableName = nameof(currenciesResult.IsSuccess),
-                        Description = $"La variable {currenciesResult.IsSuccess} es {false}.",
-                        OtherErrors = new[]
-                        {
-                            currenciesResult.Error
-                        }
+                        Description = $"La variable {currenciesResult.IsSuccess} es {false}."
                     }
                 );
             }
 
-            return Result<CurrencyDto<TCurrency>[]>.Success(
+            if (currenciesResult.Value == null)
+            {
+                return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Failure(
+                    Error: new ResultErrorDto
+                    {
+                        ClassName = nameof(Value<TCurrency>),
+                        MethodName = nameof(CurrenciesAsync),
+                        VariableName = nameof(currenciesResult.Value),
+                        Description = $"La variable {currenciesResult.Value} es {null}."
+                    }
+                );
+            }
+
+            return Result<CurrencyDto<TCurrency>[], ResultErrorDto>.Success(
                 Value: currenciesResult.Value
                     .AsParallel()
                     .Where(predicate: Model => !TCurrency.IsNaN(value: Model.Currency)

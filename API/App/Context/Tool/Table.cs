@@ -7,32 +7,41 @@ namespace API.App.Context.Tool
     internal static class Table
     {
         #region Get
-        internal static Result<MatchCollection> GetRows(HtmlDto Html)
+        internal static Result<MatchCollection, ResultErrorDto> GetRows(HtmlDto Html)
         {
             #region Objects
-            Result<string> htmlResult;
+            Result<string, ResultErrorDto> htmlResult;
             #endregion
 
             htmlResult = GetHtml(Html: Html);
 
             if (!htmlResult.IsSuccess)
             {
-                return Result<MatchCollection>.Failure(
+                return Result<MatchCollection, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
                         MethodName = nameof(GetRows),
                         VariableName = nameof(htmlResult.IsSuccess),
-                        Description = $"La variable {nameof(htmlResult.IsSuccess)} no puede ser {false}.",
-                        OtherErrors = new[]
-                        {
-                            htmlResult.Error
-                        }
+                        Description = $"La variable {nameof(htmlResult.IsSuccess)} no puede ser {false}."
                     }
                 );
             }
 
-            return Result<MatchCollection>.Success(Value: RowMatches(Input: htmlResult.Value));
+            if (htmlResult.Value == null)
+            {
+                return Result<MatchCollection, ResultErrorDto>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Table),
+                        MethodName = nameof(GetRows),
+                        VariableName = nameof(htmlResult.Value),
+                        Description = $"La variable {nameof(htmlResult.Value)} no puede ser {null}."
+                    }
+                );
+            }
+
+            return Result<MatchCollection, ResultErrorDto>.Success(Value: RowMatches(Input: htmlResult.Value));
         }
 
         private static MatchCollection RowMatches(string Input)
@@ -57,31 +66,40 @@ namespace API.App.Context.Tool
         }
 
         #region Table
-        private static Result<string> GetHtml(HtmlDto Html)
+        private static Result<string, ResultErrorDto> GetHtml(HtmlDto Html)
         {
             #region Variables
             string tableHtml;
             #endregion
 
             #region Objects
-            Result<Match> tableMatchResult;
+            Result<Match, ResultErrorDto> tableMatchResult;
             #endregion
 
             tableMatchResult = GetMatchResult(Html: Html);
 
             if (!tableMatchResult.IsSuccess)
             {
-                return Result<string>.Failure(
+                return Result<string, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
                         MethodName = nameof(GetHtml),
                         VariableName = nameof(tableMatchResult.IsSuccess),
-                        Description = $"La variable {nameof(tableMatchResult.IsSuccess)} no puede ser {false}.",
-                        OtherErrors = new[]
-                        {
-                            tableMatchResult.Error
-                        }
+                        Description = $"La variable {nameof(tableMatchResult.IsSuccess)} no puede ser {false}."
+                    }
+                );
+            }
+
+            if (tableMatchResult.Value == null)
+            {
+                return Result<string, ResultErrorDto>.Failure(
+                    Error: new ResultErrorDto()
+                    {
+                        ClassName = nameof(Table),
+                        MethodName = nameof(GetHtml),
+                        VariableName = nameof(tableMatchResult.Value),
+                        Description = $"La variable {nameof(tableMatchResult.Value)} no puede ser {null}."
                     }
                 );
             }
@@ -90,7 +108,7 @@ namespace API.App.Context.Tool
 
             if (string.IsNullOrWhiteSpace(value: tableHtml))
             {
-                return Result<string>.Failure(
+                return Result<string, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
@@ -101,10 +119,10 @@ namespace API.App.Context.Tool
                 );
             }
 
-            return Result<string>.Success(Value: tableHtml);
+            return Result<string, ResultErrorDto>.Success(Value: tableHtml);
         }
 
-        private static Result<Match> GetMatchResult(HtmlDto Html)
+        private static Result<Match, ResultErrorDto> GetMatchResult(HtmlDto Html)
         {
             #region Object
             Match tableMatch;
@@ -119,7 +137,7 @@ namespace API.App.Context.Tool
 
             if (tableMatch.Equals(obj: null))
             {
-                return Result<Match>.Failure(
+                return Result<Match, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
@@ -132,7 +150,7 @@ namespace API.App.Context.Tool
 
             if (tableMatch.Success.Equals(obj: false))
             {
-                return Result<Match>.Failure(
+                return Result<Match, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Table),
@@ -143,7 +161,7 @@ namespace API.App.Context.Tool
                 );
             }
 
-            return Result<Match>.Success(Value: tableMatch);
+            return Result<Match, ResultErrorDto>.Success(Value: tableMatch);
         }
         #endregion
         #endregion

@@ -37,7 +37,7 @@ namespace API.App.Information
             #endregion
 
             #region Objects
-            Result<bool> yearRangeResult;
+            Result<bool, ResultErrorDto> yearRangeResult;
             CurrencyHeaderDto<TCurrency> currencyHeader;
             #endregion
 

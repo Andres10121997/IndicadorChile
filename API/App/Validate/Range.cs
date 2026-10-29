@@ -27,9 +27,9 @@ namespace API.App.Validate
 
 
 
-        internal static Result<bool> Date(byte Day,
-                                          byte Month,
-                                          SearchFilterModel SearchFilter)
+        internal static Result<bool, ResultErrorDto> Date(byte Day,
+                                                          byte Month,
+                                                          SearchFilterModel SearchFilter)
         {
             range = new bool[2]
             {
@@ -44,7 +44,7 @@ namespace API.App.Validate
 
             if (!all)
             {
-                return Result<bool>.Failure(
+                return Result<bool, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Range),
@@ -55,11 +55,11 @@ namespace API.App.Validate
                 );
             }
 
-            return Result<bool>.Success(Value: true);
+            return Result<bool, ResultErrorDto>.Success(Value: true);
         }
 
-        internal static Result<bool> Year(CurrencyInfoDto CurrencyInfo,
-                                          SearchFilterModel SearchFilter)
+        internal static Result<bool, ResultErrorDto> Year(CurrencyInfoDto CurrencyInfo,
+                                                          SearchFilterModel SearchFilter)
         {
             range = new bool[2]
             {
@@ -71,7 +71,7 @@ namespace API.App.Validate
 
             if (!all)
             {
-                return Result<bool>.Failure(
+                return Result<bool, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Range),
@@ -82,7 +82,7 @@ namespace API.App.Validate
                 );
             }
 
-            return Result<bool>.Success(Value: true);
+            return Result<bool, ResultErrorDto>.Success(Value: true);
         }
     }
 }

@@ -43,14 +43,17 @@ namespace API.App.Context.Tool
                 body: async (RowMatch, CancellationToken) =>
                 {
                     #region Objects
-                    Result<MatchCollection> cellResult;
+                    Result<MatchCollection, ResultErrorDto> cellResult;
                     #endregion
 
                     cellResult = Cell(RowMatch: RowMatch);
 
                     if (cellResult.IsSuccess)
                     {
-                        Parse(CellMatches: cellResult.Value);
+                        if (cellResult.Value != null)
+                        {
+                            Parse(CellMatches: cellResult.Value);
+                        }
                     }
                 }
             );
@@ -58,7 +61,7 @@ namespace API.App.Context.Tool
             return data;
         }
 
-        private static Result<MatchCollection> Cell(Match RowMatch)
+        private static Result<MatchCollection, ResultErrorDto> Cell(Match RowMatch)
         {
             #region Variables
             string cellPattern;
@@ -78,7 +81,7 @@ namespace API.App.Context.Tool
 
             if (cellMatches.Equals(obj: null))
             {
-                return Result<MatchCollection>.Failure(
+                return Result<MatchCollection, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Data<TCurrency>),
@@ -91,7 +94,7 @@ namespace API.App.Context.Tool
 
             if (cellMatches.Count < 0)
             {
-                return Result<MatchCollection>.Failure(
+                return Result<MatchCollection, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Data<TCurrency>),
@@ -104,7 +107,7 @@ namespace API.App.Context.Tool
 
             if (cellMatches.Count.Equals(obj: 0))
             {
-                return Result<MatchCollection>.Failure(
+                return Result<MatchCollection, ResultErrorDto>.Failure(
                     Error: new ResultErrorDto()
                     {
                         ClassName = nameof(Data<TCurrency>),
@@ -115,7 +118,7 @@ namespace API.App.Context.Tool
                 );
             }
 
-            return Result<MatchCollection>.Success(Value: cellMatches);
+            return Result<MatchCollection, ResultErrorDto>.Success(Value: cellMatches);
         }
 
         private static string RowHtml(Match RowMatch)

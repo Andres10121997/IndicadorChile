@@ -16,7 +16,7 @@ namespace API.App.Context.Tool
         #endregion
 
         #region Objects
-        private static Result<CurrencyDto<TCurrency>[]> currenciesResult;
+        private static Result<CurrencyDto<TCurrency>[], ResultErrorDto> currenciesResult;
         #endregion
 
 
@@ -71,6 +71,11 @@ namespace API.App.Context.Tool
                 return default!;
             }
 
+            if (currenciesResult.Value == null)
+            {
+                return default!;
+            }
+
             currencies = currenciesResult.Value;
 
             return currencies;
@@ -87,6 +92,11 @@ namespace API.App.Context.Tool
             );
 
             if (!currenciesResult.IsSuccess)
+            {
+                return default!;
+            }
+
+            if (currenciesResult.Value == null)
             {
                 return default!;
             }
