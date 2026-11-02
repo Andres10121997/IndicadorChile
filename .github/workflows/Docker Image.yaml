@@ -16,13 +16,20 @@ jobs:
             os: ubuntu-latest
             dockerfile: ./API/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/api
+            context: .
 
     runs-on: ${{ matrix.os }}
     
     steps:
-    - name: Checkout code
+    - name: Checkout repository and submodules
       id: checkoutCode
       uses: actions/checkout@v7 # Obtiene el código de tu repositorio
+      with:
+        # Opciones: 'true' para submódulos de primer nivel o 'recursive' para todos
+        submodules: recursive
+        # Si tus submódulos están en repositorios privados, 
+        # necesitarás un Token de Acceso Personal (PAT) con permisos de lectura:
+        token: ${{ secrets.TOKEN_CD }}
 
     - name: Log in to GitHub Container Registry
       id: logInGitHub
@@ -36,7 +43,7 @@ jobs:
       id: buildPushImage
       uses: docker/build-push-action@v7 # Acción para construir y subir imágenes de Docker
       with:
-        context: . # Construye desde el directorio raíz del proyecto
+        context: ${{ matrix.os }} # Construye desde el directorio raíz del proyecto
         file: ${{ matrix.dockerfile }}
         push: true # Sube la imagen al registro después de construirla
         tags: | # Asigna etiquetas a la imagen
