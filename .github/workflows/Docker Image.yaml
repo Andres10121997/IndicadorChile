@@ -29,7 +29,7 @@ jobs:
         submodules: recursive
         # Si tus submódulos están en repositorios privados, 
         # necesitarás un Token de Acceso Personal (PAT) con permisos de lectura:
-        token: ${{ secrets.TOKEN_CD }}
+        token: ${{ secrets.DOCKER_TOKEN }}
 
     - name: Log in to GitHub Container Registry
       id: logInGitHub
