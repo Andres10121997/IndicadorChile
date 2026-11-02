@@ -43,7 +43,7 @@ jobs:
       id: buildPushImage
       uses: docker/build-push-action@v7 # Acción para construir y subir imágenes de Docker
       with:
-        context: ${{ matrix.os }} # Construye desde el directorio raíz del proyecto
+        context: ${{ matrix.context }} # Construye desde el directorio raíz del proyecto
         file: ${{ matrix.dockerfile }}
         push: true # Sube la imagen al registro después de construirla
         tags: | # Asigna etiquetas a la imagen
