@@ -18,6 +18,12 @@ jobs:
             image_name: ${{ vars.IMAGE_NAME }}/api
             context: .
 
+          - project: Web
+            os: ubuntu-latest
+            dockerfile: ./IndicadorChileWeb/Dockerfile
+            image_name: ${{ vars.IMAGE_NAME }}/web
+            context: ./IndicadorChileWeb
+
     runs-on: ${{ matrix.os }}
     
     steps:
