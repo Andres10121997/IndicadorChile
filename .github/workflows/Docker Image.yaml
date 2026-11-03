@@ -1,11 +1,20 @@
 name: Docker Image
 
 on:
+  workflow_run:
+    workflows: ["Submodules Sync"]
+    types:
+      - completed
+  
   schedule:
     - cron: '0 0 * * 1-5' # Actualiza el disparador cron del flujo de trabajo actual de GitHub Action basándose en una lista de expresiones cron.
+    - cron: '0 12 * * 1-5'
+  
   workflow_dispatch: 
+  
   # push:
     # branches: [ main ]
+  
   # pull_request:
     # branches: [ main ]
 
