@@ -15,6 +15,7 @@ jobs:
     defaults:
       run:
         shell: bash
+    
     steps:
       - name: Checkout repository and submodules
         uses: actions/checkout@v7 # Obtiene el código de tu repositorio
