@@ -4,10 +4,10 @@ on:
   schedule:
     # Actualiza el disparador cron del flujo de trabajo actual de GitHub Action basándose en una lista de expresiones cron.
     - cron: '0 0 * * 1-5'
-      timezone: "America/Santiago"
+      timezone: 'America/Santiago'
     
     - cron: '0 12 * * 1-5'
-      timezone: "America/Santiago"
+      timezone: 'America/Santiago'
   
   # Permite ejecutar este flujo de trabajo manualmente desde la pestaña Actions o a través de la API HTTP.
   workflow_dispatch:
