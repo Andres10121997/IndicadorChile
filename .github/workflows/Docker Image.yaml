@@ -40,6 +40,8 @@ jobs:
             image_name: ${{ vars.IMAGE_NAME }}/web
             context: ./IndicadorChileWeb
 
+    name: Build and upload the ${{ matrix.project }} Docker image
+    
     runs-on: ${{ matrix.os }}
     
     steps:
