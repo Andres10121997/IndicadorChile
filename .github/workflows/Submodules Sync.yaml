@@ -8,7 +8,8 @@ on:
 
 jobs:
   sync:
-    name: 'Sincronizar submódulos'
+    name: Submodules Sync
+    
     runs-on: ubuntu-latest
 
     defaults:
