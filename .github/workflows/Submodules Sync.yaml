@@ -1,0 +1,37 @@
+name: Submodules Sync
+
+on:
+  schedule:
+    - cron: '0 0 * * 1-5' # Actualiza el disparador cron del flujo de trabajo actual de GitHub Action basándose en una lista de expresiones cron.
+  # Allows you to run this workflow manually from the Actions tab or through HTTP API
+  workflow_dispatch:
+
+jobs:
+  sync:
+    name: 'Sincronizar submódulos'
+    runs-on: ubuntu-latest
+
+    defaults:
+      run:
+        shell: bash
+    steps:
+      - name: Checkout repository and submodules
+        uses: actions/checkout@v7 # Obtiene el código de tu repositorio
+        with:
+          # Opciones: 'true' para submódulos de primer nivel o 'recursive' para todos
+          submodules: recursive
+          # Si tus submódulos están en repositorios privados, 
+          # necesitarás un Token de Acceso Personal (PAT) con permisos de lectura:
+          token: ${{ secrets.DOCKER_TOKEN }}
+      
+      - name: Git Submodule Update
+        run: |
+          git pull --recurse-submodules
+          git submodule update --remote --recursive
+      
+      - name: Commit Update
+        run: |
+          git config --global user.name 'Git bot'
+          git config --global user.email 'bot@noreply.github.com'
+          git remote set-url origin https://x-access-token:${{ secrets.DOCKER_TOKEN }}@github.com/${{ github.repository }}
+          git commit -am "Auto updated submodule references" && git push || echo "No changes to commit"
