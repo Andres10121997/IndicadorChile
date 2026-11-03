@@ -3,8 +3,7 @@ name: Submodules Sync
 on:
   schedule:
     - cron: '0 0 * * 1-5' # Actualiza el disparador cron del flujo de trabajo actual de GitHub Action basándose en una lista de expresiones cron.
-  # Allows you to run this workflow manually from the Actions tab or through HTTP API
-  workflow_dispatch:
+  workflow_dispatch: # Permite ejecutar este flujo de trabajo manualmente desde la pestaña Actions o a través de la API HTTP.
 
 jobs:
   sync:
