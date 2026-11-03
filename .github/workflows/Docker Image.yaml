@@ -7,7 +7,8 @@ on:
       - completed
   
   schedule:
-    - cron: '0 0 * * 1-5' # Actualiza el disparador cron del flujo de trabajo actual de GitHub Action basándose en una lista de expresiones cron.
+    # Actualiza el disparador cron del flujo de trabajo actual de GitHub Action basándose en una lista de expresiones cron.
+    - cron: '0 0 * * 1-5'
       timezone: "America/Santiago"
       
     - cron: '0 12 * * 1-5'
