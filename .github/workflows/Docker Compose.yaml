@@ -10,12 +10,5 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository and submodules
-        id: checkoutCode
-        uses: actions/checkout@v7 # Obtiene el código de tu repositorio
-        with:
-          # Opciones: 'true' para submódulos de primer nivel o 'recursive' para todos
-          submodules: recursive
-        
       - name: Spin up services with Docker Compose
         run: docker compose up -d
