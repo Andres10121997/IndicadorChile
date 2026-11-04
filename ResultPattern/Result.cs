@@ -61,7 +61,7 @@ namespace ResultPattern
 
 
 
-        public static Result<TValue, TError> Success(TValue? Value)
+        public static Result<TValue, TError> Success(TValue Value)
         {
             return new Result<TValue, TError>(
                 IsSuccess: true,
@@ -70,7 +70,7 @@ namespace ResultPattern
             );
         }
 
-        public static Result<TValue, TError> Failure(TError? Error)
+        public static Result<TValue, TError> Failure(TError Error)
         {
             return new Result<TValue, TError>(
                 IsSuccess: false,
