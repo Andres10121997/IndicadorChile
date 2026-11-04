@@ -1,0 +1,14 @@
+name: Docker Compose
+
+on:
+  workflow_dispatch:
+
+jobs:
+  buid-docker-compose:
+    name: Build Docker Compose
+
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Spin up services with Docker Compose
+        run: docker compose up -d
