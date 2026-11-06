@@ -4,16 +4,10 @@ on:
   workflow_dispatch:
 
 jobs:
-  call-checkout:
-    uses: ./.github/workflows/Checkout-repository-and-submodules.yaml # Se llama a nivel de JOB
-    secrets: inherit # Pasa los secretos (como DOCKER_TOKEN) al flujo hijo
-    
   buid-docker-compose:
     name: Build Docker Compose
     
     runs-on: ubuntu-latest
-
-    needs: call-checkout
 
     steps:
       - name: Checkout repository and submodules
@@ -22,9 +16,6 @@ jobs:
         with:
           # Opciones: 'true' para submódulos de primer nivel o 'recursive' para todos
           submodules: recursive
-          # Si tus submódulos están en repositorios privados, 
-          # necesitarás un Token de Acceso Personal (PAT) con permisos de lectura:
-          token: ${{ secrets.DOCKER_TOKEN }}
 
       - name: Spin up services with Docker Compose
         run: docker compose up -d
