@@ -25,6 +25,10 @@ jobs:
           # Si tus submódulos están en repositorios privados, 
           # necesitarás un Token de Acceso Personal (PAT) con permisos de lectura:
           token: ${{ secrets.DOCKER_TOKEN }}
+
+      - uses: ./.github/workflows/Checkout-repository-and-submodules.yaml # Se llama a nivel de JOB
+        with:
+          secrets: inherit # Pasa los secretos (como DOCKER_TOKEN) al flujo hijo
       
       - name: Spin up services with Docker Compose
         run: docker compose up -d
