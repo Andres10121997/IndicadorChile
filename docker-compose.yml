@@ -38,6 +38,8 @@ services:
         image: ${DOCKER_REGISTRY-}web
         container_name: indicadores_de_chile_web
         restart: always
+        depends_on:
+            - api
         ports:
             - "8080:8080"
             - "8081:8081"
