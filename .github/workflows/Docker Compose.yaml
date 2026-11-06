@@ -46,5 +46,4 @@ jobs:
 
     steps:
       - name: Spin up services with Docker Compose
-        uses:
         run: docker compose up -d
