@@ -4,9 +4,9 @@ on:
   workflow_dispatch:
 
 jobs:
-  buid-docker-compose:
-    name: Build Docker Compose
-    
+  checkout-repository-and-submodules:
+    name: Checkout repository and submodules
+
     runs-on: ubuntu-latest
 
     steps:
@@ -19,6 +19,14 @@ jobs:
           # Si tus submódulos están en repositorios privados, 
           # necesitarás un Token de Acceso Personal (PAT) con permisos de lectura:
           token: ${{ secrets.DOCKER_TOKEN }}
-      
+  
+  buid-docker-compose:
+    name: Build Docker Compose
+
+    needs: checkout-repository-and-submodules
+    
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Spin up services with Docker Compose
         run: docker compose up -d
