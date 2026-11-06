@@ -37,7 +37,7 @@ jobs:
             image_name: ${{ vars.IMAGE_NAME }}/web
             context: ./IndicadorChileWeb
 
-    name: Build and push the ${{ matrix.project }} Docker image
+    name: Build and push the ${{ matrix.project }} Docker Image
     
     runs-on: ${{ matrix.os }}
 
