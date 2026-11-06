@@ -1,6 +1,7 @@
 name: Checkout repository and submodules
 
 on:
+  workflow_call: 
   schedule:
     # Actualiza el disparador cron del flujo de trabajo actual de GitHub Action basándose en una lista de expresiones cron.
     - cron: '0 0 * * 1-5'
