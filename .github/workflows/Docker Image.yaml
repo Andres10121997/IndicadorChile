@@ -19,6 +19,10 @@ on:
     # branches: [ main ]
 
 jobs:
+  call-Submodules-Sync:
+    uses: .github/workflows/Submodules-Sync.yaml # Se llama a nivel de JOB
+    secrets: inherit # Pasa los secretos (como DOCKER_TOKEN) al flujo hijo
+  
   build-and-push-docker-image:
     strategy:
       fail-fast: false
