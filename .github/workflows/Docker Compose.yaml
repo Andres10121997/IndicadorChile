@@ -1,49 +1,16 @@
 name: Docker Compose
 
 on:
-  workflow_call:
-    # Map the workflow outputs to job outputs
-    outputs:
-      workflow_output:
-        description: "The first job output"
-        value: ${{ jobs.checkout-repository-and-submodules.outputs.checkout }}
   workflow_dispatch:
 
 jobs:
-  checkout-repository-and-submodules:
-    name: Checkout repository and submodules
-
-    runs-on: ubuntu-latest
-
-    outputs:
-      checkout: ${{ steps.procesar.outputs.checkout }}
-    
-    steps:
-      - name: Checkout repository and submodules
-        id: checkoutCode
-        uses: actions/checkout@v7 # Obtiene el código de tu repositorio
-        with:
-          # Opciones: 'true' para submódulos de primer nivel o 'recursive' para todos
-          submodules: recursive
-          # Si tus submódulos están en repositorios privados, 
-          # necesitarás un Token de Acceso Personal (PAT) con permisos de lectura:
-          token: ${{ secrets.DOCKER_TOKEN }}
-      
-      - name: Procesar algo en el repositorio
-        id: procesar
-        run: |
-          echo "Submódulos descargados correctamente."
-          # Guardamos un valor en el output del job
-          echo "resultado=completado_exitosamente" >> $GITHUB_OUTPUT
-          
-  
   buid-docker-compose:
     name: Build Docker Compose
-
-    needs: checkout-repository-and-submodules
     
     runs-on: ubuntu-latest
 
     steps:
+      - uses: ./'Checkout repository and submodules.yaml'
+      
       - name: Spin up services with Docker Compose
         run: docker compose up -d
