@@ -10,7 +10,7 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: ./'Checkout repository and submodules.yaml'
+      - uses: ./.github/workflows/Checkout repository and submodules.yaml
       
       - name: Spin up services with Docker Compose
         run: docker compose up -d
