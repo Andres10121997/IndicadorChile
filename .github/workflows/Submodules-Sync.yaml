@@ -39,8 +39,11 @@ jobs:
         run: |
           git config --global user.name 'Git bot'
           git config --global user.email 'bot@noreply.github.com'
-      
-      - name: Commit Update
+
+      - name: Git Remote
         run: |
           git remote set-url origin https://x-access-token:${{ secrets.DOCKER_TOKEN }}@github.com/${{ github.repository }}
+      
+      - name: Git Commit and Push
+        run: |
           git commit -am "Referencias de submódulos actualizadas automáticamente." && git push || echo "No hay cambios que confirmar."
