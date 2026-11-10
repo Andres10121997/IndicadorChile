@@ -11,8 +11,8 @@ services:
             - "1970:8080"
             - "1973:8081"
         build:
-            context: .
-            dockerfile: API/Dockerfile
+            context: IndicadorChileAPI
+            dockerfile: Dockerfile
         environment:
             # Asp Net Core
             - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
