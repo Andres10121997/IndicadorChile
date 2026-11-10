@@ -2,7 +2,7 @@
 
 Este proyecto tiene 2 submódulos:
 1. **<ins>Aplicación API</ins>:** Cuyo propósito es obtener y enviar distintas divisas de Chile.
-2. **<ins>Aplicación web</ins>:** Cuyo propósito es mostrar las distintas divisas.
+2. **<ins>Aplicación Web</ins>:** Cuyo propósito es mostrar las distintas divisas.
 
 ## Comenzando
 
