@@ -1,3 +1,6 @@
 [submodule "IndicadorChileWeb"]
 	path = IndicadorChileWeb
 	url = https://github.com/Andres10121997/IndicadorChileWeb.git
+[submodule "IndicadorChileAPI"]
+	path = IndicadorChileAPI
+	url = https://github.com/Andres10121997/IndicadorChileAPI.git
