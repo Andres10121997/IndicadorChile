@@ -1,0 +1,39 @@
+name: Publish OpenAPI
+
+on:
+  workflow_dispatch:
+
+jobs:
+  build-validate-publish:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v6
+      
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '8.x'
+      
+      - name: Build and Generate OpenAPI
+        run: |
+          dotnet build --configuration Release
+      
+      - name: Setup Node.js
+        uses: actions/setup-node@v6
+        with:
+          node-version: 24
+      
+      - name: Validate OpenAPI Document
+        run: |
+          npx @scalar/cli document validate ./openapi.json
+      
+      - name: Publish to Registry
+        run: |
+          npx @scalar/cli auth login --token ${{ secrets.SCALAR_API_KEY }}
+          npx @scalar/cli registry publish \
+            --namespace ${{ vars.SCALAR_NAMESPACE }} \
+            --slug ${{ vars.SCALAR_SLUG }} \
+            ./openapi.json
+        env:
+          SCALAR_API_KEY: ${{ secrets.SCALAR_API_KEY }}
