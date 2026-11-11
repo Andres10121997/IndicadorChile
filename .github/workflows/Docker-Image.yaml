@@ -27,7 +27,7 @@ jobs:
         include:
           - project: API
             os: ubuntu-latest
-            dockerfile: ./API/Dockerfile
+            dockerfile: ./IndicadorChileAPI/Dockerfile
             image_name: ${{ vars.IMAGE_NAME }}/api
             context: .
 
