@@ -34,44 +34,7 @@ jobs:
         run: |
           ls -la
           cat .env
-        name: Docker Compose
-
-on:
-  workflow_dispatch:
-
-jobs:
-  call-env-file:
-    name: Call env file
-    uses: ./.github/workflows/env-file.yaml
-    secrets: inherit # Pasa los secretos al flujo hijo
-  
-  build-docker-compose:
-    name: Build Docker Compose
-    runs-on: ubuntu-latest
-    needs: call-env-file
-
-    steps:
-      - name: Checkout repository and submodules
-        id: checkoutCode
-        uses: actions/checkout@v7
-        with:
-          submodules: recursive
-
-      - name: Descargar archivo .env
-        uses: actions/download-artifact@v8
-        with:
-          name: env-file
-          path: . # Asegura que caiga en la raíz del proyecto
-
-      - name: Verificar que el archivo existe
-        run: ls -la .env
       
-      - name: Spin up services with Docker Compose
-        run: docker compose up -d
-
       - name: Eliminar .env local por seguridad
         if: always()
         run: rm -f .env
-      
-      - name: Spin up services with Docker Compose
-        run: docker compose up -d
