@@ -25,6 +25,9 @@ jobs:
           echo "LANGUAGE=es_CL:es" >> .env
           echo "LC_ALL=es_CL.UTF-8" >> .env
 
+      - name: Verificar que se creó el archivo
+        run: ls -la .env
+
       - name: Upload .env file as an artifact
         uses: actions/upload-artifact@v4
         with:
