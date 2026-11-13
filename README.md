@@ -20,6 +20,7 @@ Qué cosas necesitas para instalar el software y cómo instalarlas:
 
 ## Comandos
 ### `Docker Compose`
+#### Comandos de ciclo de vida.
 
 Inicia todos los servicios definidos en el archivo `YAML` en segundo plano (modo `detached`):
 ```yaml
