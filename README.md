@@ -18,5 +18,20 @@ Qué cosas necesitas para instalar el software y cómo instalarlas:
 | :--- | :--- | :--- |
 | `Docker` | Ingrese al sitio web de `Docker`, descargue el instalador del software e instálelo. <br /> En caso de tener algún problema, ver el video | 1. [Sitio web](https://www.docker.com/) <br /> 2. [Video instalación (ejemplo)](https://www.youtube.com/watch?v=cWuirzMOwwg) |
 
+## Comandos
+### `Docker Compose`
+
+Inicia todos los servicios definidos en el archivo `YAML` en segundo plano (modo `detached`):
+```docker-compose
+docker compose up -d
+```
+
+:---
+
+Reconstruye las imágenes obligatoriamente y luego levanta los contenedores en segundo plano:
+```
+docker compose up --build -d
+```
+
 ## Licencia
 El proyecto Indicadores Chile es un software de código abierto con licencia `GNU General Public License v2.0`.
