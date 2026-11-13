@@ -3,6 +3,14 @@
 version: "3.9"
 
 services:
+    typescript-compiler:
+        image: node:26-alpine
+        working_dir: /app
+        volumes:
+            - .:/app
+        # Instala TypeScript y transpila (usa --watch si es para desarrollo)
+        command: sh -c "npm install -g typescript && tsc --watch"
+    
     api:
         image: ${DOCKER_REGISTRY-}api
         container_name: indicadores_de_chile_api
@@ -39,6 +47,7 @@ services:
         container_name: indicadores_de_chile_web
         restart: always
         depends_on:
+            - typescript-compiler
             - api
         ports:
             - "8080:8080"
