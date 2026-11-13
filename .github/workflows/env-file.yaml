@@ -21,10 +21,10 @@ jobs:
       - name: Create .env file
         run: |
           cat << 'EOF' > .env
-          echo "TimeZone=America/Santiago" >> .env
-          echo "LANG=es_CL.UTF-8" >> .env
-          echo "LANGUAGE=es_CL:es" >> .env
-          echo "LC_ALL=es_CL.UTF-8" >> .env
+          "TimeZone=America/Santiago"
+          "LANG=es_CL.UTF-8"
+          "LANGUAGE=es_CL:es"
+          "LC_ALL=es_CL.UTF-8"
           EOF
 
       - name: Verify that the file was created
@@ -36,5 +36,4 @@ jobs:
           name: env-file
           path: .env
           include-hidden-files: true # ¡Muy importante para archivos que empiezan con punto!
-          # Opcional: sube el archivo sin comprimir en ZIP
-          archive: false
+          if-no-files-found: error
