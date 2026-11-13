@@ -20,6 +20,7 @@ jobs:
 
       - name: Create .env file
         run: |
+          touch .env
           echo "TimeZone=America/Santiago" >> .env
           echo "LANG=es_CL.UTF-8" >> .env
           echo "LANGUAGE=es_CL:es" >> .env
