@@ -22,42 +22,32 @@ Qué cosas necesitas para instalar el software y cómo instalarlas:
 ### `Docker Compose`
 #### Comandos de ciclo de vida.
 
-Inicia todos los servicios definidos en el archivo `YAML` en segundo plano (modo `detached`):
+1. Inicia todos los servicios definidos en el archivo `YAML` en segundo plano (modo `detached`):
 ```yaml
 docker compose up -d
 ```
 
----
-
-Reconstruye las imágenes obligatoriamente y luego levanta los contenedores en segundo plano:
+2. Reconstruye las imágenes obligatoriamente y luego levanta los contenedores en segundo plano:
 ```yaml
 docker compose up --build -d
 ```
 
----
-
-Detiene y elimina los contenedores, las redes y (por defecto) los volúmenes asociados:
+3. Detiene y elimina los contenedores, las redes y (por defecto) los volúmenes asociados:
 ```yaml
 docker compose down
 ```
 
----
-
-Detiene los contenedores en ejecución sin eliminarlos del sistema:
+4. Detiene los contenedores en ejecución sin eliminarlos del sistema:
 ```yaml
 docker compose stop
 ```
 
----
-
-Vuelve a arrancar los contenedores que se encontraban detenidos:
+5. Vuelve a arrancar los contenedores que se encontraban detenidos:
 ```yaml
 docker compose start
 ```
 
----
-
-Reinicia todos los servicios de la aplicación:
+6. Reinicia todos los servicios de la aplicación:
 ```yaml
 docker compose restart
 ```
