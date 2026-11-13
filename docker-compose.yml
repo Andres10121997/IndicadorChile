@@ -29,9 +29,9 @@ services:
             # Time Zone
             - TZ=America/Santiago
             # Idioma
-            - LANG=es_CL.UTF-8
-            - LANGUAGE=es_CL:es
-            - LC_ALL=es_CL.UTF-8
+            - LANG=${LANG}
+            - LANGUAGE=${LANGUAGE}
+            - LC_ALL=${LC_ALL}
             # Aplicación
             - AppName=Indicadores de Chile (API)
             - AppDescription=API para obtener, principalmente, la lista de distintas "divisas", como la UF y el Dólar.
@@ -63,9 +63,9 @@ services:
             # Time Zone
             - TZ=America/Santiago
             # Idioma
-            - LANG=es_CL.UTF-8
-            - LANGUAGE=es_CL:es
-            - LC_ALL=es_CL.UTF-8
+            - LANG=${LANG}
+            - LANGUAGE=${LANGUAGE}
+            - LC_ALL=${LC_ALL}
         volumes:
             # Configuración del almacenamiento persistente
             - '/path/to/host/uptime/:/app/data'
