@@ -28,6 +28,7 @@ jobs:
         uses: actions/download-artifact@v8
         with:
           name: env-file
+          path: . # Asegura que esté en la raíz del proyecto
 
       - name: Verificar que el archivo existe y usarlo
         run: |
