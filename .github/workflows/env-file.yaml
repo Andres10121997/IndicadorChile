@@ -27,7 +27,7 @@ jobs:
           echo "LC_ALL=es_CL.UTF-8" >> .env
 
       - name: Verify that the file was created
-        run: ls -lah .env
+        run: ls -lah && cat .env
 
       - name: Upload .env file as an artifact
         uses: actions/upload-artifact@v4
