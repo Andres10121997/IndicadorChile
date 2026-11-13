@@ -73,5 +73,21 @@ docker compose logs -f <nombre_servicio>
 docker compose top
 ```
 
+#### Gestión y ejecución
+1. Construye o vuelve a compilar las imágenes de los servicios indicados en el archivo `compose.yaml`.
+```yaml
+docker compose build
+```
+
+2. Ejecuta un comando interactivo (por ejemplo, `sh` o `bash`) dentro de un contenedor en ejecución.
+```yaml
+docker compose exec <servicio> <comando>
+```
+
+3. Descarga las versiones más recientes de las imágenes base declaradas en la configuración.
+```yaml
+docker compose pull
+```
+
 ## Licencia
 El proyecto Indicadores Chile es un software de código abierto con licencia `GNU General Public License v2.0`.
