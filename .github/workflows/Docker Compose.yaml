@@ -4,10 +4,17 @@ on:
   workflow_dispatch:
 
 jobs:
+  call-env-file:
+    name: Call enn file
+    uses: ./.github/workflows/env-file.yaml
+    secrets: inherit # Pasa los secretos al flujo hijo
+  
   buid-docker-compose:
     name: Build Docker Compose
     
     runs-on: ubuntu-latest
+
+    needs: call-env-file
 
     steps:
       - name: Checkout repository and submodules
@@ -17,5 +24,15 @@ jobs:
           # Opciones: 'true' para submódulos de primer nivel o 'recursive' para todos
           submodules: recursive
 
+      - name: Descargar archivo .env
+        uses: actions/download-artifact@v4
+        with:
+          name: env-file
+
+      - name: Verificar que el archivo existe y usarlo
+        run: |
+          ls -la
+          cat .env
+      
       - name: Spin up services with Docker Compose
         run: docker compose up -d
