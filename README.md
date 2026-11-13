@@ -52,5 +52,26 @@ docker compose start
 docker compose restart
 ```
 
+#### Monitoreo y diagnóstico
+1. Muestra el estado actual y los puertos de los contenedores gestionados por `Compose`.
+```yaml
+docker compose ps
+```
+
+2. Muestra en tiempo real los registros (`logs`) de todos los servicios.
+```yaml
+docker compose logs -f
+```
+
+3. Muestra los `logs` en vivo únicamente del servicio especificado.
+```yaml
+docker compose logs -f <nombre_servicio>
+```
+
+4. Muestra los procesos que se están ejecutando dentro de cada contenedor.
+```yaml
+docker compose top
+```
+
 ## Licencia
 El proyecto Indicadores Chile es un software de código abierto con licencia `GNU General Public License v2.0`.
