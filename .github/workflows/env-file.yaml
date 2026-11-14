@@ -1,4 +1,4 @@
-name: Crear y compartir .env
+name: Create and share a .env file
 
 on:
   workflow_call:
