@@ -43,6 +43,8 @@ services:
             # Microsoft
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+        networks:
+            - api-tier
     
     web:
         image: ${DOCKER_REGISTRY-}web
@@ -80,3 +82,5 @@ services:
 networks:
     typescript-compiler-tier:
         driver: bridge
+    api-tier:
+        driver: none
