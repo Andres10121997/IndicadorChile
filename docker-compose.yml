@@ -8,6 +8,8 @@ services:
         working_dir: /app
         volumes:
             - .:/app
+        networks:
+            - typescript-compiler-tier
         # Instala TypeScript y transpila (usa --watch si es para desarrollo)
         command: sh -c "npm install -g typescript && tsc --watch"
     
@@ -72,3 +74,9 @@ services:
             # Microsoft
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+        networks:
+            - typescript-compiler-tier
+
+networks:
+    typescript-compiler-tier:
+        driver: bridge
