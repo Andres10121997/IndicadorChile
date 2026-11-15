@@ -21,6 +21,7 @@ services:
             dockerfile: Dockerfile
         image: ${DOCKER_REGISTRY-}api
         container_name: indicadores_de_chile_api
+        read_only: true
         restart: always
         
         environment:
@@ -60,6 +61,9 @@ services:
         depends_on:
             - typescript-compiler
             - api
+        
+        # Seguridad
+        read_only: true
         
         environment:
             # Asp Net Core
