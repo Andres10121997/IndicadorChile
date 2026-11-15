@@ -64,6 +64,15 @@ services:
         
         # Seguridad
         read_only: true
+        user: 1000:1000
+        security_opt:
+            - no_new_privileges=true
+        
+        # Capacidades
+        cap_drop:
+            - ALL
+        cap_add:
+            - NET_BIND_SERVICE
         
         environment:
             # Asp Net Core
