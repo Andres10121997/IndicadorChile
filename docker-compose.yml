@@ -1,7 +1,25 @@
 # https://learn.microsoft.com/es-mx/visualstudio/containers/tutorial-multicontainer?view=visualstudio
 # https://learn.microsoft.com/es-mx/visualstudio/containers/launch-profiles?view=visualstudio
 services:
-    # Servicio transpilar TypeScript
+    # Contenedor auxiliar: Genera el certificado en el volumen interno y termina
+    cert-gen:
+        image: alpine/openssl:latest
+        container_name: indicadores_cert_gen
+        entrypoint: /bin/sh
+        volumes:
+            - ssl_data:/https
+        command:
+            - -c
+            - |
+              if [ ! -f /https/aspnetapp.pfx ]; then
+                openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout /https/aspnetapp.key -out /https/aspnetapp.crt -subj "/CN=localhost"
+                openssl pkcs12 -export -out /https/aspnetapp.pfx -inkey /https/aspnetapp.key -in /https/aspnetapp.crt -passout pass:${ASPNETCORE_Kestrel_Password}
+                rm -f /https/aspnetapp.key /https/aspnetapp.crt
+                chown 1000:1000 /https/aspnetapp.pfx
+                chmod 640 /https/aspnetapp.pfx
+              fi
+    
+    # Contenedor auxiliar: Transpilar TypeScript
     typescript-transpile:
         image: node:26-alpine
         restart: always
@@ -28,7 +46,14 @@ services:
         container_name: indicadores_de_chile_api
         read_only: true
         restart: always
+        depends_on:
+            cert-gen:
+                condition: service_completed_successfully
 
+        user: 1000:1000
+        tmpfs:
+            - /tmp
+        
         # Seguridad
         security_opt:
             - "no-new-privileges=true"
@@ -44,6 +69,9 @@ services:
             - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
             - ASPNETCORE_HTTP_PORTS=8080
             - ASPNETCORE_HTTPS_PORTS=8081
+            # Certificado SSL embebido en la imagen
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=${ASPNETCORE_Kestrel_Password}
             # Time Zone
             - TZ=${TimeZone}
             # Idioma
@@ -59,13 +87,8 @@ services:
             - "1970:8080"
             - "1973:8081"
         volumes:
-            # Configuración del almacenamiento persistente
             - '/path/to/host/uptime/:/app/data'
-            # Asp.Net
-            - ~/.aspnet/https:/https:ro
-            # Microsoft
-            - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+            - ssl_data:/https:ro
     
     # Servicio web
     web:
@@ -74,12 +97,17 @@ services:
             dockerfile: Dockerfile
         image: ${DOCKER_REGISTRY-}web
         container_name: indicadores_de_chile_web
+        read_only: true
         restart: always
         depends_on:
-            - typescript-transpile
+            typescript-transpile:
+                condition: service_started
+            cert-gen:
+                condition: service_completed_successfully
         
-        read_only: true
         user: 1000:1000
+        tmpfs:
+            - /tmp
 
         # Seguridad
         security_opt:
@@ -96,6 +124,9 @@ services:
             - ASPNETCORE_ENVIRONMENT=${ENVIRONMENT}
             - ASPNETCORE_HTTP_PORTS=8080
             - ASPNETCORE_HTTPS_PORTS=8081
+            # Certificado SSL embebido en la imagen
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=${ASPNETCORE_Kestrel_Password}
             # Time Zone
             - TZ=${TimeZone}
             # Idioma
@@ -104,17 +135,13 @@ services:
             - LC_ALL=${LC_ALL}
         networks:
             - typescript-compiler-tier
+            - frontend-tier
         ports:
             - "8080:8080"
             - "8081:8081"
         volumes:
-            # Configuración del almacenamiento persistente
             - '/path/to/host/uptime/:/app/data'
-            # Asp.Net
-            - ~/.aspnet/https:/https:ro
-            # Microsoft
-            - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
-            - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
+            - ssl_data:/https:ro
 
 networks:
     typescript-compiler-tier:
@@ -122,4 +149,8 @@ networks:
         internal: true # Sin salida a internet ni puerta de enlace predeterminada
     backend-tier:
         driver: bridge
-        internal: true # Sin salida a internet ni puerta de enlace predeterminada
+    frontend-tier:
+        driver: bridge
+
+volumes:
+    ssl_data:
