@@ -37,7 +37,7 @@ services:
             - AppName=Indicadores de Chile (API)
             - AppDescription=API para obtener, principalmente, la lista de distintas "divisas", como la UF y el Dólar.
         networks:
-            - api-tier
+            - backend-tier
         ports:
             - "1970:8080"
             - "1973:8081"
@@ -58,7 +58,6 @@ services:
         restart: always
         depends_on:
             - typescript-transpile
-            - api
         
         # Seguridad
         read_only: true
@@ -98,5 +97,7 @@ services:
 networks:
     typescript-compiler-tier:
         driver: bridge
-    api-tier:
-        driver: none
+        internal: true # Sin salida a internet ni puerta de enlace predeterminada
+    backend-tier:
+        driver: bridge
+        internal: true # Sin salida a internet ni puerta de enlace predeterminada
