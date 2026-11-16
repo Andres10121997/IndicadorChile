@@ -5,6 +5,10 @@ services:
     typescript-transpile:
         image: node:26-alpine
         working_dir: /app
+        
+        security_opt:
+            - no-new-privileges:true
+        
         networks:
             - typescript-compiler-tier
         volumes:
@@ -63,7 +67,7 @@ services:
         read_only: true
         user: 1000:1000
         security_opt:
-            - no_new_privileges=true
+            - "no-new-privileges=true"
         
         # Capacidades
         cap_drop:
