@@ -5,10 +5,18 @@ services:
     cert-gen:
         image: mcr.microsoft.com/dotnet/sdk:8.0
         container_name: certificado-ssl
+
+        user: 1000:1000
         
         # Seguridad
         security_opt:
             - "no-new-privileges=true"
+        
+        # Capacidades
+        cap_drop:
+            - ALL
+        cap_add:
+            - CHOWN
         
         entrypoint: >
             sh -c '
