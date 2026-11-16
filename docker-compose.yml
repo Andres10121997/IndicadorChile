@@ -3,21 +3,24 @@
 services:
     # Contenedor auxiliar: Genera el certificado en el volumen interno y termina
     cert-gen:
-        image: alpine/openssl:latest
-        container_name: indicadores_cert_gen
-        entrypoint: /bin/sh
+        image: mcr.microsoft.com/dotnet/sdk:8.0
+        container_name: certificado-ssl
+        
+        # Seguridad
+        security_opt:
+            - "no-new-privileges=true"
+        
+        entrypoint: >
+            sh -c '
+            if [ ! -f /https/aspnetapp.pfx ]; then
+                dotnet dev-certs https -ep /https/aspnetapp.pfx -p "$$CERT_PASSWORD" &&
+                chmod 644 /https/aspnetapp.pfx;
+            fi
+            '
+        environment:
+            - CERT_PASSWORD=${CERT_PASSWORD}
         volumes:
             - ssl_data:/https
-        command:
-            - -c
-            - |
-              if [ ! -f /https/aspnetapp.pfx ]; then
-                openssl req -x509 -newkey rsa:4096 -sha256 -days 3650 -nodes -keyout /https/aspnetapp.key -out /https/aspnetapp.crt -subj "/CN=localhost"
-                openssl pkcs12 -export -out /https/aspnetapp.pfx -inkey /https/aspnetapp.key -in /https/aspnetapp.crt -passout pass:${ASPNETCORE_Kestrel_Password}
-                rm -f /https/aspnetapp.key /https/aspnetapp.crt
-                chown 1000:1000 /https/aspnetapp.pfx
-                chmod 640 /https/aspnetapp.pfx
-              fi
     
     # Contenedor auxiliar: Transpilar TypeScript
     typescript-transpile:
@@ -71,7 +74,7 @@ services:
             - ASPNETCORE_HTTPS_PORTS=8081
             # Certificado SSL embebido en la imagen
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=${ASPNETCORE_Kestrel_Password}
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
             # Time Zone
             - TZ=${TimeZone}
             # Idioma
@@ -126,7 +129,7 @@ services:
             - ASPNETCORE_HTTPS_PORTS=8081
             # Certificado SSL embebido en la imagen
             - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/aspnetapp.pfx
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=${ASPNETCORE_Kestrel_Password}
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=${CERT_PASSWORD}
             # Time Zone
             - TZ=${TimeZone}
             # Idioma
