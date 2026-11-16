@@ -2,7 +2,7 @@
 # https://learn.microsoft.com/es-mx/visualstudio/containers/launch-profiles?view=visualstudio
 services:
     # Contenedor auxiliar: Genera el certificado en el volumen interno y termina
-    cert-gen:
+    cert-ssl:
         image: mcr.microsoft.com/dotnet/sdk:8.0
         container_name: certificado-ssl
 
@@ -44,7 +44,7 @@ services:
             - "no-new-privileges=true"
         
         networks:
-            - typescript-compiler-tier
+            - typescript-transpile-tier
         volumes:
             - .:/app
     
@@ -58,7 +58,7 @@ services:
         read_only: true
         restart: always
         depends_on:
-            cert-gen:
+            cert-ssl:
                 condition: service_completed_successfully
 
         user: 1000:1000
@@ -113,7 +113,7 @@ services:
         depends_on:
             typescript-transpile:
                 condition: service_started
-            cert-gen:
+            cert-ssl:
                 condition: service_completed_successfully
         
         user: 1000:1000
@@ -145,7 +145,7 @@ services:
             - LANGUAGE=${LANGUAGE}
             - LC_ALL=${LC_ALL}
         networks:
-            - typescript-compiler-tier
+            - typescript-transpile-tier
             - frontend-tier
         ports:
             - "8080:8080"
@@ -155,9 +155,10 @@ services:
             - ssl_data:/https:ro
 
 networks:
-    typescript-compiler-tier:
+    typescript-transpile-tier:
         driver: bridge
         internal: true # Sin salida a internet ni puerta de enlace predeterminada
+        external: false
     backend-tier:
         driver: bridge
     frontend-tier:
