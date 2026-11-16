@@ -1,7 +1,5 @@
 # https://learn.microsoft.com/es-mx/visualstudio/containers/tutorial-multicontainer?view=visualstudio
 # https://learn.microsoft.com/es-mx/visualstudio/containers/launch-profiles?view=visualstudio
-version: "3.9"
-
 services:
     # Servicio transpilar TypeScript
     typescript-transpile:
@@ -59,7 +57,7 @@ services:
         container_name: indicadores_de_chile_web
         restart: always
         depends_on:
-            - typescript-compiler
+            - typescript-transpile
             - api
         
         # Seguridad
