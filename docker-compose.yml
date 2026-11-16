@@ -4,7 +4,11 @@ services:
     # Servicio transpilar TypeScript
     typescript-transpile:
         image: node:26-alpine
+        restart: always
         working_dir: /app
+
+        # Instala TypeScript y transpila (usa --watch si es para desarrollo)
+        command: sh -c "npm install -g typescript && tsc --watch"
         
         security_opt:
             - no-new-privileges:true
@@ -13,8 +17,6 @@ services:
             - typescript-compiler-tier
         volumes:
             - .:/app
-        # Instala TypeScript y transpila (usa --watch si es para desarrollo)
-        command: sh -c "npm install -g typescript && tsc --watch"
     
     # Servicio API
     api:
@@ -25,6 +27,16 @@ services:
         container_name: indicadores_de_chile_api
         read_only: true
         restart: always
+
+        # Seguridad
+        security_opt:
+            - "no-new-privileges=true"
+        
+        # Capacidades
+        cap_drop:
+            - ALL
+        # cap_add:
+            # - NET_BIND_SERVICE
         
         environment:
             # Asp Net Core
@@ -63,9 +75,10 @@ services:
         depends_on:
             - typescript-transpile
         
-        # Seguridad
         read_only: true
         user: 1000:1000
+
+        # Seguridad
         security_opt:
             - "no-new-privileges=true"
         
