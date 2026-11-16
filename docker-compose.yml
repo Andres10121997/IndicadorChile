@@ -38,6 +38,8 @@ services:
 
         # Instala TypeScript y transpila (usa --watch si es para desarrollo)
         command: sh -c "npm install -g typescript && tsc --watch"
+
+        user: 1000:1000
         
         # Seguridad
         security_opt:
