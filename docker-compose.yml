@@ -10,8 +10,9 @@ services:
         # Instala TypeScript y transpila (usa --watch si es para desarrollo)
         command: sh -c "npm install -g typescript && tsc --watch"
         
+        # Seguridad
         security_opt:
-            - no-new-privileges:true
+            - "no-new-privileges=true"
         
         networks:
             - typescript-compiler-tier
@@ -60,6 +61,8 @@ services:
         volumes:
             # Configuración del almacenamiento persistente
             - '/path/to/host/uptime/:/app/data'
+            # Asp.Net
+            - ~/.aspnet/https:/https:ro
             # Microsoft
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
@@ -107,6 +110,8 @@ services:
         volumes:
             # Configuración del almacenamiento persistente
             - '/path/to/host/uptime/:/app/data'
+            # Asp.Net
+            - ~/.aspnet/https:/https:ro
             # Microsoft
             - ${APPDATA}/Microsoft/UserSecrets:/home/app/.microsoft/usersecrets:ro
             - ${APPDATA}/Microsoft/UserSecrets:/root/.microsoft/usersecrets:ro
