@@ -30,34 +30,6 @@ services:
         volumes:
             - ssl_data:/https
     
-    # Contenedor auxiliar: Transpilar TypeScript
-    typescript-transpile:
-        image: node:26-alpine
-        restart: always
-        working_dir: /app
-
-        command: sh -c "npm install --no-save --cache /tmp/.npm typescript && ./node_modules/.bin/tsc --watch"
-
-        user: 1000:1000
-        tmpfs:
-            - /tmp
-        
-        # Seguridad
-        security_opt:
-            - "no-new-privileges=true"
-        
-        # Capacidades
-        cap_drop:
-            - ALL
-        cap_add:
-            - NET_RAW
-        
-        networks:
-            - red_internet
-            - typescript-transpile-tier
-        volumes:
-            - .:/app
-    
     # Servicio API
     api:
         build:
@@ -123,12 +95,11 @@ services:
         read_only: true
         restart: always
         depends_on:
-            typescript-transpile:
-                condition: service_started
             cert-ssl:
                 condition: service_completed_successfully
         
         user: 1000:1000
+        
         tmpfs:
             - /tmp
 
