@@ -45,6 +45,12 @@ services:
         security_opt:
             - "no-new-privileges=true"
         
+        # Capacidades
+        cap_drop:
+            - ALL
+        # cap_add:
+            # - CHOWN
+        
         networks:
             - typescript-transpile-tier
         volumes:
