@@ -36,10 +36,11 @@ services:
         restart: always
         working_dir: /app
 
-        # Instala TypeScript y transpila (usa --watch si es para desarrollo)
-        command: sh -c "npm install -g typescript && tsc --watch"
+        command: sh -c "npm install --no-save --cache /tmp/.npm typescript && ./node_modules/.bin/tsc --watch"
 
         user: 1000:1000
+        tmpfs:
+            - /tmp
         
         # Seguridad
         security_opt:
@@ -48,10 +49,11 @@ services:
         # Capacidades
         cap_drop:
             - ALL
-        # cap_add:
-            # - CHOWN
+        cap_add:
+            - NET_RAW
         
         networks:
+            - red_internet
             - typescript-transpile-tier
         volumes:
             - .:/app
@@ -102,6 +104,8 @@ services:
             - AppDescription=API para obtener, principalmente, la lista de distintas "divisas", como la UF y el Dólar.
         networks:
             - backend-tier
+            # - backend-internal-tier
+            # - backend-external-tier
         ports:
             - "1970:8080"
             - "1973:8081"
@@ -163,6 +167,9 @@ services:
             - ssl_data:/https:ro
 
 networks:
+    red_internet:
+        driver: bridge
+        internal: false # Por defecto es false; si fuera true, bloquearía el acceso exterior
     typescript-transpile-tier:
         driver: bridge
         internal: true # Sin salida a internet ni puerta de enlace predeterminada
