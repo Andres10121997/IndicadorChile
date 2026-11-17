@@ -22,12 +22,12 @@ jobs:
         run: |
           cat << 'EOF' > .env
           # Zona Horaria
-          "TimeZone=America/Santiago"
+          TimeZone=America/Santiago
 
           # Idioma
-          "LANG=es_CL.UTF-8"
-          "LANGUAGE=es_CL:es"
-          "LC_ALL=es_CL.UTF-8"
+          LANG=es_CL.UTF-8
+          LANGUAGE=es_CL:es
+          LC_ALL=es_CL.UTF-8
           EOF
 
       - name: Verify that the file was created
