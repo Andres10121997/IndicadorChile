@@ -7,6 +7,8 @@ services:
         container_name: certificado-ssl
 
         user: 1000:1000
+        tmpfs:
+            - /tmp
         
         # Seguridad
         security_opt:
@@ -99,7 +101,6 @@ services:
                 condition: service_completed_successfully
         
         user: 1000:1000
-        
         tmpfs:
             - /tmp
 
