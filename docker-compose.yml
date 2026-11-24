@@ -1,37 +1,6 @@
 # https://learn.microsoft.com/es-mx/visualstudio/containers/tutorial-multicontainer?view=visualstudio
 # https://learn.microsoft.com/es-mx/visualstudio/containers/launch-profiles?view=visualstudio
 services:
-    # Contenedor auxiliar: Genera el certificado en el volumen interno y termina
-    cert-ssl:
-        image: mcr.microsoft.com/dotnet/sdk:8.0
-        container_name: certificado-ssl
-
-        user: 1000:1000
-        tmpfs:
-            - /tmp
-        
-        # Seguridad
-        security_opt:
-            - "no-new-privileges=true"
-        
-        # Capacidades
-        cap_drop:
-            - ALL
-        cap_add:
-            - CHOWN
-        
-        entrypoint: >
-            sh -c '
-            if [ ! -f /https/aspnetapp.pfx ]; then
-                dotnet dev-certs https -ep /https/aspnetapp.pfx -p "$$CERT_PASSWORD" &&
-                chmod 644 /https/aspnetapp.pfx;
-            fi
-            '
-        environment:
-            - CERT_PASSWORD=${CERT_PASSWORD}
-        volumes:
-            - ssl_data:/https
-    
     # Servicio API
     api:
         build:
@@ -41,9 +10,6 @@ services:
         container_name: indicadores_de_chile_api
         read_only: true
         restart: always
-        depends_on:
-            cert-ssl:
-                condition: service_completed_successfully
 
         user: 1000:1000
         tmpfs:
@@ -83,7 +49,7 @@ services:
             - "1973:8081"
         volumes:
             - '/path/to/host/uptime/:/app/data'
-            - ssl_data:/https:ro
+            - ./certs:/https:ro
     
     # Servicio web
     web:
@@ -94,9 +60,6 @@ services:
         container_name: indicadores_de_chile_web
         read_only: true
         restart: always
-        depends_on:
-            cert-ssl:
-                condition: service_completed_successfully
         
         user: 1000:1000
         tmpfs:
@@ -133,7 +96,7 @@ services:
             - "8081:8081"
         volumes:
             - '/path/to/host/uptime/:/app/data'
-            - ssl_data:/https:ro
+            - ./certs:/https:ro
 
 networks:
     red_internet:
