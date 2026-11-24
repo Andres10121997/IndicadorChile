@@ -78,8 +78,6 @@ services:
             - AppDescription=API para obtener, principalmente, la lista de distintas "divisas", como la UF y el Dólar.
         networks:
             - backend-tier
-            # - backend-internal-tier
-            # - backend-external-tier
         ports:
             - "1970:8080"
             - "1973:8081"
@@ -129,7 +127,6 @@ services:
             - LANGUAGE=${LANGUAGE}
             - LC_ALL=${LC_ALL}
         networks:
-            - typescript-transpile-tier
             - frontend-tier
         ports:
             - "8080:8080"
