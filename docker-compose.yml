@@ -142,10 +142,6 @@ networks:
     red_internet:
         driver: bridge
         internal: false # Por defecto es false; si fuera true, bloquearía el acceso exterior
-    typescript-transpile-tier:
-        driver: bridge
-        internal: true # Sin salida a internet ni puerta de enlace predeterminada
-        external: false
     backend-tier:
         driver: bridge
     frontend-tier:
