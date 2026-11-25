@@ -5,16 +5,21 @@ on:
 
 jobs:
   call-env-file:
-    name: Call enn file
+    name: Call env file
     uses: ./.github/workflows/env-file.yaml
     secrets: inherit # Pasa los secretos al flujo hijo
+
+  call-dev-certs-file:
+    name: Call dev certs file
+    uses: ./.github/workflows/dev-certs-file.yaml
+    secrets: inherit
   
   buid-docker-compose:
     name: Build Docker Compose
     
     runs-on: ubuntu-latest
 
-    needs: call-env-file
+    needs: [call-dev-certs-file, call-env-file]
 
     steps:
       - name: Checkout repository and submodules
@@ -29,6 +34,12 @@ jobs:
         with:
           name: env-file
           path: . # Asegura que esté en la raíz del proyecto
+
+      - name: Descargar archivo dev certs
+        uses: actions/download-artifact@v8
+        with:
+          name: dev-certs-pfx
+          path: .
 
       - name: Verificar que el archivo existe y usarlo
         run: |
