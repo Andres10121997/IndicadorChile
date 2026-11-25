@@ -48,7 +48,7 @@ services:
             - "1970:8080"
             - "1973:8081" # 127.0.0.1:1973:8081
         volumes:
-            # - '/path/to/host/uptime/:/app/data'
+            - '/path/to/host/uptime/:/app/data'
             - ./certs:/https:ro
     
     # Servicio web
@@ -96,7 +96,7 @@ services:
             - "8080:8080"
             - "8081:8081"
         volumes:
-            # - '/path/to/host/uptime/:/app/data'
+            - '/path/to/host/uptime/:/app/data'
             - ./certs:/https:ro
 
 networks:
