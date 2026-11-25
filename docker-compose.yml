@@ -46,9 +46,9 @@ services:
             - backend-tier
         ports:
             - "1970:8080"
-            - "1973:8081"
+            - "1973:8081" # 127.0.0.1:1973:8081
         volumes:
-            - '/path/to/host/uptime/:/app/data'
+            # - '/path/to/host/uptime/:/app/data'
             - ./certs:/https:ro
     
     # Servicio web
@@ -91,21 +91,17 @@ services:
             - LC_ALL=${LC_ALL}
         networks:
             - frontend-tier
+            - backend-tier
         ports:
             - "8080:8080"
             - "8081:8081"
         volumes:
-            - '/path/to/host/uptime/:/app/data'
+            # - '/path/to/host/uptime/:/app/data'
             - ./certs:/https:ro
 
 networks:
-    red_internet:
-        driver: bridge
-        internal: false # Por defecto es false; si fuera true, bloquearía el acceso exterior
-    backend-tier:
-        driver: bridge
     frontend-tier:
         driver: bridge
-
-volumes:
-    ssl_data:
+    backend-tier:
+        driver: bridge
+        internal: true
