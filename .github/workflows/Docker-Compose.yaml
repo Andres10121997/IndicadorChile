@@ -41,10 +41,16 @@ jobs:
           name: dev-certs-pfx
           path: .
 
-      - name: Verificar que el archivo existe y usarlo
-        run: |
-          ls -la
-          cat .env
+      - name: Levantar servicios
+        run: docker compose up --build -d
+
+      - name: Esperar y verificar estado
+        run: docker compose ps
+
+      # - name: Verificar que el archivo existe y usarlo
+        # run: |
+          # ls -la
+          # cat .env
       
       - name: Eliminar .env local por seguridad
         if: always()
