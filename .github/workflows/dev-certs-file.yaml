@@ -29,7 +29,7 @@ jobs:
           mkdir -p certs
           dotnet dev-certs https --clean
           dotnet dev-certs https -ep certs/aspnetapp.pfx -p "${{ secrets.CERT_PASSWORD }}"
-          chmod 644 certs/aspnetapp.pfx
+          chmod 600 certs/aspnetapp.pfx
 
       - name: Upload dev certs file as an artifact
         uses: actions/upload-artifact@v7
